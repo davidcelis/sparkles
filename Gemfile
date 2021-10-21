@@ -27,6 +27,9 @@ gem "turbolinks", "~> 5"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
 
+# Use the official API client to connect to Slack
+gem "slack-ruby-client"
+
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
   gem "pry-byebug"
