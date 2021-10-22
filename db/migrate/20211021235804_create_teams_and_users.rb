@@ -7,7 +7,7 @@ class CreateTeamsAndUsers < ActiveRecord::Migration[6.1]
     end
 
     create_table :users, id: :string do |t|
-      t.references :team, type: :string, null: false, foreign_key: true
+      t.references :team, type: :string, null: false
 
       t.timestamps
     end

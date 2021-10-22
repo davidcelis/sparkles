@@ -15,7 +15,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password:
-  socket: /tmp/mysql.sock
+  host: 127.0.0.1
+  port: <%= ENV.fetch("PLANETSCALE_PORT") { 3306 } %>
 
 development:
   <<: *default
@@ -49,4 +50,4 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  url: <%= Rails.application.credentials.database_url %>
+  url: <%= ENV["PLANETSCALE_URL"] %>

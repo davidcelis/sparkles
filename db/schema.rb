@@ -13,11 +13,10 @@
 ActiveRecord::Schema.define(version: 2021_10_22_192715) do
 
   create_table "sparkles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "sparklee_id"
-    t.string "sparkler_id"
+    t.string "sparklee_id", null: false
+    t.string "sparkler_id", null: false
     t.string "channel_id"
     t.string "reason"
-    t.string "reaction_to"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["sparklee_id"], name: "index_sparkles_on_sparklee_id"
@@ -25,19 +24,16 @@ ActiveRecord::Schema.define(version: 2021_10_22_192715) do
   end
 
   create_table "teams", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "slack_token"
+    t.string "slack_token", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "team_id"
+    t.string "team_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_users_on_team_id"
   end
 
-  add_foreign_key "sparkles", "users", column: "sparklee_id"
-  add_foreign_key "sparkles", "users", column: "sparkler_id"
-  add_foreign_key "users", "teams"
 end
