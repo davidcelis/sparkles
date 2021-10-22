@@ -38,7 +38,7 @@ module SlackHelper
     authorization_url = URI(SLACK_AUTHORIZATION_URL)
     authorization_url.query = {
       scope: BOT_SCOPES.join(","),
-      redirect_uri: "https://215c-71-36-123-150.ngrok.io/slack/oauth/callback", # slack_oauth_callback_url,
+      redirect_uri: slack_oauth_callback_url,
       client_id: CLIENT_ID
     }.to_query
 
