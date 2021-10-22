@@ -1,5 +1,9 @@
 module SlackHelper
   SLACK_AUTHORIZATION_URL = "https://slack.com/oauth/v2/authorize".freeze
+
+  CLIENT_ID = ENV.fetch("SLACK_CLIENT_ID") { Rails.application.credentials.dig(:slack, :client_id) }
+  CLIENT_SECRET = ENV.fetch("SLACK_CLIENT_SECRET") { Rails.application.credentials.dig(:slack, :client_secret) }
+
   BOT_SCOPES = [
     "commands",
     "reactions:read"
@@ -35,7 +39,7 @@ module SlackHelper
     authorization_url.query = {
       scope: BOT_SCOPES.join(","),
       redirect_uri: "https://215c-71-36-123-150.ngrok.io/slack/oauth/callback", # slack_oauth_callback_url,
-      client_id: Rails.application.credentials.dig(:slack, :client_id)
+      client_id: CLIENT_ID
     }.to_query
 
     link_to "#{svg} Add to Slack".html_safe, authorization_url.to_s, style: style

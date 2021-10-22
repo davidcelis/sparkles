@@ -9,8 +9,8 @@ module Slack
       slack_client = Slack::Web::Client.new
       response = slack_client.oauth_v2_access(
         code: params[:code],
-        client_id: Rails.application.credentials.dig(:slack, :client_id),
-        client_secret: Rails.application.credentials.dig(:slack, :client_secret),
+        client_id: SlackHelper::CLIENT_ID,
+        client_secret: SlackHelper::CLIENT_SECRET,
       )
 
       team = Team.find_or_initialize_by(id: response.team.id)
