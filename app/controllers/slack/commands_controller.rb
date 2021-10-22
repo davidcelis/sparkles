@@ -5,31 +5,12 @@ module Slack
     before_action :verify_slack_request
 
     def create
-      if matches = params[:text].match(/\A<@(?<user_id>\w+)(?:\|\w+)>( (?<reason>.+))?\z/)
-        team = Team.find(params[:team_id])
-        slack_client = Slack::Web::Client.new(token: team.slack_token)
+      text = params.delete(:text)
+      result = Commands::Slack.parse(text).execute(params)
 
-        sparkler = team.users.find_or_create_by(id: params[:user_id])
-        sparklee = team.users.find_or_create_by(id: matches[:user_id])
-        sparkle = sparklee.sparkles.create!(
-          sparkler_id: sparkler.id,
-          channel_id: params[:channel_id],
-          reason: matches[:reason]
-        )
-
-        if sparklee.sparkles.count == 1
-          response_text = ":tada: <@#{sparklee.id}> just got their first :sparkle:! :tada:"
-        else
-          response_text = "Thanks for recognizing your teammate! <@#{sparklee.id}> now has #{sparklee.sparkles.count} sparkles :sparkles:"
-        end
-
-        render json: {
-          response_type: :in_channel,
-          text: response_text
-        }
-      else
-        render plain: "Usage: /sparkle @user [reason]"
-      end
+      render json: result
+    rescue Commands::Slack::ParseError
+      render plain: "Sorry, I didn't understand your command.\n\nUsage: /sparkle @user [reason]"
     end
 
     private
