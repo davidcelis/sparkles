@@ -123,12 +123,12 @@ GEM
     minitest (5.14.4)
     msgpack (1.4.2)
     multipart-post (2.1.1)
-    mysql2 (0.5.3)
     nio4r (2.5.8)
     nokogiri (1.12.5-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
+    pg (1.2.3)
     popper_js (2.9.3)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -236,7 +236,7 @@ DEPENDENCIES
   bootstrap (~> 5.0.1)
   jquery-rails (~> 4.4)
   listen (~> 3.3)
-  mysql2 (~> 0.5)
+  pg (~> 1.1)
   pry-byebug
   pry-rails
   puma (~> 5.0)
