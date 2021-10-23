@@ -35,6 +35,9 @@ gem 'listen', '~> 3.3'
 # Use the official API client to connect to Slack
 gem "slack-ruby-client"
 
+# Use Sidekiq for background job processing
+gem "sidekiq", "~> 6.2"
+
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
   gem "pry-byebug"
