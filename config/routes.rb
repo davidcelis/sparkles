@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: "slack/oauth#install"
+
   namespace :slack do
     resources :commands, only: [:create]
 
@@ -8,5 +10,6 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: "slack/oauth#install"
+  # A simple health check for dokku
+  get :health, to: proc { [200, {}, ['ok']] }
 end
