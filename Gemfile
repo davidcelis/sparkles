@@ -34,6 +34,7 @@ gem 'listen', '~> 3.3'
 
 # Use the official API client to connect to Slack
 gem "slack-ruby-client"
+gem "jwt"
 
 # Use Sidekiq for background job processing
 gem "sidekiq", "~> 6.2"

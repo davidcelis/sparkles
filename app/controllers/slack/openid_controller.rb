@@ -1,28 +1,29 @@
 module Slack
-  class OAuthController < ApplicationController
+  class OpenIDController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:callback]
 
     before_action :verify_state
 
     def callback
       slack_client = Slack::Web::Client.new
-      response = slack_client.oauth_v2_access(
+      response = slack_client.post('openid.connect.token', {
         code: params[:code],
         client_id: Rails.application.credentials.dig(:slack, :client_id),
         client_secret: Rails.application.credentials.dig(:slack, :client_secret),
-        redirect_uri: slack_oauth_callback_url,
-      )
+        redirect_uri: slack_openid_callback_url,
+      })
 
-      team = Team.find_or_initialize_by(id: response.team.id)
-      user = User.find_or_initialize_by(id: response.authed_user.id, team_id: team.id)
+      # Parse the JWT we received and validate its nonce
+      jwt, _ = JWT.decode(response.id_token, nil, false)
+      if jwt["nonce"] != cookies.encrypted[:nonce]
+        flash.alert = "The provided OpenID nonce did not match. Please try signing in again."
 
-      ActiveRecord::Base.transaction do
-        team.slack_token = response.access_token
-        team.save!
-
-        user.slack_token = response.authed_user.access_token
-        user.save!
+        redirect_to root_path and return
       end
+
+      user = User.find_or_initialize_by(id: jwt["https://slack.com/user_id"], team_id: jwt["https://slack.com/team_id"])
+      user.slack_token = response.access_token
+      user.save!
 
       cookies.encrypted.permanent[:team_id] = user.team_id
       cookies.encrypted.permanent[:user_id] = user.id

@@ -1,0 +1,21 @@
+<div class="pt-2 pe-3 text-end">
+  <%= add_to_slack_button(state: @state) %>
+</div>
+
+<div class="px-4 py-5 my-5 text-center">
+  <%= image_tag "sparkles.png", width: 190, height: 236, alt: "sparkles", class: "d-block mx-auto mb-4" %>
+
+  <h1 class="display-5 fw-bold">Sparkles</h1>
+
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">
+      Sparkles is a little Slack app for recognizing your teammates and friends.
+      After installing Sparkles to your Slack workspace, you can use the <code>/sparkle</code> command
+      to have &#10024; all kinds of fun! &#10024; Sign in to view your team's leaderboard and see who
+      has sparkled who. If your team hasn't installed Sparkles yet, you can subimt an installation
+      request to your admins using the button above!
+    </p>
+
+    <%= sign_in_with_slack_button(state: @state, nonce: @nonce) %>
+  </div>
+</div>

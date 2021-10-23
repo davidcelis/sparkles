@@ -11,6 +11,20 @@
   </head>
 
   <body>
+    <div id="flash" class="col-lg-6 mx-auto">
+      <% if flash.alert %>
+        <div class="alert alert-danger" role="alert">
+          <%= flash.alert %>
+        </div>
+      <% end %>
+
+      <% if flash.notice %>
+        <div class="alert alert-primary" role="alert">
+          <%= flash.notice %>
+        </div>
+      <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>
