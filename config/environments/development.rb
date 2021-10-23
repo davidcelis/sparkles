@@ -67,5 +67,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # Allow forwarded requests from ngrok.
-  config.hosts << /[0-9a-f\-]+\.ngrok\.io/
+  config.hosts << "sparkles.loca.lt"
 end
