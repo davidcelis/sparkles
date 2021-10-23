@@ -23,7 +23,11 @@ module Commands
         text = if sparklee.sparkles.count == 1
           ":tada: <@#{sparklee.id}> just got their first :sparkle:! :tada:"
         else
-          "Thanks for recognizing your teammate! <@#{sparklee.id}> now has #{sparklee.sparkles.count} sparkles :sparkles:"
+          "Awesome! <@#{sparklee.id}> now has #{sparklee.sparkles.count} sparkles :sparkles:"
+        end
+
+        if sparklee == sparkler
+          text += "\n\nNothing wrong with a little pat on the back, eh <@#{sparkler.id}>?"
         end
 
         Commands::Slack::Result.new(
