@@ -1,0 +1,13 @@
+{
+  "name": "sparkles",
+  "description": "Award your Slack teammates with sparkles for any reason or no reason at all!",
+  "keywords": [
+    "slack",
+    "sparkles"
+  ],
+  "scripts": {
+    "dokku": {
+      "postdeploy": "bundle exec rake db:migrate"
+    }
+  }
+}
