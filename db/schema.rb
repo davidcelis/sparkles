@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2021_10_22_192715) do
 
-  create_table "sparkles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "sparkles", force: :cascade do |t|
     t.string "sparklee_id", null: false
     t.string "sparkler_id", null: false
     t.string "channel_id"
@@ -23,17 +26,20 @@ ActiveRecord::Schema.define(version: 2021_10_22_192715) do
     t.index ["sparkler_id"], name: "index_sparkles_on_sparkler_id"
   end
 
-  create_table "teams", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "teams", id: :string, force: :cascade do |t|
     t.string "slack_token", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", id: :string, force: :cascade do |t|
     t.string "team_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_users_on_team_id"
   end
 
+  add_foreign_key "sparkles", "users", column: "sparklee_id"
+  add_foreign_key "sparkles", "users", column: "sparkler_id"
+  add_foreign_key "users", "teams"
 end
