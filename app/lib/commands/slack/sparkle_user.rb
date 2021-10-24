@@ -1,6 +1,43 @@
 module Commands
   module Slack
     class SparkleUser
+      WORDS_OF_ENCOURAGEMENT = [
+        "Amazing",
+        "Aw yiss",
+        "Awesome",
+        "Bam",
+        "Beautiful",
+        "Boo-yah",
+        "Bravo",
+        "Cheers",
+        "Cool",
+        "Excellent",
+        "Exciting",
+        "Fabulous",
+        "Fantastic",
+        "Good news, everyone",
+        "Great",
+        "Hell yeah",
+        "Hooray",
+        "Oh-ho",
+        "Oh yeah",
+        "Rad",
+        "Rock and roll",
+        "Shut the front door",
+        "Sweet",
+        "Tada",
+        "Whee",
+        "Woah",
+        "Woo",
+        "Woo-hoo",
+        "Woot",
+        "Wow",
+        "Yay",
+        "Yeah",
+        "Yesss",
+        "Yippee"
+      ].freeze
+
       def initialize(text)
         matches = text.match(Commands::Slack::SPARKLE_USER)
 
@@ -22,7 +59,8 @@ module Commands
         text = if sparklee.sparkles.count == 1
           ":tada: <@#{sparklee.id}> just got their first :sparkle:! :tada:"
         else
-          "Awesome! <@#{sparklee.id}> now has #{sparklee.sparkles.count} sparkles :sparkles:"
+          prefix = WORDS_OF_ENCOURAGEMENT.sample + ("!" * rand(1..3))
+          "#{prefix} <@#{sparklee.id}> now has #{sparklee.sparkles.count} sparkles :sparkles:"
         end
 
         if sparklee == sparkler
