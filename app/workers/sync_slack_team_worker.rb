@@ -9,13 +9,14 @@ class SyncSlackTeamWorker < ApplicationWorker
     # Sync users
     users = []
     team.api_client.users_list(sleep_interval: 5, max_retries: 20) do |users_response|
-      users += users_response.members.map do |member|
+      members = users_response.members.reject { |m| m.is_bot || m.id == "USLACKBOT" }
+      users += members.map do |member|
         {
           id: member.id,
           team_id: member.team_id,
           name: member.profile.real_name,
           username: member.profile.display_name,
-          image_url: member.profile.image_url_512,
+          image_url: member.profile.image_512,
           deactivated: member.deleted,
           created_at: Time.current,
           updated_at: Time.current
