@@ -10,15 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_23_200635) do
+ActiveRecord::Schema.define(version: 2021_10_24_031447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "channels", id: :string, force: :cascade do |t|
+    t.string "team_id", null: false
+    t.string "name", null: false
+    t.boolean "private", default: false, null: false
+    t.boolean "archived", default: false, null: false
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["id", "team_id"], name: "index_channels_on_id_and_team_id", unique: true
+    t.index ["team_id"], name: "index_channels_on_team_id"
+  end
+
   create_table "sparkles", force: :cascade do |t|
     t.string "sparklee_id", null: false
     t.string "sparkler_id", null: false
-    t.string "channel_id"
+    t.string "channel_id", null: false
     t.string "reason"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -30,6 +42,8 @@ ActiveRecord::Schema.define(version: 2021_10_23_200635) do
     t.string "slack_token", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.string "icon_url"
   end
 
   create_table "users", id: :string, force: :cascade do |t|
@@ -37,9 +51,16 @@ ActiveRecord::Schema.define(version: 2021_10_23_200635) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slack_token"
+    t.string "name"
+    t.string "username"
+    t.string "image_url"
+    t.boolean "deactivated", default: false, null: false
+    t.index ["id", "team_id"], name: "index_users_on_id_and_team_id", unique: true
     t.index ["team_id"], name: "index_users_on_team_id"
   end
 
+  add_foreign_key "channels", "teams"
+  add_foreign_key "sparkles", "channels"
   add_foreign_key "sparkles", "users", column: "sparklee_id"
   add_foreign_key "sparkles", "users", column: "sparkler_id"
   add_foreign_key "users", "teams"

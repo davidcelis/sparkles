@@ -38,6 +38,7 @@ gem "jwt"
 
 # Use Sidekiq for background job processing
 gem "sidekiq", "~> 6.2"
+gem "sidekiq-scheduler", "~> 3.1"
 
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console

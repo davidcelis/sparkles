@@ -2,7 +2,14 @@ module SlackHelper
   SLACK_OAUTH_URL = "https://slack.com/oauth/v2/authorize".freeze
   SLACK_OPENID_URL = "https://slack.com/openid/connect/authorize".freeze
 
-  BOT_SCOPES = ["commands"].freeze
+  BOT_SCOPES = [
+    "channels:read",
+    "commands",
+    "groups:read",
+    "team:read",
+    "users:read"
+  ].freeze
+
   USER_SCOPES = ["openid"].freeze
 
   def sign_in_with_slack_button(state:, nonce:)

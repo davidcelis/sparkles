@@ -10,7 +10,6 @@ module Commands
 
       def execute(params)
         team = Team.find(params[:team_id])
-        slack_client = ::Slack::Web::Client.new(token: team.slack_token)
 
         sparkler = team.users.find_or_create_by(id: params[:user_id])
         sparklee = team.users.find_or_create_by(id: @sparklee_id)
