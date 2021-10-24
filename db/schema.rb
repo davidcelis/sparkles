@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_24_031447) do
+ActiveRecord::Schema.define(version: 2021_10_24_204156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 2021_10_24_031447) do
     t.boolean "private", default: false, null: false
     t.boolean "archived", default: false, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
     t.index ["id", "team_id"], name: "index_channels_on_id_and_team_id", unique: true
     t.index ["team_id"], name: "index_channels_on_team_id"
   end
@@ -32,24 +32,24 @@ ActiveRecord::Schema.define(version: 2021_10_24_031447) do
     t.string "sparkler_id", null: false
     t.string "channel_id", null: false
     t.string "reason"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
     t.index ["sparklee_id"], name: "index_sparkles_on_sparklee_id"
     t.index ["sparkler_id"], name: "index_sparkles_on_sparkler_id"
   end
 
   create_table "teams", id: :string, force: :cascade do |t|
     t.string "slack_token", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
     t.string "name"
     t.string "icon_url"
   end
 
   create_table "users", id: :string, force: :cascade do |t|
     t.string "team_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
     t.string "slack_token"
     t.string "name"
     t.string "username"
