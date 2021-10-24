@@ -24,6 +24,8 @@ module Slack
         user.save!
       end
 
+      SyncSlackTeamWorker.perform_async(team.id)
+
       cookies.encrypted.permanent[:team_id] = user.team_id
       cookies.encrypted.permanent[:user_id] = user.id
 
