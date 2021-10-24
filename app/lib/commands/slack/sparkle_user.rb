@@ -48,6 +48,17 @@ module Commands
       def execute(params)
         team = Team.find(params[:team_id])
 
+        user_info_response = team.api_client.users_info(user: @sparklee_id)
+        if user_info_response.user.is_bot || user_info_response.user.id == "USLACKBOT"
+          text = if user_info_response.user.real_name == "Sparklebot"
+            "Aww, thank you, <@#{params[:user_id]}>! That's so thoughtful, but I'm already swimming in sparkles! I couldn't possibly take one of yours, but I apprecate the gesture nonetheless :sparkles:"
+          else
+            "It's so nice that you want to recognize one of my fellow bots! They've all politely declined to join the fun of sparkle hoarding, but I'll pass along your thanks."
+          end
+
+          return Commands::Slack::Result.new(text: text)
+        end
+
         sparkler = team.users.find_or_create_by(id: params[:user_id])
         sparklee = team.users.find_or_create_by(id: @sparklee_id)
         sparkle = sparklee.sparkles.create!(
