@@ -21,7 +21,7 @@ module Slack
         user.update!(slack_token: response.authed_user.access_token)
       end
 
-      SyncSlackTeamWorker.perform_async(team.id)
+      SyncSlackTeamWorker.perform_async(team.id, true)
 
       cookies.encrypted.permanent[:team_id] = user.team_id
       cookies.encrypted.permanent[:user_id] = user.id
