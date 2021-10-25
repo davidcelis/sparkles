@@ -17,7 +17,7 @@ module Slack
       user = User.find_or_initialize_by(id: response.authed_user.id, team_id: team.id)
 
       ActiveRecord::Base.transaction do
-        team.update!(slack_token: response.access_token)
+        team.update!(slack_token: response.access_token, sparklebot_id: response.bot_user_id)
         user.update!(slack_token: response.authed_user.access_token)
       end
 
