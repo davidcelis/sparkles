@@ -12,12 +12,12 @@ module Slack
 
     def self.from_api_response(response)
       new(
-        id: response.id,
-        team_id: response.shared_team_ids.first,
-        name: response.name,
-        private: response.is_private,
-        shared: response.is_shared,
-        archived: response.is_archived,
+        id: response[:id],
+        team_id: Array(response[:shared_team_ids]).first,
+        name: response[:name],
+        private: response[:is_private],
+        shared: response[:is_shared],
+        archived: response[:is_archived],
       )
     end
 

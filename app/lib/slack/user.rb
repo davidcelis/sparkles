@@ -11,13 +11,13 @@ module Slack
 
     def self.from_api_response(response)
       new(
-        id: response.id,
-        team_id: response.team_id,
-        name: response.profile.real_name,
-        username: response.profile.display_name,
-        image_url: response.profile.image_512,
-        deactivated: response.deleted,
-        bot: (response.is_bot || response.id == "USLACKBOT")
+        id: response[:id],
+        team_id: response[:team_id],
+        name: response[:profile][:real_name],
+        username: response[:profile][:display_name],
+        image_url: response[:profile][:image_512],
+        deactivated: response[:deleted],
+        bot: (response[:is_bot] || response[:id] == "USLACKBOT")
       )
     end
 

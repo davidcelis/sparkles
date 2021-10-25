@@ -8,9 +8,9 @@ module Slack
 
     def self.from_api_response(response)
       new(
-        id: response.id,
-        name: response.name,
-        icon_url: response.icon.image_original
+        id: response[:id],
+        name: response[:name],
+        icon_url: response[:icon][:image_original]
       )
     end
 
