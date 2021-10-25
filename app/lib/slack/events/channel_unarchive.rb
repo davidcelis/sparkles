@@ -4,7 +4,7 @@ module Slack
       def handle
         # If we already have the channel stored, we only need to update the
         # flag to reflect its been unarchived
-        if (channel = ::Channel.find_by(id: payload[:channel])
+        if (channel = ::Channel.find_by(id: payload[:channel]))
           channel.update!(archived: false)
           return
         end
