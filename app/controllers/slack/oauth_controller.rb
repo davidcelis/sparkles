@@ -13,8 +13,8 @@ module Slack
         redirect_uri: slack_oauth_callback_url,
       )
 
-      team = Team.find_or_initialize_by(id: response.team.id)
-      user = User.find_or_initialize_by(id: response.authed_user.id, team_id: team.id)
+      team = ::Team.find_or_initialize_by(id: response.team.id)
+      user = ::User.find_or_initialize_by(id: response.authed_user.id, team_id: team.id)
 
       ActiveRecord::Base.transaction do
         team.update!(slack_token: response.access_token, sparklebot_id: response.bot_user_id)

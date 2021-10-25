@@ -21,7 +21,7 @@ module Slack
         redirect_to root_path and return
       end
 
-      user = User.find_or_initialize_by(id: jwt["https://slack.com/user_id"], team_id: jwt["https://slack.com/team_id"])
+      user = ::User.find_or_initialize_by(id: jwt["https://slack.com/user_id"], team_id: jwt["https://slack.com/team_id"])
       user.slack_token = response.access_token
       user.save!
 
