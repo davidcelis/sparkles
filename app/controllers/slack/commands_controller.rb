@@ -14,7 +14,7 @@ module Slack
         head :ok
       end
     rescue Commands::Slack::ParseError
-      render plain: "Sorry, I didn't understand your command.\n\nUsage: /sparkle @user [reason]"
+      render plain: "Sorry, I didn't understand your command. Usage:\n\n#{Commands::Slack::Help::TEXT}"
     end
 
     private
