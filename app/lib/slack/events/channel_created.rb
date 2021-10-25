@@ -7,6 +7,10 @@ module Slack
 
         ::Channel.upsert(slack_channel.attributes)
 
+        # Also join the channel so that if it is eventually made private,
+        # we won't lose access.
+        team.api_client.conversations_join(channel: channel.id)
+
         {ok: true}
       end
     end

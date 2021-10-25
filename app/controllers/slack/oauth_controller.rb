@@ -17,11 +17,8 @@ module Slack
       user = User.find_or_initialize_by(id: response.authed_user.id, team_id: team.id)
 
       ActiveRecord::Base.transaction do
-        team.slack_token = response.access_token
-        team.save!
-
-        user.slack_token = response.authed_user.access_token
-        user.save!
+        team.update!(slack_token: response.access_token)
+        user.update!(slack_token: response.authed_user.access_token)
       end
 
       SyncSlackTeamWorker.perform_async(team.id)

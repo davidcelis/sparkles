@@ -3,6 +3,7 @@ module SlackHelper
   SLACK_OPENID_URL = "https://slack.com/openid/connect/authorize".freeze
 
   BOT_SCOPES = [
+    "channels:join",
     "channels:read",
     "commands",
     "groups:read",
