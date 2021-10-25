@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :slack do
     resources :commands, only: [:create]
+    resources :events, only: [:create]
 
     namespace :oauth do
       get :callback
