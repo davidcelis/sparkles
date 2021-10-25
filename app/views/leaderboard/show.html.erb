@@ -1,7 +1,3 @@
-<div class="pt-2 pe-3 text-end">
-  <%= link_to "Sign out", sign_out_path, class: "btn btn-outline-secondary", data: {method: :delete} %>
-</div>
-
 <div class="px-4 my-5 text-center">
   <h1 class="display-5 fw-bold">
     <%= image_tag "sparkles.png", width: 75, height: 75, alt: "sparkles", class: "mx-auto mb-3" %>
@@ -10,8 +6,21 @@
   </h1>
 
   <div class="col-lg-6 mx-auto">
-    <p class="lead mb-4">
-      A web leaderboard is coming soon! Check back later.
-    </p>
+    <ul class="list-group">
+      <% @users.each do |user| %>
+        <li class="d-flex p-2 align-items-center list-group-item list-group-item-action">
+          <%= link_to leaderboard_details_path(current_team.id, user.id), class: "username" do %>
+            <%= image_tag(user.image_url, size: 36, class: "rounded me-1", alt: user.name) %>
+            <%= "@#{user.username.presence || user.name}" %>
+          <% end %>
+          <div class="progress flex-grow-1 ms-2 me-2">
+            <div class="progress-bar bg-warning" style="width: <%= (user.sparkles_count.to_f / @high_score) * 100 %>%;"></div>
+          </div>
+          <span class="ms-auto"><%= user.sparkles_count %> &#10024;</span>
+        </li>
+      <% end %>
+    </ul>
   </div>
+
+  <%= paginate @users %>
 </div>

@@ -14,4 +14,19 @@
  *= require_self
  */
 
- @import "bootstrap";
+@import "bootstrap";
+
+a.username {
+  color: #1164a3;
+  text-decoration: none;
+}
+
+p.reason {
+  text-align: left;
+}
+
+.btn-xs, .btn-group-xs > .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.5rem;
+  border-radius: 0.2rem;
+}

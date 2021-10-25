@@ -30,7 +30,7 @@ gem "bcrypt", "~> 3.1.7"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
-gem 'listen', '~> 3.3'
+gem "listen", "~> 3.3"
 
 # Use the official API client to connect to Slack
 gem "slack-ruby-client"
@@ -39,6 +39,9 @@ gem "jwt"
 # Use Sidekiq for background job processing
 gem "sidekiq", "~> 6.2"
 gem "sidekiq-scheduler", "~> 3.1"
+
+# Paginate through sparkles and the leaderboard with Kaminari
+gem "kaminari", "~> 1.2"
 
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console

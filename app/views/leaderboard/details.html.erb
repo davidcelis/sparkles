@@ -1,0 +1,42 @@
+<div class="px-4 my-5 text-center">
+  <h1 class="display-5 fw-bold">
+    <%= image_tag "sparkles.png", size: 75, class: "mx-auto mb-3", alt: "sparkles" %>
+    <%= image_tag @user.image_url, size: 75, class: "rounded mb-3", alt: @user.name %>
+    <%= @user.name %>'s Sparkles
+    <%= image_tag "sparkles.png", size: 75, class: "mx-auto mb-3", alt: "sparkles" %>
+  </h1>
+
+  <div class="col-lg-6 mx-auto">
+    <ul class="list-group">
+      <% @sparkles.each do |sparkle| %>
+        <li class="p-2 list-group-item list-group-item-action">
+          <div class="d-flex w-100 align-items-center justify-content-between">
+            <h5 class="mb-1">
+              <%= image_tag(sparkle.sparklee.image_url, size: 36, class: "rounded me-1", alt: sparkle.sparklee.name) %>
+              Sparkled by
+              <%= link_to leaderboard_details_path(current_team.id, sparkle.sparklee.id), class: "username" do %>
+                <%= "@#{sparkle.sparklee.username.presence || sparkle.sparklee.name}" %>
+              <% end %>
+              <small class="text-muted">
+                <% if sparkle.channel.private? %>
+                  somewhere secret &#128274;
+                <% else %>
+                  in #<%= sparkle.channel.name %>
+                <% end %>
+              </small>
+            </h5>
+            <%= link_to sparkle.permalink, class: "btn btn-xs btn-secondary fw-bold", target: :_blank, rel: "nofollow" do %>
+              <%= time_ago_in_words(sparkle.created_at) %> ago
+            <% end %>
+          </div>
+
+          <% if sparkle.reason.present? %>
+            <p class="reason mb-0"><%= sparkle.reason %></p>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <%= paginate @sparkles %>
+</div>

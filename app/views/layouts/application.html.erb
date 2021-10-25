@@ -25,6 +25,15 @@
       <% end %>
     </div>
 
+    <% if authenticated? %>
+      <div class="pt-2 pe-3 text-end">
+        <%= link_to sign_out_path, class: "btn btn-outline-secondary", data: {method: :delete} do %>
+          <%= image_tag current_user.image_url, size: 25, class: "rounded", alt: current_user.name %>
+          Sign out
+        <% end %>
+      </div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
