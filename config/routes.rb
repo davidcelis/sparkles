@@ -12,7 +12,12 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: "leaderboard#index", constraints: AuthenticationConstraint
+  resource :leaderboard, only: [:show], controller: :leaderboard
+
+  get :sign_in, to: "sessions#new"
+  delete :sign_out, to: "sessions#destroy"
+
+  root to: "leaderboard#show", constraints: AuthenticationConstraint
   root to: "sessions#new", as: nil
 
   # A simple health check for dokku
