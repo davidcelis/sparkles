@@ -6,8 +6,13 @@ module Slack
 
     def create
       command = Commands::Slack.parse(params)
+      command.execute
 
-      render json: command.execute
+      if command.result
+        render json: command.result
+      else
+        head :ok
+      end
     rescue Commands::Slack::ParseError
       render plain: "Sorry, I didn't understand your command.\n\nUsage: /sparkle @user [reason]"
     end

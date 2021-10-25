@@ -1,12 +1,6 @@
 module Commands
   module Slack
-    class Sparkle
-      attr_reader :params
-
-      def initialize(params)
-        @params = params
-      end
-
+    class Sparkle < Base
       def execute
         unless Channel.exists?(id: params[:channel_id])
           text = "Oops, you need to `/invite` me to this channel before I can give out sparkles here!"
@@ -25,7 +19,7 @@ module Commands
 
         SparkleWorker.perform_async(options)
 
-        {response_type: :in_channel}
+        @result = {response_type: :in_channel}
       end
     end
   end
