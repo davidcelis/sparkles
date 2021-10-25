@@ -50,9 +50,7 @@ class SparkleWorker < ApplicationWorker
         "It's so nice that you want to recognize one of my fellow bots! They've all politely declined to join the fun of sparkle hoarding, but I'll pass along your thanks."
       end
 
-      http.post(options[:response_url], {text: text, response_type: :in_channel})
-
-      return
+      return team.api_client.chat_postMessage(channel: options[:channel_id], text: text)
     end
 
     # Find the sparkler, adding them to our database if we haven't yet
@@ -87,13 +85,9 @@ class SparkleWorker < ApplicationWorker
       text += "\n\nNothing wrong with a little pat on the back, eh <@#{sparkler.id}>?"
     end
 
-    http.post(options[:response_url], {text: text, response_type: :in_channel})
-  end
+    message = team.api_client.chat_postMessage(channel: options[:channel_id], text: text)
+    response = team.api_client.chat_getPermalink(channel: options[:channel_id], message_ts: message.ts)
 
-  def http
-    @http ||= Faraday.new do |f|
-      f.request :json # Encode request bodies as JSON
-      f.request :retry # Retry transient failures
-    end
+    sparkle.update!(permalink: response.permalink)
   end
 end

@@ -5,6 +5,7 @@ module SlackHelper
   BOT_SCOPES = [
     "channels:join",
     "channels:read",
+    "chat:write",
     "commands",
     "groups:read",
     "team:read",

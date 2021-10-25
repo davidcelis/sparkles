@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_031058) do
+ActiveRecord::Schema.define(version: 2021_10_25_160646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_031058) do
     t.string "reason"
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.string "permalink"
     t.index ["sparklee_id"], name: "index_sparkles_on_sparklee_id"
     t.index ["sparkler_id"], name: "index_sparkles_on_sparkler_id"
   end

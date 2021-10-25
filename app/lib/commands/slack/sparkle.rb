@@ -20,8 +20,7 @@ module Commands
           channel_id: params[:channel_id],
           sparkler_id: params[:user_id],
           sparklee_id: matches[:user_id],
-          reason: matches[:reason],
-          response_url: params[:response_url]
+          reason: matches[:reason]
         }
 
         SparkleWorker.perform_async(options)
