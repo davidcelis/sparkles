@@ -10,8 +10,6 @@ module Slack
         # Also join the channel so that if it is eventually made private,
         # we won't lose access.
         team.api_client.conversations_join(channel: slack_channel.id)
-
-        {ok: true}
       end
     end
   end

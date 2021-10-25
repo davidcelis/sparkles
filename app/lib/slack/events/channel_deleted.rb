@@ -3,8 +3,6 @@ module Slack
     class ChannelDeleted < Base
       def handle
         ::Channel.find(payload[:channel]).update!(deleted: true)
-
-        {ok: true}
       end
     end
   end

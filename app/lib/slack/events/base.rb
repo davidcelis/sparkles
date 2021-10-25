@@ -2,6 +2,7 @@ module Slack
   module Events
     class Base
       attr_reader :payload
+      attr_reader :result
 
       def initialize(params)
         @team_id = params[:team_id]

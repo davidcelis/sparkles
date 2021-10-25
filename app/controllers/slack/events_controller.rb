@@ -7,9 +7,15 @@ module Slack
     def create
       type = params.dig(:event, :type)
       klass = "slack/events/#{type}".classify.constantize
-      event = klass.new(params)
 
-      render json: event.handle
+      event = klass.new(params)
+      event.handle
+
+      if event.result
+        render json: event.result
+      else
+        head :ok
+      end
     rescue NameError
       head :bad_request
     end
