@@ -8,6 +8,7 @@ module Slack
 
     alias_method :private?, :private
     alias_method :archived?, :archived
+    alias_method :shared?, :shared
 
     def self.from_api_response(response)
       new(

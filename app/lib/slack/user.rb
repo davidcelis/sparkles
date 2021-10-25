@@ -24,5 +24,11 @@ module Slack
     def attributes
       Hash[PUBLIC_ATTRIBUTES.map { |attr| [attr, public_send(attr)] }]
     end
+
+    def sparklebot?
+      return false unless self.bot?
+
+      self.name == "Sparklebot"
+    end
   end
 end

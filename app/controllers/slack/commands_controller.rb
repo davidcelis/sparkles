@@ -5,10 +5,9 @@ module Slack
     before_action :verify_slack_request
 
     def create
-      text = params.delete(:text)
-      result = Commands::Slack.parse(text).execute(params)
+      command = Commands::Slack.parse(params)
 
-      render json: result
+      render json: command.execute
     rescue Commands::Slack::ParseError
       render plain: "Sorry, I didn't understand your command.\n\nUsage: /sparkle @user [reason]"
     end
@@ -17,8 +16,8 @@ module Slack
 
     def verify_slack_request
       Slack::Events::Request.new(request).verify!
-    rescue Slack::Events::Request::MissingSigningSecret
-      render json: {error: e.class.name}, status: :bad_request
+    rescue Slack::Events::Request::MissingSigningSecret, Slack::Events::Request::TimestampExpired, Slack::Events::Request::InvalidSignature
+      render plain: "Oops! I ran into an error verifying this request, but you should try again in a sec."
     end
   end
 end
