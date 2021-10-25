@@ -6,6 +6,8 @@ module Slack
         slack_channel = Slack::Channel.from_api_response(response.channel)
 
         ::Channel.upsert(slack_channel.attributes)
+
+        {ok: true}
       end
     end
   end
