@@ -1,10 +1,13 @@
 {
   "name": "sparkles",
-  "description": "Award your Slack teammates with sparkles for any reason or no reason at all!",
+  "description": "✨ Award your Slack teammates with sparkles for any reason or no reason at all!",
   "keywords": [
     "slack",
     "sparkles"
   ],
+  "website": "https://sparkles.lol",
+  "repository": "https://github.com/davidcelis/sparkles",
+  "logo": "https://sparkles.lol/sparkles.png",
   "scripts": {
     "dokku": {
       "postdeploy": "bundle exec rake db:migrate"

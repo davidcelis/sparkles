@@ -1,0 +1,58 @@
+_metadata:
+  major_version: 1
+  minor_version: 1
+display_information:
+  name: Sparkles
+  description: Award your teammates with sparkles for any reason or no reason at all!
+  background_color: "#000000"
+  long_description: Sparkles is a simple little Slack application for recognizing
+    your teammates and friends. It's inspired by an old Hubot script that was
+    very popular at GitHub and gave us a fun, silly way to share appreciation.
+    When installed to a Slack workspace, a /sparkle slash command is added and
+    you can get started immediately!
+features:
+  bot_user:
+    display_name: Sparklebot
+    always_online: true
+  slash_commands:
+    - command: /sparkle
+      url: https://example.com/slack/commands
+      description: See how to use Sparkles ✨
+      usage_hint: help
+      should_escape: true
+oauth_config:
+  redirect_urls:
+    - https://example.com/slack/oauth/callback
+    - https://example.com/slack/openid/callbck
+  scopes:
+    user:
+      - openid
+    bot:
+      - channels:join
+      - channels:read
+      - commands
+      - groups:read
+      - reactions:read
+      - team:read
+      - users:read
+      - chat:write
+settings:
+  event_subscriptions:
+    request_url: https://example.com/slack/events
+    bot_events:
+      - channel_archive
+      - channel_created
+      - channel_deleted
+      - channel_rename
+      - channel_unarchive
+      - group_archive
+      - group_deleted
+      - group_rename
+      - group_unarchive
+      - member_joined_channel
+      - team_join
+      - team_rename
+      - user_change
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
