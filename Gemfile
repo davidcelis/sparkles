@@ -43,6 +43,11 @@ gem "sidekiq-scheduler", "~> 3.1"
 # Paginate through sparkles and the leaderboard with Kaminari
 gem "kaminari", "~> 1.2"
 
+# Capture errors with Sentry
+gem "sentry-ruby", "~> 4.7"
+gem "sentry-rails", "~> 4.7"
+gem "sentry-sidekiq", "~> 4.7"
+
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
   gem "pry-byebug"
