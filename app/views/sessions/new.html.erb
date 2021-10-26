@@ -1,5 +1,5 @@
 <div class="pt-2 pe-3 text-end">
-  <%= add_to_slack_button(state: @state) %>
+  <%= sign_in_with_slack_button(state: @state, nonce: @nonce) %>
 </div>
 
 <div class="px-4 py-5 my-5 text-center">
@@ -14,10 +14,11 @@
       Sparkles is a little Slack app for recognizing your teammates and friends.
       After installing Sparkles to your Slack workspace, you can use the <code>/sparkle</code> command
       to have &#10024; all kinds of fun! &#10024; Sign in to view your team's leaderboard and see who
-      has sparkled who. If your team hasn't installed Sparkles yet, you can subimt an installation
-      request to your admins using the button above!
+      has sparkled who. If your team hasn't installed Sparkles yet, you can submit an installation
+      request to your admins using the button below! If your team is already using Sparkles, just sign
+      in using the link at the top of the page.
     </p>
 
-    <%= sign_in_with_slack_button(state: @state, nonce: @nonce) %>
+    <%= add_to_slack_button(state: @state) %>
   </div>
 </div>
