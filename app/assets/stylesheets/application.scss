@@ -14,11 +14,28 @@
  *= require_self
  */
 
-@import "bootstrap";
+$light-yellow: #ffffdd;
+$dark-yellow: #ffda21;
+$blue: #4b8aba;
 
-a.username {
-  color: #1164a3;
+body {
+  font-family: SFRounded, ui-rounded, SF Pro Rounded, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  letter-spacing: .35px;
+  background: rgba(249,245,233,1);
+  background: linear-gradient(180deg, $light-yellow 0%, white 100%);
+}
+
+a {
+  color: $blue;
   text-decoration: none;
+
+  &:hover {
+    color: darken($blue, 10%);
+  }
+}
+
+.progress-bar {
+  background-color: $dark-yellow;
 }
 
 p.reason {
@@ -26,7 +43,12 @@ p.reason {
 }
 
 .btn-xs, .btn-group-xs > .btn {
+  letter-spacing: 0px;
   padding: 0.25rem 0.5rem;
   font-size: 0.5rem;
   border-radius: 0.2rem;
+}
+
+.sign-out-button {
+  background-color: white;
 }

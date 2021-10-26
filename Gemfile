@@ -21,10 +21,6 @@ gem "webpacker", "~> 5.0"
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "turbolinks", "~> 5"
 
-# Make things a bit prettier by default
-gem "bootstrap", "~> 5.0.1"
-gem "jquery-rails", "~> 4.4"
-
 # Use Active Model has_secure_password
 gem "bcrypt", "~> 3.1.7"
 

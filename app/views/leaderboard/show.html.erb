@@ -14,7 +14,7 @@
             <%= "@#{user.username.presence || user.name}" %>
           <% end %>
           <div class="progress flex-grow-1 ms-2 me-2">
-            <div class="progress-bar bg-warning" style="width: <%= (user.sparkles_count.to_f / @high_score.to_f) * 100 %>%;"></div>
+            <div class="progress-bar" style="width: <%= (user.sparkles_count.to_f / @high_score.to_f) * 100 %>%;"></div>
           </div>
           <span class="ms-auto"><%= user.sparkles_count.to_i %> &#10024;</span>
         </li>
