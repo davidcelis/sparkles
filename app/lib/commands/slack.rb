@@ -2,8 +2,8 @@ module Commands
   module Slack
     ParseError = Class.new(StandardError)
 
-    SPARKLE_USER = /\A<@(?<user_id>\w+)(?:\|\w+)?>(\s+(?<reason>.+))?\z/
-    LEADERBOARD = /\Astats(\s+<@(?<user_id>\w+)(?:\|\w+)?>)?\z/
+    SPARKLE_USER = /\A<@(?<slack_user_id>\w+)(?:\|\w+)?>(\s+(?<reason>.+))?\z/
+    LEADERBOARD = /\Astats(\s+<@(?<slack_user_id>\w+)(?:\|\w+)?>)?\z/
     HELP = /\Ahelp\z/
 
     def self.parse(params)

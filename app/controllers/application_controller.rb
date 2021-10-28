@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   def current_user
-    @current_user ||= User.find_by(id: cookies.encrypted[:user_id], team_id: cookies.encrypted[:team_id])
+    @current_user ||= User.find_by(
+      slack_team_id: cookies.encrypted[:slack_team_id],
+      slack_id: cookies.encrypted[:slack_user_id]
+    )
   end
   helper_method :current_user
 

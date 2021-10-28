@@ -2,7 +2,7 @@ module Slack
   class User
     include ActiveModel::Model
 
-    PUBLIC_ATTRIBUTES = %i[id team_id name username image_url deactivated]
+    PUBLIC_ATTRIBUTES = %i[slack_team_id slack_id name username image_url deactivated]
     PRIVATE_ATTRIBUTES = %i[bot].freeze
     attr_accessor *(PUBLIC_ATTRIBUTES + PRIVATE_ATTRIBUTES)
 
@@ -11,8 +11,8 @@ module Slack
 
     def self.from_api_response(response)
       new(
-        id: response[:id],
-        team_id: response[:team_id],
+        slack_team_id: response[:team_id],
+        slack_id: response[:id],
         name: response[:profile][:real_name],
         username: response[:profile][:display_name],
         image_url: response[:profile][:image_512],

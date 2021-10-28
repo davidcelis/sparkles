@@ -13,7 +13,7 @@ module Slack
 
         return unless slack_channel.private?
 
-        ::Channel.upsert(slack_channel.attributes)
+        ::Channel.upsert(slack_channel.attributes, unique_by: [:slack_team_id, :slack_id])
       end
     end
   end

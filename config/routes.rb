@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   resource :leaderboard, only: [:show], controller: :leaderboard
-  get "/leaderboard/:team_id/:user_id", to: "leaderboard#details", as: :leaderboard_details
+  get "/leaderboard/:slack_team_id/:slack_user_id", to: "leaderboard#details", as: :leaderboard_details
 
   get :sign_in, to: "sessions#new"
   delete :sign_out, to: "sessions#destroy"

@@ -21,12 +21,10 @@ module Slack
         redirect_to root_path and return
       end
 
-      user = ::User.find_or_initialize_by(id: jwt["https://slack.com/user_id"], team_id: jwt["https://slack.com/team_id"])
-      user.slack_token = response.access_token
-      user.save!
+      user = ::User.find_or_create_by!(slack_team_id: jwt["https://slack.com/team_id"], slack_id: jwt["https://slack.com/user_id"])
 
-      cookies.encrypted.permanent[:team_id] = user.team_id
-      cookies.encrypted.permanent[:user_id] = user.id
+      cookies.encrypted.permanent[:slack_team_id] = user.slack_team_id
+      cookies.encrypted.permanent[:slack_user_id] = user.slack_id
 
       redirect_to root_path
     end

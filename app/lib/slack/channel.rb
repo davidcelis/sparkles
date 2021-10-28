@@ -2,7 +2,7 @@ module Slack
   class Channel
     include ActiveModel::Model
 
-    PUBLIC_ATTRIBUTES = %i[id team_id name private archived].freeze
+    PUBLIC_ATTRIBUTES = %i[slack_team_id slack_id name private archived].freeze
     PRIVATE_ATTRIBUTES = %i[shared].freeze
     attr_accessor *(PUBLIC_ATTRIBUTES + PRIVATE_ATTRIBUTES)
 
@@ -12,8 +12,8 @@ module Slack
 
     def self.from_api_response(response)
       new(
-        id: response[:id],
-        team_id: Array(response[:shared_team_ids]).first,
+        slack_team_id: Array(response[:shared_team_ids]).first,
+        slack_id: response[:id],
         name: response[:name],
         private: response[:is_private],
         shared: response[:is_shared],

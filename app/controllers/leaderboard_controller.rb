@@ -7,9 +7,9 @@ class LeaderboardController < ApplicationController
   end
 
   def details
-    raise ActiveRecord::RecordNotFound unless current_team.id == params[:team_id]
+    raise ActiveRecord::RecordNotFound unless current_team.slack_id == params[:slack_team_id]
 
-    @user = current_team.users.find(params[:user_id])
+    @user = current_team.users.find_by!(slack_id: params[:slack_user_id])
     @sparkles = @user.sparkles.includes(:sparkler, :channel).order(created_at: :desc).page(params[:page]).per(25)
   end
 end

@@ -12,7 +12,7 @@ class SyncSlackTeamWorker < ApplicationWorker
       users += users_response.members.map { |m| Slack::User.from_api_response(m) }
     end
     users = users.reject(&:bot?).map(&:attributes)
-    User.upsert_all(users, unique_by: [:id, :team_id])
+    User.upsert_all(users, unique_by: [:slack_team_id, :slack_id])
 
     # Sync channels. If this is the first sync, we'll ignore archived channels
     # because people can't get sparkled in them anyway. If they're unarchived
@@ -26,11 +26,11 @@ class SyncSlackTeamWorker < ApplicationWorker
       max_retries: 20
     ) do |conversations_response|
       channels += conversations_response.channels.map do |channel|
-        Slack::Channel.from_api_response(channel).tap { |c| c.team_id = team.id }
+        Slack::Channel.from_api_response(channel).tap { |c| c.slack_team_id = team.slack_id }
       end
     end
     channels = channels.reject(&:shared?).map(&:attributes)
-    Channel.upsert_all(channels, unique_by: [:id, :team_id])
+    Channel.upsert_all(channels, unique_by: [:slack_team_id, :slack_id])
 
     # If this is the first sync when the app is installed, we'll join all public
     # channels. Being present in channels means we won't lose track of where
@@ -40,7 +40,7 @@ class SyncSlackTeamWorker < ApplicationWorker
     return unless first_sync
 
     channels.reject { |c| c[:private] }. each do |channel|
-      team.api_client.conversations_join(channel: channel[:id])
+      team.api_client.conversations_join(channel: channel[:slack_id])
     end
   end
 end

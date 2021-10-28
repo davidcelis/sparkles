@@ -2,7 +2,7 @@ module Commands
   module Slack
     class Sparkle < Base
       def execute
-        unless Channel.exists?(id: params[:channel_id])
+        unless Channel.exists?(slack_team_id: params[:team_id], slack_id: params[:channel_id])
           text = "Oops, you need to `/invite` me to this channel before I can give out sparkles here!"
 
           return {response_type: :ephemeral, text: text}
@@ -10,10 +10,10 @@ module Commands
 
         matches = params[:text].match(Commands::Slack::SPARKLE_USER)
         options = {
-          team_id: params[:team_id],
-          channel_id: params[:channel_id],
-          sparkler_id: params[:user_id],
-          sparklee_id: matches[:user_id],
+          slack_team_id: params[:team_id],
+          slack_channel_id: params[:channel_id],
+          slack_sparkler_id: params[:user_id],
+          slack_sparklee_id: matches[:slack_user_id],
           reason: matches[:reason]
         }
 

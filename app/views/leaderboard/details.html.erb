@@ -12,10 +12,10 @@
         <li class="p-2 list-group-item list-group-item-action">
           <div class="d-flex w-100 align-items-center justify-content-between">
             <h5 class="mb-1">
-              <%= image_tag(sparkle.sparklee.image_url, size: 36, class: "rounded me-1", alt: sparkle.sparklee.name) %>
+              <%= image_tag(sparkle.sparkler.image_url, size: 36, class: "rounded me-1", alt: sparkle.sparkler.name) %>
               Sparkled by
-              <%= link_to leaderboard_details_path(current_team.id, sparkle.sparklee.id), class: "username" do %>
-                <%= "@#{sparkle.sparklee.username.presence || sparkle.sparklee.name}" %>
+              <%= link_to leaderboard_details_path(current_team.slack_id, sparkle.sparkler.slack_id), class: "username" do %>
+                <%= "@#{sparkle.sparkler.username.presence || sparkle.sparkler.name}" %>
               <% end %>
               <small class="text-muted">
                 <% if sparkle.channel.private? %>

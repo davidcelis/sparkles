@@ -4,8 +4,8 @@ module Commands
       def execute
         matches = params[:text].match(Commands::Slack::LEADERBOARD)
         options = {
-          team_id: params[:team_id],
-          user_id: matches[:user_id],
+          slack_team_id: params[:team_id],
+          slack_user_id: matches[:slack_user_id],
           response_url: params[:response_url]
         }
 

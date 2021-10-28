@@ -1,16 +1,12 @@
 class LeaderboardWorker < ApplicationWorker
   include ActionView::Helpers::DateHelper
-  # {
-  #   team_id: "T1234567890",
-  #   user_id: "U1234567890", # or nil
-  #   response_url: "https://slack.com/"
-  # }
+
   def perform(options)
     options = options.with_indifferent_access
-    team = Team.find(options[:team_id])
+    team = Team.find_by!(slack_id: options[:slack_team_id])
 
-    blocks = if options[:user_id]
-      user_stats_for(team: team, user_id: options[:user_id])
+    blocks = if options[:slack_user_id]
+      user_stats_for(team: team, slack_user_id: options[:slack_user_id])
     else
       team_leaderboard_for(team: team)
     end
@@ -45,7 +41,7 @@ class LeaderboardWorker < ApplicationWorker
           },
           {
             type: :mrkdwn,
-            text: "*<@#{user.id}>* has #{user.sparkles_count} sparkles :sparkles:"
+            text: "*<@#{user.slack_id}>* has #{user.sparkles_count} sparkles :sparkles:"
           }
         ]
       }
@@ -70,15 +66,15 @@ class LeaderboardWorker < ApplicationWorker
     blocks
   end
 
-  def user_stats_for(team:, user_id:)
-    response = team.api_client.users_info(user: user_id)
+  def user_stats_for(team:, slack_user_id:)
+    response = team.api_client.users_info(user: slack_user_id)
     slack_user = Slack::User.from_api_response(response.user)
 
     if slack_user.bot?
       text = if slack_user.sparklebot?
         "I have far too many sparkles to count, so I've stopped keeping track!"
       else
-        "<@#{user_id}> and all the other bots have politely declined to join the fun of sparkle hoarding."
+        "<@#{slack_user_id}> and all the other bots have politely declined to join the fun of sparkle hoarding."
       end
 
       text += " Try this command again with one of your human teammates!"
@@ -87,8 +83,8 @@ class LeaderboardWorker < ApplicationWorker
     end
 
     # Fetch the user from our database, updating their info if it's behind
-    user = team.users.find_or_initialize_by(id: user_id)
-    user.update_attributes!(slack_user.attributes) if user.new_record?
+    user = team.users.find_or_initialize_by(slack_id: slack_user_id)
+    user.update!(slack_user.attributes) if user.new_record?
     sparkles = user.sparkles.includes(:sparkler, :channel).order(created_at: :desc).limit(10)
 
     blocks = [
@@ -107,7 +103,7 @@ class LeaderboardWorker < ApplicationWorker
       channel_text = if sparkle.channel.private?
         "a secret place :lock:"
       else
-        "<##{sparkle.channel_id}>"
+        "<##{sparkle.channel.slack_id}>"
       end
 
       time_text = "#{time_ago_in_words(sparkle.created_at)} ago"
@@ -116,7 +112,7 @@ class LeaderboardWorker < ApplicationWorker
       end
       reason_text = " (#{sparkle.reason})" if sparkle.reason.present?
 
-      text = "Sparkled by <@#{sparkle.sparkler_id}> #{time_text} in #{channel_text}#{reason_text}"
+      text = "Sparkled by <@#{sparkle.sparkler.slack_id}> #{time_text} in #{channel_text}#{reason_text}"
 
       blocks << {
         type: :context,
@@ -145,7 +141,7 @@ class LeaderboardWorker < ApplicationWorker
         },
         {
           type: :mrkdwn,
-          text: "Visit <https://sparkles.lol/leaderboard/#{team.id}/#{user.id}|sparkles.lol> to see the rest!"
+          text: "Visit <https://sparkles.lol/leaderboard/#{team.slack_id}/#{user.slack_id}|sparkles.lol> to see the rest!"
         }
       ]
     }

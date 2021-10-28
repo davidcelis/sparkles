@@ -10,61 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_27_184541) do
+ActiveRecord::Schema.define(version: 2021_10_21_235804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "channels", id: :string, force: :cascade do |t|
-    t.string "team_id", null: false
+  create_table "channels", force: :cascade do |t|
+    t.string "slack_team_id", null: false
+    t.string "slack_id", null: false
     t.string "name", null: false
     t.boolean "private", default: false, null: false
     t.boolean "archived", default: false, null: false
     t.boolean "deleted", default: false, null: false
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
-    t.index ["id", "team_id"], name: "index_channels_on_id_and_team_id", unique: true
-    t.index ["team_id"], name: "index_channels_on_team_id"
+    t.index ["slack_team_id", "slack_id"], name: "index_channels_on_slack_team_id_and_slack_id", unique: true
   end
 
   create_table "sparkles", force: :cascade do |t|
-    t.string "sparklee_id", null: false
-    t.string "sparkler_id", null: false
-    t.string "channel_id", null: false
+    t.string "slack_team_id", null: false
+    t.string "slack_sparklee_id", null: false
+    t.string "slack_sparkler_id", null: false
+    t.string "slack_channel_id", null: false
     t.string "reason"
-    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
-    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
     t.string "permalink"
-    t.index ["sparklee_id"], name: "index_sparkles_on_sparklee_id"
-    t.index ["sparkler_id"], name: "index_sparkles_on_sparkler_id"
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.index ["slack_team_id", "slack_sparklee_id"], name: "index_sparkles_on_slack_team_id_and_slack_sparklee_id"
+    t.index ["slack_team_id", "slack_sparkler_id"], name: "index_sparkles_on_slack_team_id_and_slack_sparkler_id"
   end
 
-  create_table "teams", id: :string, force: :cascade do |t|
+  create_table "teams", force: :cascade do |t|
+    t.string "slack_id", null: false
+    t.string "name", null: false
     t.string "slack_token", null: false
+    t.string "sparklebot_id", null: false
+    t.string "icon_url"
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
-    t.string "name"
-    t.string "icon_url"
-    t.string "sparklebot_id"
+    t.index ["slack_id"], name: "index_teams_on_slack_id", unique: true
   end
 
-  create_table "users", id: :string, force: :cascade do |t|
-    t.string "team_id", null: false
-    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
-    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
-    t.string "slack_token"
-    t.string "name"
+  create_table "users", force: :cascade do |t|
+    t.string "slack_team_id", null: false
+    t.string "slack_id", null: false
+    t.string "name", null: false
     t.string "username"
     t.string "image_url"
     t.boolean "deactivated", default: false, null: false
     t.integer "sparkles_count", default: 0, null: false
-    t.index ["id", "team_id"], name: "index_users_on_id_and_team_id", unique: true
-    t.index ["team_id"], name: "index_users_on_team_id"
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.index ["slack_team_id", "slack_id"], name: "index_users_on_slack_team_id_and_slack_id", unique: true
   end
 
-  add_foreign_key "channels", "teams"
-  add_foreign_key "sparkles", "channels"
-  add_foreign_key "sparkles", "users", column: "sparklee_id"
-  add_foreign_key "sparkles", "users", column: "sparkler_id"
-  add_foreign_key "users", "teams"
 end

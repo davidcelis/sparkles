@@ -13,18 +13,22 @@ module Slack
         redirect_uri: slack_oauth_callback_url,
       )
 
-      team = ::Team.find_or_initialize_by(id: response.team.id)
-      user = ::User.find_or_initialize_by(id: response.authed_user.id, team_id: team.id)
+      team = ::Team.find_or_initialize_by(slack_id: response.team.id)
+      team.slack_token = response.access_token
+      team.sparklebot_id = response.bot_user_id
 
-      ActiveRecord::Base.transaction do
-        team.update!(slack_token: response.access_token, sparklebot_id: response.bot_user_id)
-        user.update!(slack_token: response.authed_user.access_token)
-      end
+      slack_team = Slack::Team.from_api_response(team.api_client.team_info.team)
+      team.assign_attributes(slack_team.attributes)
+      team.save!
+
+      user_info_response = team.api_client.users_info(user: response.authed_user.id)
+      slack_user = ::Slack::User.from_api_response(user_info_response.user)
+      ::User.upsert(slack_user.attributes, unique_by: [:slack_team_id, :slack_id])
 
       SyncSlackTeamWorker.perform_async(team.id, true)
 
-      cookies.encrypted.permanent[:team_id] = user.team_id
-      cookies.encrypted.permanent[:user_id] = user.id
+      cookies.encrypted.permanent[:slack_team_id] = team.slack_id
+      cookies.encrypted.permanent[:slack_user_id] = slack_user.slack_id
 
       redirect_to root_path
     end
