@@ -7,35 +7,41 @@
   </h1>
 
   <div class="col-lg-6 mx-auto">
-    <ul class="list-group">
-      <% @sparkles.each do |sparkle| %>
-        <li class="p-2 list-group-item list-group-item-action">
-          <div class="d-flex w-100 align-items-center justify-content-between">
-            <h5 class="mb-1">
-              <%= image_tag(sparkle.sparkler.image_url, size: 36, class: "rounded me-1", alt: sparkle.sparkler.name) %>
-              Sparkled by
-              <%= link_to leaderboard_details_path(current_team.slack_id, sparkle.sparkler.slack_id), class: "username" do %>
-                <%= "@#{sparkle.sparkler.username.presence || sparkle.sparkler.name}" %>
-              <% end %>
-              <small class="text-muted">
-                <% if sparkle.channel.private? %>
-                  somewhere secret &#128274;
-                <% else %>
-                  in #<%= sparkle.channel.name %>
+    <% if @sparkles.empty? %>
+      <p class="lead mb-4">
+        Oops, looks like nobody has given <%= @user.name %> any sparkles. Maybe you can be the first?
+      </p>
+    <% else %>
+      <ul class="list-group">
+        <% @sparkles.each do |sparkle| %>
+          <li class="p-2 list-group-item list-group-item-action">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+              <h5 class="mb-1">
+                <%= image_tag(sparkle.sparkler.image_url, size: 36, class: "rounded me-1", alt: sparkle.sparkler.name) %>
+                Sparkled by
+                <%= link_to leaderboard_details_path(current_team.slack_id, sparkle.sparkler.slack_id), class: "username" do %>
+                  <%= "@#{sparkle.sparkler.username.presence || sparkle.sparkler.name}" %>
                 <% end %>
-              </small>
-            </h5>
-            <%= link_to_unless (sparkle.channel.private? || sparkle.permalink.blank?), "#{time_ago_in_words(sparkle.created_at)} ago", sparkle.permalink, {class: "btn btn-xs btn-secondary fw-bold", target: :_blank, rel: "nofollow"} do %>
-              <button class="btn btn-xs btn-secondary fw-bold" disabled><%= time_ago_in_words(sparkle.created_at) %> ago</span>
-            <% end %>
-          </div>
+                <small class="text-muted">
+                  <% if sparkle.channel.private? %>
+                    somewhere secret &#128274;
+                  <% else %>
+                    in #<%= sparkle.channel.name %>
+                  <% end %>
+                </small>
+              </h5>
+              <%= link_to_unless (sparkle.channel.private? || sparkle.permalink.blank?), "#{time_ago_in_words(sparkle.created_at)} ago", sparkle.permalink, {class: "btn btn-xs btn-secondary fw-bold", target: :_blank, rel: "nofollow"} do %>
+                <button class="btn btn-xs btn-secondary fw-bold" disabled><%= time_ago_in_words(sparkle.created_at) %> ago</span>
+              <% end %>
+            </div>
 
-          <% if sparkle.reason.present? %>
-            <p class="reason mb-0"><%= sparkle.reason %></p>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
+            <% if sparkle.reason.present? %>
+              <p class="reason mb-0"><%= sparkle.reason %></p>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
 
   <%= paginate @sparkles %>
