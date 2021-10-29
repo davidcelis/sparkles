@@ -91,10 +91,9 @@ class SparkleWorker < ApplicationWorker
     # Get the ten most recent messages in the channel so we can find the
     # original message, grab its permalink, and assign it to the Sparkle
     response = team.api_client.conversations_history(channel: sparkle.slack_channel_id, limit: 10)
-    message = response.messages.find { |m| m.user == sparkle.slack_sparkler_id && m.include?(sparkle.reason) }
+    message = response.messages.find { |m| m.user == sparkle.slack_sparkler_id && m.text.include?(sparkle.reason) }
 
-    response = team.api_client.chat_getPermalink(channel: options[:slack_channel_id], message_ts: message.ts)
-
+    response = team.api_client.chat_getPermalink(channel: sparkle.slack_channel_id, message_ts: message.ts)
     sparkle.update!(permalink: response.permalink)
   end
 end
