@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/davidcelis/slack_markdown.git
-  revision: 853818d14670fc261c387c0a5835ca7911a52490
+  revision: 4f591847160e55744ba04ae9d7c6ca7979d7846f
   specs:
     slack_markdown (0.3.0)
       escape_utils
