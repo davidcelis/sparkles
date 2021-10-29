@@ -26,9 +26,7 @@ module Slack
     end
 
     def sparklebot?
-      return false unless self.bot?
-
-      self.name == "Sparklebot"
+      self.bot? && self.name == "Sparklebot"
     end
   end
 end
