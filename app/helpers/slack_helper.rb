@@ -7,6 +7,7 @@ module SlackHelper
     "channels:read",
     "chat:write",
     "commands",
+    "emoji:read",
     "groups:read",
     "team:read",
     "users:read"
