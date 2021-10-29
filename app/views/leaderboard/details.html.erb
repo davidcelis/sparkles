@@ -36,7 +36,7 @@
             </div>
 
             <% if sparkle.reason.present? %>
-              <p class="reason mb-0"><%= sparkle.reason %></p>
+              <p class="reason mb-0"><%= @processor.call(sparkle.reason)[:output].to_s.html_safe %></p>
             <% end %>
           </li>
         <% end %>
