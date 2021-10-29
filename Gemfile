@@ -48,6 +48,12 @@ group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
   gem "pry-byebug"
   gem "pry-rails"
+
+  gem "rspec-rails", "~> 5.0"
+  gem "factory_bot_rails", "~> 6.2"
+  gem "faker", "~> 2.19"
+  gem "vcr", "~> 6.0"
+  gem "webmock", "~> 3.14"
 end
 
 group :development do

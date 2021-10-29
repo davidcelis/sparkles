@@ -18,7 +18,6 @@
 !/tmp/pids/
 !/tmp/pids/.keep
 
-
 /public/assets
 .byebug_history
 
@@ -31,3 +30,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore persisted failures from RSpec
+spec/examples.txt

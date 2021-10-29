@@ -38,12 +38,6 @@ Like with the full leaderboard, you can also see anybody's ten most recent spark
 
 `/sparkle stats @davidcelis`
 
-### Ideas/Roadmap
-
-- [ ] Ability to give someone a sparkle by adding :sparkles: as a reacji on their message
-- [ ] A live-updating leaderboard using [Hotwire](https://hotwired.dev)
-- [ ] Tests :sweat_smile:
-
 ## Self-hosting
 
 Both the slack application and [sparkles.lol](https://sparkles.lol) are free to use! Except for the reasons given for sparkles, we never store messages from Slack itself. However, maybe you work for an organization with strict rules about what data is allowed into or out of Slack. If that's the case, Sparkles is easy to host yourself! In fact, with only a little bit of configuration, you can host Sparkles on Heroku or with Dokku.
