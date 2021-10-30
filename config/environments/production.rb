@@ -18,7 +18,7 @@ Rails.application.configure do
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
+  config.require_master_key = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
@@ -38,7 +38,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
@@ -48,8 +48,14 @@ Rails.application.configure do
   config.log_tags = [ :request_id ]
 
   # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, {
+    url: ENV["REDIS_CACHE_URL"],
 
+    error_handler: ->(method:, returning:, exception:) {
+      # Report errors to Sentry as warnings
+      Sentry.capture_exception(exception, level: "warning", tags: {method: method, returning: returning})
+    }
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
