@@ -1,4 +1,3 @@
-# TODO: Call `bust!` on an emoji_changed event
 class EmojiCache
   def initialize(team)
     @team = team
