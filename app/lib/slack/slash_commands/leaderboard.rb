@@ -1,8 +1,8 @@
-module Commands
-  module Slack
+module Slack
+  module SlashCommands
     class Leaderboard < Base
       def execute
-        matches = params[:text].match(Commands::Slack::LEADERBOARD)
+        matches = params[:text].match(Slack::SlashCommands::LEADERBOARD)
         options = {
           slack_team_id: params[:team_id],
           slack_user_id: matches[:slack_user_id],

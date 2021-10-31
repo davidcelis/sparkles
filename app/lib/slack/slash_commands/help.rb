@@ -1,5 +1,5 @@
-module Commands
-  module Slack
+module Slack
+  module SlashCommands
     class Help < Base
       TEXT = <<~USAGE
         *Give someone a sparkle:* `/sparkle @user [reason]` (the reason is optional, so if you want to give someone a :sparkle: for no reason at all, go for it! :smile:)

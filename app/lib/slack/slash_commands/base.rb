@@ -1,5 +1,5 @@
-module Commands
-  module Slack
+module Slack
+  module SlashCommands
     class Base
       attr_reader :params
       attr_reader :result

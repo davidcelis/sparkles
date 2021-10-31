@@ -5,7 +5,7 @@ module Slack
     before_action :verify_slack_request
 
     def create
-      command = Commands::Slack.parse(params)
+      command = Slack::SlashCommands.parse(params)
       command.execute
 
       if command.result
@@ -13,8 +13,8 @@ module Slack
       else
         head :ok
       end
-    rescue Commands::Slack::ParseError
-      render plain: "Sorry, I didn't understand your command. Usage:\n\n#{Commands::Slack::Help::TEXT}"
+    rescue Slack::SlashCommands::ParseError
+      render plain: "Sorry, I didn't understand your command. Usage:\n\n#{Slack::SlashCommands::Help::TEXT}"
     end
 
     private
