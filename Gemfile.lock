@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/davidcelis/slack_markdown.git
+  revision: 78292914843f3afc926b5391f86604599dc9065c
+  branch: fix-override-text
+  specs:
+    slack_markdown (0.4.0)
+      escape_utils
+      gemoji
+      html-pipeline (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -269,10 +279,6 @@ GEM
       gli
       hashie
       websocket-driver
-    slack_markdown (0.4.0)
-      escape_utils
-      gemoji
-      html-pipeline (~> 2.0)
     spring (3.0.0)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -336,7 +342,7 @@ DEPENDENCIES
   sidekiq (~> 6.2)
   sidekiq-scheduler (~> 3.1)
   slack-ruby-client
-  slack_markdown
+  slack_markdown!
   spring
   turbolinks (~> 5)
   vcr (~> 6.0)

@@ -2,7 +2,7 @@ module Commands
   module Slack
     ParseError = Class.new(StandardError)
 
-    SPARKLE_USER = /\A<@(?<slack_user_id>\w+)(?:\|\w+)?>(\s+(?<reason>.+))?\z/
+    SPARKLE_USER = /\A#{SlackHelper::USER_PATTERN}(\s+(?<reason>.+))?\z/
     LEADERBOARD = /\Astats(\s+<@(?<slack_user_id>\w+)(?:\|\w+)?>)?\z/
     HELP = /\Ahelp\z/
 

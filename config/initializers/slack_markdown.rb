@@ -1,5 +1,5 @@
 # Extensions/overrides for the slack_markdown gem
-require 'slack_markdown'
+require "slack_markdown"
 
 module SlackMarkdown
   module Filters
