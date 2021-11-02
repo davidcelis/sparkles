@@ -14,9 +14,12 @@ module SlackHelper
     "chat:write",
     "commands",
     "emoji:read",
+    "groups:history",
     "groups:read",
+    "reactions:read",
     "team:read",
-    "users:read"
+    "users.profile:read",
+    "users:read",
   ].freeze
 
   USER_SCOPES = ["openid"].freeze
