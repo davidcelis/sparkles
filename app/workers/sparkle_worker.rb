@@ -38,8 +38,8 @@ class SparkleWorker < ApplicationWorker
 
   def perform(options)
     options = options.with_indifferent_access
-    team = Team.find_by(slack_id: options[:slack_team_id])
-    channel = team.channels.find_by(slack_id: options[:slack_channel_id])
+    team = Team.find_by!(slack_id: options[:slack_team_id])
+    channel = team.channels.find_by!(slack_id: options[:slack_channel_id])
 
     response = team.api_client.users_info(user: options[:slack_sparklee_id])
     slack_sparklee = Slack::User.from_api_response(response.user)
@@ -50,6 +50,12 @@ class SparkleWorker < ApplicationWorker
       else
         "It's so nice that you want to recognize one of my fellow bots! They've all politely declined to join the fun of sparkle hoarding, but I'll pass along your thanks."
       end
+
+      return team.api_client.chat_postMessage(channel: channel.slack_id, text: text)
+    end
+
+    if slack_sparklee.restricted?
+      text = "Oops, I don't work with guest users or in shared channels right now :sweat: Sorry about that!"
 
       return team.api_client.chat_postMessage(channel: channel.slack_id, text: text)
     end
@@ -73,7 +79,7 @@ class SparkleWorker < ApplicationWorker
     message = history.messages.find { |m| m.user == sparkler.slack_id && m.text.include?(options[:reason]) }
     message = team.api_client.chat_getPermalink(channel: channel.slack_id, message_ts: message.ts)
 
-    # Create the channel
+    # Create the sparkle
     sparklee.sparkles.create!(team: team, sparkler: sparkler, channel: channel, reason: options[:reason], permalink: message.permalink)
 
     text = if sparklee.sparkles.count == 1

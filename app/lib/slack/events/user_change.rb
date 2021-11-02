@@ -6,8 +6,9 @@ module Slack
         # team based on an enterprise grid, so we should just ignore them.
         return if payload.dig(:user, :team_id) != slack_team_id
 
+        # Don't persist users who are bots or restricted guests.
         slack_user = ::Slack::User.from_api_response(payload[:user])
-        return if slack_user.bot?
+        return if slack_user.bot? || slack_user.restricted?
 
         ::User.upsert(slack_user.attributes, unique_by: [:slack_team_id, :slack_id])
       end

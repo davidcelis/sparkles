@@ -6,12 +6,12 @@ class SyncSlackTeamWorker < ApplicationWorker
     slack_team = Slack::Team.from_api_response(team.api_client.team_info.team)
     team.update!(slack_team.attributes)
 
-    # Sync users
+    # Sync users who aren't bots and aren't restricted
     users = []
     team.api_client.users_list(sleep_interval: 5, max_retries: 20) do |users_response|
       users += users_response.members.map { |m| Slack::User.from_api_response(m) }
     end
-    users = users.reject(&:bot?).map(&:attributes)
+    users = users.select(&:human_teammate?).map(&:attributes)
     User.upsert_all(users, unique_by: [:slack_team_id, :slack_id])
 
     # Sync channels. If this is the first sync, we'll ignore archived channels
