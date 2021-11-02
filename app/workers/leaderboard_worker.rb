@@ -17,7 +17,7 @@ class LeaderboardWorker < ApplicationWorker
   private
 
   def team_leaderboard_for(team:)
-    users = User.order(sparkles_count: :desc).limit(10)
+    users = team.users.order(sparkles_count: :desc).limit(10)
 
     blocks = [
       {
