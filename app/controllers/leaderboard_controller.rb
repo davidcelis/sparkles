@@ -2,7 +2,7 @@ class LeaderboardController < ApplicationController
   before_action :require_authentication
 
   def show
-    @high_score = current_team.users.maximum(:sparkles_count)
+    @high_score = current_team.users.where(deactivated: false).maximum(:sparkles_count)
     @users = current_team.users.order(sparkles_count: :desc).page(params[:page]).per(100)
   end
 
