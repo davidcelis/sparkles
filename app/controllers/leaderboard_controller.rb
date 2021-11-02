@@ -3,7 +3,7 @@ class LeaderboardController < ApplicationController
 
   def show
     @high_score = current_team.users.where(deactivated: false).maximum(:sparkles_count)
-    @users = current_team.users.order(sparkles_count: :desc).page(params[:page]).per(100)
+    @users = current_team.users.where(deactivated: false).order(sparkles_count: :desc).page(params[:page]).per(100)
   end
 
   def details
