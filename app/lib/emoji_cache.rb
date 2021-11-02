@@ -10,6 +10,9 @@ class EmojiCache
       return @team.api_client.emoji_list.emoji.slice(*names).compact
     end
 
+    # Sometimes we just don't need to render any custom emoji :shrug:
+    return {} if names.empty?
+
     # Otherwise, pull the requested emoji out of Redis and return them,
     # assuming we got results for all of the emoji
     emoji = redis.mapped_hmget(key, *names)
