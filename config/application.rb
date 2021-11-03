@@ -34,5 +34,8 @@ module Sparkles
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Instrument HTTP calls with Faraday (Slack API) and Redis commands
+    config.skylight.probes += %w(faraday redis)
   end
 end

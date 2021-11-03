@@ -273,6 +273,8 @@ GEM
       sidekiq (>= 3)
       thwait
       tilt (>= 1.4.0)
+    skylight (5.1.1)
+      activesupport (>= 5.2.0)
     slack-ruby-client (0.17.0)
       faraday (>= 1.0)
       faraday_middleware
@@ -336,11 +338,12 @@ DEPENDENCIES
   rails (~> 6.1.4, >= 6.1.4.1)
   rspec-rails (~> 5.0)
   sass-rails (>= 6)
-  sentry-rails (~> 4.7)
-  sentry-ruby (~> 4.7)
-  sentry-sidekiq (~> 4.7)
+  sentry-rails
+  sentry-ruby
+  sentry-sidekiq
   sidekiq (~> 6.2)
   sidekiq-scheduler (~> 3.1)
+  skylight
   slack-ruby-client
   slack_markdown!
   spring
