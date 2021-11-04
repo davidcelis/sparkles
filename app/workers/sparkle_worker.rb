@@ -93,6 +93,13 @@ class SparkleWorker < ApplicationWorker
       text += "\n\nNothing wrong with a little pat on the back, eh <@#{sparkler.slack_id}>?"
     end
 
+    if team.feed_channel_id
+      team.api_client.chat_postMessage(
+        channel: team.feed_channel_id,
+        text: "<@#{options[:slack_sparkler_id]}> gave <@#{options[:slack_sparklee_id]}> a sparkle for <#{message.permalink}|#{options[:reason]}>"
+      )
+    end
+
     team.api_client.chat_postMessage(channel: channel.slack_id, text: text)
   end
 end
