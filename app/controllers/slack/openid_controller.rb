@@ -21,6 +21,13 @@ module Slack
         redirect_to root_path and return
       end
 
+      # Make sure the team has installed Sparkles
+      unless ::Team.where(slack_id: jwt["https://slack.com/team_id"]).exists?
+        flash.alert = "Oops, your team hasn't installed Sparkles yet! Use the \"Add to Slack\" button to get it installed before trying to sign in."
+
+        redirect_to root_path and return
+      end
+
       user = ::User.find_or_create_by!(slack_team_id: jwt["https://slack.com/team_id"], slack_id: jwt["https://slack.com/user_id"])
 
       cookies.encrypted.permanent[:slack_team_id] = user.slack_team_id
