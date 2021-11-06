@@ -95,6 +95,13 @@ class SparkleWorker < ApplicationWorker
         text += "\n\nNothing wrong with a little pat on the back, eh <@#{sparkler.slack_id}>?"
       end
 
+      if team.slack_feed_channel_id && !channel.private?
+        team.api_client.chat_postMessage(
+          channel: team.slack_feed_channel_id,
+          text: "<@#{options[:slack_sparkler_id]}> gave <@#{options[:slack_sparklee_id]}> a <#{message.permalink}|sparkle>"
+        )
+      end
+
       team.api_client.chat_postMessage(channel: channel.slack_id, text: text)
     rescue
       # Just re-raise the error if this job has already been retried.

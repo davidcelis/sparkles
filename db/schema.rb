@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_21_235804) do
+ActiveRecord::Schema.define(version: 2021_11_04_030606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_235804) do
     t.string "icon_url"
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.string "slack_feed_channel_id"
     t.index ["slack_id"], name: "index_teams_on_slack_id", unique: true
   end
 
