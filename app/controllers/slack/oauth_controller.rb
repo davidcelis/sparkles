@@ -5,6 +5,10 @@ module Slack
     before_action :verify_state
 
     def callback
+      # Don't let someone just try to hit the OAuth callback manually and have
+      # it send me a dang Sentry email.
+      redirect_to root_path and return if params[:code].blank?
+
       slack_client = Slack::Web::Client.new
       response = slack_client.oauth_v2_access(
         code: params[:code],
