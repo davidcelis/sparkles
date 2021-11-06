@@ -11,13 +11,29 @@
 
   <div class="col-lg-6 mx-auto">
     <p class="lead mb-4">
-      Sparkles is a little Slack app for recognizing your teammates and friends.
-      After installing Sparkles to your Slack workspace, you can use the <code>/sparkle</code> command
-      to have &#10024; all kinds of fun! &#10024; Sign in to view your team's leaderboard and see who
-      has sparkled who. If your team hasn't installed Sparkles yet, you can submit an installation
-      request to your admins using the button below! If your team is already using Sparkles, just sign
-      in using the link at the top of the page.
+      Sparkles is a shiny, little Slack app for recognizing your teammates and friends!
+      Add it to your Slack workspace and use the <code>/sparkle</code> command
+      to say &#10024; thank you &#10024; with a sparkle, keep track of your own sparkle
+      points, and even check your team's leaderboard. Add it to Slack to get started or,
+      if your team is already using Sparkles, sign in with the link above!
     </p>
+
+    <p class="lead mb-4"><%= add_to_slack_button(state: @state) %></p>
+
+    <figure class="figure onboarding-figure">
+      <%= image_tag "give-a-sparkle.png", alt: "Use the /sparkle command to give a sparkle", class: "figure-img img-fluid rounded border" %>
+      <figcaption class="figure-caption fw-bolder">Say "thank you" with a sparkle!</figcaption>
+    </figure>
+
+    <figure class="figure onboarding-figure">
+      <%= image_tag "see-your-sparkles.png", alt: "A list of one user's sparkles", class: "figure-img img-fluid rounded border" %>
+      <figcaption class="figure-caption fw-bolder">Keep track of every sparkle you've been given!</figcaption>
+    </figure>
+
+    <figure class="figure onboarding-figure">
+      <%= image_tag "check-the-leaderboard.png", alt: "An example sparkle leaderboard", class: "figure-img img-fluid rounded border" %>
+      <figcaption class="figure-caption fw-bolder">Check your team's leaderboard!</figcaption>
+    </figure>
 
     <%= add_to_slack_button(state: @state) %>
   </div>

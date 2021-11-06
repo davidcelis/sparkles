@@ -96,9 +96,9 @@ You can deploy Sparkles however you like; the only two required processes are th
 * `REDIS_URL`: A connection string for a Redis database. This is defined automatically for you if you're using something like Heroku or Dokku and add the Redis plugin/resource.
 * `RAILS_MASTER_KEY`: The contents of the `master.key` file you generated earlier.
 
-## Development
+## Development [![View performance data on Skylight](https://badges.skylight.io/status/wrjfnvXfyKpB.svg)](https://oss.skylight.io/app/applications/wrjfnvXfyKpB)
 
-Encountered a bug? Have an idea for something that Sparkles doesn't do yet? Feel free to [file an issue](https://github.com/davidcelis/sparkles/issues/new). Or, if you're a developer yourself, [fork the repository](https://github.com/davidcelis/sparkles/fork), make some changes, and open a Pull Request!
+Encountered a bug? Have an idea for something that Sparkles doesn't do yet? Want to help [make the app faster](https://oss.skylight.io/app/applications/wrjfnvXfyKpB)? Feel free to [file an issue](https://github.com/davidcelis/sparkles/issues/new). Or, if you're a developer yourself, [fork the repository](https://github.com/davidcelis/sparkles/fork), make some changes, and open a Pull Request!
 
 ## Acknowledgements
 

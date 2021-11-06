@@ -57,3 +57,13 @@ svg.octicon-mark-github {
   fill: #6c757d;
   margin-bottom: .15rem;
 }
+
+figure.onboarding-figure {
+  transition: transform 1s;
+
+  &:hover {
+    &:nth-child(odd) { transform: rotate(1deg); }
+
+    &:nth-child(even) { transform: rotate(-1deg); }
+  }
+}
