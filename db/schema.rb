@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2021_11_04_030606) do
     t.string "icon_url"
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
-    t.string "feed_channel_id"
+    t.string "slack_feed_channel_id"
     t.index ["slack_id"], name: "index_teams_on_slack_id", unique: true
   end
 

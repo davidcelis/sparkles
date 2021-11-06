@@ -98,7 +98,7 @@ class SparkleWorker < ApplicationWorker
       if team.slack_feed_channel_id && !channel.private?
         team.api_client.chat_postMessage(
           channel: team.slack_feed_channel_id,
-          text: "<@#{options[:slack_sparkler_id]}> gave <@#{options[:slack_sparklee_id]}> a sparkle for <#{message.permalink}|#{options[:reason]}>"
+          text: "<@#{options[:slack_sparkler_id]}> gave <@#{options[:slack_sparklee_id]}> a <#{message.permalink}|sparkle>"
         )
       end
 
