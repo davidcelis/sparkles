@@ -4,7 +4,10 @@ module Slack
 
     SPARKLE_USER = /\A#{SlackHelper::USER_PATTERN}(\s+(?<reason>.+))?\z/
     LEADERBOARD = /\Astats(\s+#{SlackHelper::USER_PATTERN})?\z/
+    FEED_CHANNEL = /\Aset feed(\s+#{SlackHelper::CHANNEL_PATTERN})?\z/
     HELP = /\Ahelp\z/
+
+    
 
     def self.parse(params)
       case params[:text]
@@ -12,6 +15,8 @@ module Slack
         Slack::SlashCommands::Sparkle.new(params)
       when LEADERBOARD
         Slack::SlashCommands::Leaderboard.new(params)
+      when FEED_CHANNEL
+        Slack::SlashCommands::FeedChannel.new(params)
       when HELP
         Slack::SlashCommands::Help.new(params)
       else
