@@ -6,8 +6,6 @@ module Slack
     LEADERBOARD = /\Astats(\s+#{SlackHelper::USER_PATTERN})?\z/
     HELP = /\Ahelp\z/
 
-    
-
     def self.parse(params)
       case params[:text]
       when SPARKLE_USER
