@@ -1,12 +1,12 @@
-class LeaderboardController < ApplicationController
+class StatsController < ApplicationController
   before_action :require_authentication
 
-  def show
+  def team
     @high_score = current_team.users.where(deactivated: false).maximum(:sparkles_count)
     @users = current_team.users.where(deactivated: false).order(sparkles_count: :desc).page(params[:page]).per(100)
   end
 
-  def details
+  def user
     raise ActiveRecord::RecordNotFound unless current_team.slack_id == params[:slack_team_id]
 
     @user = current_team.users.find_by!(slack_id: params[:slack_user_id])
@@ -48,7 +48,7 @@ class LeaderboardController < ApplicationController
 
     SlackMarkdown::Processor.new(
       on_slack_user_id: ->(id) {
-        return { url: leaderboard_details_path(current_team.slack_id, id), text: user_ids_to_names[id] }
+        return { url: user_stats_path(current_team.slack_id, id), text: user_ids_to_names[id] }
       },
       on_slack_channel_id: ->(id) {
         return { url: "#" , text: channel_ids_to_names[id] }

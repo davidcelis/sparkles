@@ -9,7 +9,7 @@
     <ul class="list-group">
       <% @users.each do |user| %>
         <li class="d-flex p-2 align-items-center list-group-item list-group-item-action">
-          <%= link_to leaderboard_details_path(current_team.slack_id, user.slack_id), class: "username" do %>
+          <%= link_to user_stats_path(current_team.slack_id, user.slack_id), class: "username" do %>
             <%= image_tag(user.image_url, size: 36, class: "rounded me-1", alt: user.name) %>
             <%= "@#{user.username.presence || user.name}" %>
           <% end %>

@@ -1,4 +1,4 @@
-class LeaderboardWorker < ApplicationWorker
+class StatsWorker < ApplicationWorker
   include ActionView::Helpers::DateHelper
 
   def perform(options)
@@ -141,7 +141,7 @@ class LeaderboardWorker < ApplicationWorker
         },
         {
           type: :mrkdwn,
-          text: "Visit <https://sparkles.lol/leaderboard/#{team.slack_id}/#{user.slack_id}|sparkles.lol> to see the rest!"
+          text: "Visit <https://sparkles.lol/stats/#{team.slack_id}/#{user.slack_id}|sparkles.lol> to see the rest!"
         }
       ]
     }

@@ -12,14 +12,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :leaderboard, only: [:show], controller: :leaderboard
-  get "/leaderboard/:slack_team_id/:slack_user_id", to: "leaderboard#details", as: :leaderboard_details
+  get "/stats/:slack_team_id", to: "stats#team", as: :team_stats
+  get "/stats/:slack_team_id/:slack_user_id", to: "stats#user", as: :user_stats
 
-  get :sign_in, to: "sessions#new"
+  root to: "pages#welcome"
   delete :sign_out, to: "sessions#destroy"
-
-  root to: "leaderboard#show", constraints: AuthenticationConstraint
-  root to: "sessions#new", as: nil
 
   # A simple health check for dokku
   get :health, to: proc { [200, {}, ['ok']] }

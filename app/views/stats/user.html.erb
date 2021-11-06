@@ -19,7 +19,7 @@
               <h5 class="mb-1">
                 <%= image_tag(sparkle.sparkler.image_url, size: 36, class: "rounded me-1", alt: sparkle.sparkler.name) %>
                 Sparkled by
-                <%= link_to leaderboard_details_path(current_team.slack_id, sparkle.sparkler.slack_id), class: "username" do %>
+                <%= link_to user_stats_path(current_team.slack_id, sparkle.sparkler.slack_id), class: "username" do %>
                   <%= "@#{sparkle.sparkler.username.presence || sparkle.sparkler.name}" %>
                 <% end %>
                 <small class="text-muted">
@@ -45,4 +45,8 @@
   </div>
 
   <%= paginate @sparkles %>
+
+  <p class="lead m-4">
+    Head back to <%= link_to "your team's leaderboard", team_stats_path(current_team.slack_id) %>!
+  </p>
 </div>

@@ -3,15 +3,15 @@ module Slack
     ParseError = Class.new(StandardError)
 
     SPARKLE_USER = /\A#{SlackHelper::USER_PATTERN}(\s+(?<reason>.+))?\z/
-    LEADERBOARD = /\Astats(\s+#{SlackHelper::USER_PATTERN})?\z/
+    STATS = /\Astats(\s+#{SlackHelper::USER_PATTERN})?\z/
     HELP = /\Ahelp\z/
 
     def self.parse(params)
       case params[:text]
       when SPARKLE_USER
         Slack::SlashCommands::Sparkle.new(params)
-      when LEADERBOARD
-        Slack::SlashCommands::Leaderboard.new(params)
+      when STATS
+        Slack::SlashCommands::Stats.new(params)
       when HELP
         Slack::SlashCommands::Help.new(params)
       else
