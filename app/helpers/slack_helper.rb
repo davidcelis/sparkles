@@ -2,8 +2,8 @@ module SlackHelper
   SLACK_OAUTH_URL = "https://slack.com/oauth/v2/authorize".freeze
   SLACK_OPENID_URL = "https://slack.com/openid/connect/authorize".freeze
 
-  USER_PATTERN = /<@(?<slack_user_id>\w+)(?:\|[^>]+)?>/
-  CHANNEL_PATTERN = /<#(?<slack_channel_id>\w+)(?:\|[^>]+)?>/
+  USER_PATTERN = /<@(?<slack_user_id>\w+)(?:\|[^>]*)?>/
+  CHANNEL_PATTERN = /<#(?<slack_channel_id>\w+)(?:\|[^>]*)?>/
   EMOJI_PATTERN = /:([^:\s]*(?:::[^:\s]*)*):/.freeze
   STOCK_EMOJI_NAMES = Emoji.all.flat_map(&:aliases).freeze
 
