@@ -23,19 +23,20 @@
                   <%= "@#{sparkle.sparkler.username.presence || sparkle.sparkler.name}" %>
                 <% end %>
                 <small class="text-muted">
-                  <% if sparkle.channel.private? %>
-                    somewhere secret &#128274;
+                  in
+                  <% if sparkle.visible_to?(current_user) %>
+                    #<%= sparkle.channel.name %>
                   <% else %>
-                    in #<%= sparkle.channel.name %>
+                    &lt;&#128274; a secret place&gt;
                   <% end %>
                 </small>
               </h5>
-              <%= link_to_unless (sparkle.channel.private? || sparkle.permalink.blank?), "#{time_ago_in_words(sparkle.created_at)} ago", sparkle.permalink, {class: "btn btn-xs btn-secondary fw-bold", target: :_blank, rel: "nofollow"} do %>
+              <%= link_to_if (sparkle.visible_to?(current_user) && sparkle.permalink.present?), "#{time_ago_in_words(sparkle.created_at)} ago", sparkle.permalink, {class: "btn btn-xs btn-secondary fw-bold", target: :_blank, rel: "nofollow"} do %>
                 <button class="btn btn-xs btn-secondary fw-bold" disabled><%= time_ago_in_words(sparkle.created_at) %> ago</span>
               <% end %>
             </div>
 
-            <% if sparkle.reason.present? %>
+            <% if sparkle.reason.present? && sparkle.visible_to?(current_user) %>
               <p class="reason mb-0"><%= @processor.call(sparkle.reason)[:output].to_s.html_safe %></p>
             <% end %>
           </li>

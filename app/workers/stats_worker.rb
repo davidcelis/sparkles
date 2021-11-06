@@ -4,9 +4,10 @@ class StatsWorker < ApplicationWorker
   def perform(options)
     options = options.with_indifferent_access
     team = Team.find_by!(slack_id: options[:slack_team_id])
+    current_user = team.users.find_by!(slack_id: options[:slack_caller_id])
 
     blocks = if options[:slack_user_id]
-      user_stats_for(team: team, slack_user_id: options[:slack_user_id])
+      user_stats_for(team: team, current_user: current_user, slack_user_id: options[:slack_user_id])
     else
       team_leaderboard_for(team: team)
     end
@@ -66,7 +67,7 @@ class StatsWorker < ApplicationWorker
     blocks
   end
 
-  def user_stats_for(team:, slack_user_id:)
+  def user_stats_for(team:, current_user:, slack_user_id:)
     response = team.api_client.users_info(user: slack_user_id)
     slack_user = Slack::User.from_api_response(response.user)
 
@@ -100,21 +101,20 @@ class StatsWorker < ApplicationWorker
     ]
 
     sparkles.each do |sparkle|
-      channel_text = if sparkle.channel.private?
-        "a secret place :lock:"
-      else
+      channel_text = if sparkle.visible_to?(current_user)
         "<##{sparkle.channel.slack_id}>"
+      else
+        "<:lock: a secret place>"
       end
 
       time_text = "#{time_ago_in_words(sparkle.created_at)} ago"
       if !sparkle.channel.private? && sparkle.permalink.present?
         time_text = "<#{sparkle.permalink}|#{time_text}>"
       end
-      reason_text = " (#{sparkle.reason})" if sparkle.reason.present?
 
-      text = "Sparkled by <@#{sparkle.sparkler.slack_id}> #{time_text} in #{channel_text}#{reason_text}"
+      text = "Sparkled by <@#{sparkle.sparkler.slack_id}> #{time_text} in #{channel_text}"
 
-      blocks << {
+      block = {
         type: :context,
         elements: [
           {
@@ -128,6 +128,12 @@ class StatsWorker < ApplicationWorker
           }
         ]
       }
+
+      if sparkle.reason.present? && sparkle.visible_to?(current_user)
+        block[:elements] << {type: :mrkdwn, text: sparkle.reason}
+      end
+
+      blocks << block
     end
 
     blocks << {type: :divider}
