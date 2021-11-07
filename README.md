@@ -38,6 +38,19 @@ Like with the full leaderboard, you can also see anybody's ten most recent spark
 
 `/sparkle stats @davidcelis`
 
+### Adjust your experience with Sparkles
+
+There are a couple options you can configure when using Sparkles to personalize your experience:
+
+`/sparkle settings`
+
+Running this command will open a modal with the settings you can adjust. As a regular teammate, you can opt out of leaderboard functionality, hiding point totals when using `/sparkle` or the web front-end. If you think the leaderboard takes away from the fun of Sparkles and would rather have a more zen experience, turn it off!
+
+If you're an admin for your Slack team, you have a couple additional options:
+
+* You can disable the leaderboard team-wide. You can still view stats on an individual basis and see the usual detail per-sparkle, but the leaderboard will become a simple team directory and point totals won't be shown anywhere.
+* You can select a public channel to act as your Sparkle feed! Any sparkles given in public channels will be shared to this channel so that nobody needs to feel out of the Sparkle loop.
+
 ## Self-hosting
 
 Both the slack application and [sparkles.lol](https://sparkles.lol) are free to use! Except for the reasons given for sparkles, we never store messages from Slack itself. However, maybe you work for an organization with strict rules about what data is allowed into or out of Slack. If that's the case, Sparkles is easy to host yourself! In fact, with only a little bit of configuration, you can host Sparkles on Heroku or with Dokku.
