@@ -2,8 +2,16 @@ class StatsController < ApplicationController
   before_action :require_authentication
 
   def team
-    @high_score = current_team.users.where(deactivated: false).maximum(:sparkles_count)
-    @users = current_team.users.where(deactivated: false).order(sparkles_count: :desc).page(params[:page]).per(100)
+    if leaderboard_enabled?
+      @high_score = current_team.users.where(deactivated: false).maximum(:sparkles_count)
+      @users = current_team.users.where(deactivated: false).order(sparkles_count: :desc).page(params[:page]).per(100)
+
+      render :leaderboard
+    else
+      @users = current_team.users.where(deactivated: false).order(:name).page(params[:page]).per(100)
+
+      render :team
+    end
   end
 
   def user

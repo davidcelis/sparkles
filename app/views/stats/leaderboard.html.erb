@@ -1,0 +1,26 @@
+<div class="px-4 my-5 text-center">
+  <h1 class="display-5 fw-bold">
+    <%= image_tag "sparkles.png", width: 75, height: 75, alt: "sparkles", class: "mx-auto mb-3" %>
+    <%= current_team.name %> Leaderboard
+    <%= image_tag "sparkles.png", width: 75, height: 75, alt: "sparkles", class: "mx-auto mb-3" %>
+  </h1>
+
+  <div class="col-lg-6 mx-auto">
+    <ul class="list-group">
+      <% @users.each do |user| %>
+        <li class="d-flex p-2 align-items-center list-group-item list-group-item-action">
+          <%= link_to user_stats_path(current_team.slack_id, user.slack_id), class: "username" do %>
+            <%= image_tag(user.image_url, size: 36, class: "rounded me-1", alt: user.name) %>
+            <%= "@#{user.username.presence || user.name}" %>
+          <% end %>
+          <div class="progress flex-grow-1 ms-2 me-2">
+            <div class="progress-bar" style="width: <%= (user.sparkles_count.to_f / @high_score.to_f) * 100 %>%;"></div>
+          </div>
+          <span class="ms-auto"><%= user.sparkles_count.to_i %> &#10024;</span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <%= paginate @users %>
+</div>

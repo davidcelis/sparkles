@@ -6,13 +6,15 @@ class StatsWorker < ApplicationWorker
     team = Team.find_by!(slack_id: options[:slack_team_id])
     current_user = team.users.find_by!(slack_id: options[:slack_caller_id])
 
-    blocks = if options[:slack_user_id]
+    result = if options[:slack_user_id]
       user_stats_for(team: team, current_user: current_user, slack_user_id: options[:slack_user_id])
-    else
+    elsif team.leaderboard_enabled? && current_user.leaderboard_enabled?
       team_leaderboard_for(team: team)
+    else
+      user_stats_for(team: team, current_user: current_user, slack_user_id: current_user.slack_id)
     end
 
-    http.post(options[:response_url], {blocks: blocks, response_type: :ephemeral})
+    http.post(options[:response_url], result)
   end
 
   private
@@ -64,36 +66,40 @@ class StatsWorker < ApplicationWorker
       ]
     }
 
-    blocks
+    {blocks: blocks, response_type: :ephemeral}
   end
 
   def user_stats_for(team:, current_user:, slack_user_id:)
-    response = team.api_client.users_info(user: slack_user_id)
-    slack_user = Slack::User.from_api_response(response.user)
+    user = current_user if current_user.slack_id == slack_user_id
+    unless user
+      response = team.api_client.users_info(user: slack_user_id)
+      slack_user = Slack::User.from_api_response(response.user)
 
-    if slack_user.bot?
-      text = if slack_user.sparklebot?
-        "I have far too many sparkles to count, so I've stopped keeping track!"
-      else
-        "<@#{slack_user_id}> and all the other bots have politely declined to join the fun of sparkle hoarding."
+      if slack_user.bot?
+        text = if slack_user.sparklebot?
+          "I have far too many sparkles to count, so I've stopped keeping track!"
+        else
+          "<@#{slack_user_id}> and all the other bots have politely declined to join the fun of sparkle hoarding."
+        end
+
+        text += " Try this command again with one of your human teammates!"
+
+        return {text: text, response_type: :ephemeral}
       end
 
-      text += " Try this command again with one of your human teammates!"
-
-      return text
+      # Fetch the user from our database, updating their info if it's behind
+      user = team.users.find_or_initialize_by(slack_id: slack_user_id)
+      user.update!(slack_user.attributes) if user.new_record?
     end
 
-    # Fetch the user from our database, updating their info if it's behind
-    user = team.users.find_or_initialize_by(slack_id: slack_user_id)
-    user.update!(slack_user.attributes) if user.new_record?
     sparkles = user.sparkles.includes(:sparkler, :channel).order(created_at: :desc).limit(10)
-
+    header = current_user == user ? "Here are your most recent sparkles!" : "Here are #{user.name}'s most recent sparkles!"
     blocks = [
       {
         type: :header,
         text: {
           type: :plain_text,
-          text: ":sparkles: Here are the most recent sparkles given to #{user.name}! :sparkles:",
+          text: ":sparkles: #{header} :sparkles:",
           emoji: true
         }
       },
@@ -152,7 +158,7 @@ class StatsWorker < ApplicationWorker
       ]
     }
 
-    blocks
+    {blocks: blocks, response_type: :ephemeral}
   end
 
   def http

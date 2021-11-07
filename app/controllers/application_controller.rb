@@ -19,6 +19,13 @@ class ApplicationController < ActionController::Base
   end
   helper_method :authenticated?
 
+  def leaderboard_enabled?
+    return unless authenticated?
+
+    current_team.leaderboard_enabled? && current_user.leaderboard_enabled?
+  end
+  helper_method :leaderboard_enabled?
+
   def require_authentication
     redirect_to sign_in_path unless authenticated?
   end

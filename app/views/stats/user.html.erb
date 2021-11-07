@@ -48,6 +48,6 @@
   <%= paginate @sparkles %>
 
   <p class="lead m-4">
-    Head back to <%= link_to "your team's leaderboard", team_stats_path(current_team.slack_id) %>!
+    Head back to <%= link_to "your team's #{leaderboard_enabled? ? "leaderboard" : "directory"}", team_stats_path(current_team.slack_id) %>!
   </p>
 </div>

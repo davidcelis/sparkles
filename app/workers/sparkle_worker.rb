@@ -74,6 +74,9 @@ class SparkleWorker < ApplicationWorker
       sparklee = team.users.find_or_initialize_by(slack_id: options[:slack_sparklee_id])
       sparklee.update!(slack_sparklee.attributes) if sparklee.new_record?
 
+      # Determine whether or not we should be showing leaderboard text in our response
+      leaderboard_enabled = team.leaderboard_enabled? && sparklee.leaderboard_enabled?
+
       # Get the ten most recent messages in the channel so we can find the
       # original message, grab its permalink, and assign it to the Sparkle
       history = team.api_client.conversations_history(channel: channel.slack_id, limit: 10)
@@ -84,10 +87,12 @@ class SparkleWorker < ApplicationWorker
       # Create the sparkle
       sparklee.sparkles.create!(team: team, sparkler: sparkler, channel: channel, reason: options[:reason], permalink: message.permalink)
 
-      text = if sparklee.sparkles.count == 1
+      prefix = WORDS_OF_ENCOURAGEMENT.sample + ("!" * rand(1..3))
+      text = if !leaderboard_enabled
+        "#{prefix} <@#{sparklee.slack_id}> just got a :sparkle:!"
+      elsif sparklee.sparkles.count == 1
         ":tada: <@#{sparklee.slack_id}> just got their first :sparkle:! :tada:"
       else
-        prefix = WORDS_OF_ENCOURAGEMENT.sample + ("!" * rand(1..3))
         "#{prefix} <@#{sparklee.slack_id}> now has #{sparklee.sparkles.count} sparkles :sparkles:"
       end
 
