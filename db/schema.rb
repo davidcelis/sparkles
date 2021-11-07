@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_04_030606) do
+ActiveRecord::Schema.define(version: 2021_11_07_000811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2021_11_04_030606) do
     t.integer "sparkles_count", default: 0, null: false
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.boolean "team_admin", default: false, null: false
     t.index ["slack_team_id", "slack_id"], name: "index_users_on_slack_team_id_and_slack_id", unique: true
   end
 
