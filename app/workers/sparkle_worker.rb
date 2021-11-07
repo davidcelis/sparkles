@@ -100,7 +100,7 @@ class SparkleWorker < ApplicationWorker
       if team.slack_feed_channel_id && !channel.private?
         team.api_client.chat_postMessage(
           channel: team.slack_feed_channel_id,
-          text: ":sparkle: <@#{options[:slack_sparklee_id]}> just got a <#{message.permalink}|sparkle>!"
+          text: ":sparkle: Somebody just got a <#{message.permalink}|sparkle>!"
         )
       end
     rescue

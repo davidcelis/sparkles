@@ -66,41 +66,43 @@ module Slack
         view[:blocks] << leaderboard_block
 
         if user.team_admin?
-          view[:blocks] += [
-            {type: :divider},
-            {
-              type: :section,
-              text: {
+          view[:blocks] << {type: :divider}
+          view[:blocks] << {
+            type: :section,
+            text: {
+              type: :mrkdwn,
+              text: ":lock: *Admin settings*"
+            }
+          }
+          view[:blocks] << {
+            type: :context,
+            elements: [
+              {
                 type: :mrkdwn,
-                text: ":lock: *Admin settings*"
+                text: "These settings will adjust the experience for everybody on your team."
               }
+            ]
+          }
+
+          channel_block = {
+            type: :section,
+            text: {
+              type: :mrkdwn,
+              text: ":sparkle: *Sparkle Feed Channel*\nShare all sparkles as they're given!"
             },
-            {
-              type: :context,
-              elements: [
-                {
-                  type: :mrkdwn,
-                  text: "These settings will adjust the experience for everybody on your team."
-                }
-              ]
-            },
-            {
-              type: :section,
-              text: {
-                type: :mrkdwn,
-                text: ":sparkle: *Sparkle Feed Channel*\nShare all sparkles as they're given!"
-              },
-              accessory: {
-                type: :channels_select,
-                action_id: :team_sparkle_feed_channel,
-                placeholder: {
-                  type: :plain_text,
-                  text: "Channel",
-                  emoji: true
-                }
+            accessory: {
+              type: :channels_select,
+              action_id: :team_sparkle_feed_channel,
+              placeholder: {
+                type: :plain_text,
+                text: "Channel",
+                emoji: true
               }
             }
-          ]
+          }
+
+          channel_block[:accessory][:initial_channel] = team.slack_feed_channel_id if team.slack_feed_channel_id
+          view[:blocks] << channel_block
 
           team_leaderboard_block = {
             type: :section,
