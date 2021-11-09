@@ -15,6 +15,9 @@ module Slack
         response = team.api_client.conversations_info(channel: payload[:channel])
         slack_channel = Slack::Channel.from_api_response(response.channel)
 
+        # Don't persist and join shared channels.
+        return if slack_channel.shared?
+
         ::Channel.upsert(slack_channel.attributes, unique_by: [:slack_team_id, :slack_id])
 
         # Also join the channel so that if it is eventually made private,
