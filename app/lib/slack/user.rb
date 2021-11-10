@@ -15,13 +15,13 @@ module Slack
       new(
         slack_team_id: response[:team_id],
         slack_id: response[:id],
-        name: response[:profile][:real_name],
-        username: response[:profile][:display_name],
-        image_url: response[:profile][:image_512],
+        name: response.dig(:profile, :real_name),
+        username: response.dig(:profile, :display_name),
+        image_url: response.dig(:profile, :image_512),
         deactivated: !!response[:deleted],
-        bot: (response[:is_bot] || response[:id] == "USLACKBOT"),
-        restricted: (response[:is_restricted] || response[:is_ultra_restricted] || response[:is_stranger]),
-        team_admin: (response[:is_admin] || response[:is_owner] || response[:is_primary_owner]),
+        bot: !!(response[:is_bot] || response[:id] == "USLACKBOT"),
+        restricted: !!(response[:is_restricted] || response[:is_ultra_restricted] || response[:is_stranger]),
+        team_admin: !!(response[:is_admin] || response[:is_owner] || response[:is_primary_owner])
       )
     end
 

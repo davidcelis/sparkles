@@ -10,7 +10,7 @@ module Slack
       new(
         slack_id: response[:id],
         name: response[:name],
-        icon_url: response[:icon][:image_original]
+        icon_url: response.dig(:icon, :image_original)
       )
     end
 
