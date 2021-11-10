@@ -3,9 +3,11 @@ module Slack
     class Sparkle < Base
       def execute
         unless ::Channel.exists?(slack_team_id: params[:team_id], slack_id: params[:channel_id])
-          text = "Oops, you need to `/invite` me to this channel before I can give out sparkles here!"
-
-          return {response_type: :ephemeral, text: text}
+          @result = {
+            response_type: :ephemeral,
+            text: "Oops, you need to `/invite` me to this channel before I can give out sparkles here!"
+          }
+          return
         end
 
         matches = params[:text].match(Slack::SlashCommands::SPARKLE_USER)
