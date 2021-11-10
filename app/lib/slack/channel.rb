@@ -17,8 +17,8 @@ module Slack
         name: response[:name],
         private: response[:is_private],
         shared: (response[:is_shared] || response[:is_ext_shared] || response[:is_org_shared] || response[:is_pending_ext_shared]),
-        archived: response[:is_archived],
-        read_only: response[:is_read_only]
+        archived: !!response[:is_archived],
+        read_only: !!response[:is_read_only]
       )
     end
 
