@@ -9,7 +9,7 @@ module Slack
         return unless payload[:user] == team.sparklebot_id
 
         response = team.api_client.conversations_info(channel: payload[:channel])
-        slack_channel = Slack::Channel.from_api_response(response.channel)
+        slack_channel = Slack::Channel.from_api_response(response.channel, slack_team_id: team.slack_id)
 
         return unless slack_channel.private?
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_07_001722) do
+ActiveRecord::Schema.define(version: 2021_11_09_233252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2021_11_07_001722) do
     t.boolean "deleted", default: false, null: false
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.boolean "shared", default: false, null: false
+    t.boolean "read_only", default: false, null: false
     t.index ["slack_team_id", "slack_id"], name: "index_channels_on_slack_team_id_and_slack_id", unique: true
   end
 

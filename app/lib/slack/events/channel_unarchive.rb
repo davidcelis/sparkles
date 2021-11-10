@@ -13,16 +13,12 @@ module Slack
         # channel was created and archived and never fetched it in the first
         # place. We need to get the full object from the API to store it.
         response = team.api_client.conversations_info(channel: payload[:channel])
-        slack_channel = Slack::Channel.from_api_response(response.channel)
-
-        # Don't persist and join shared channels.
-        return if slack_channel.shared?
-
-        ::Channel.upsert(slack_channel.attributes, unique_by: [:slack_team_id, :slack_id])
+        slack_channel = Slack::Channel.from_api_response(response.channel, slack_team_id: team.slack_id)
+        channel = ::Channel.create!(slack_channel.attributes)
 
         # Also join the channel so that if it is eventually made private,
         # we won't lose access.
-        team.api_client.conversations_join(channel: slack_channel.slack_id)
+        team.api_client.conversations_join(channel: channel.slack_id) unless channel.shared?
       end
     end
   end

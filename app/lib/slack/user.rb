@@ -20,8 +20,8 @@ module Slack
         image_url: response[:profile][:image_512],
         deactivated: !!response[:deleted],
         bot: (response[:is_bot] || response[:id] == "USLACKBOT"),
-        restricted: !!response[:is_restricted],
-        team_admin: !!response[:is_admin],
+        restricted: (response[:is_restricted] || response[:is_ultra_restricted] || response[:is_stranger]),
+        team_admin: (response[:is_admin] || response[:is_owner] || response[:is_primary_owner]),
       )
     end
 
