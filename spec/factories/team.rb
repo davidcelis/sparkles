@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :team do
-    slack_id { "T#{SecureRandom.base36(10).upcase}" }
+    slack_id { "T#{generate(:slack_id)}" }
     name { Faker::App.name }
     icon_url { Faker::Avatar.image }
-    sparklebot_id { "U#{SecureRandom.base36(10).upcase}" }
+    sparklebot_id { "U#{generate(:slack_id)}" }
 
     trait :sparkles do
       slack_id { "T02K1HUQ60Y" }
