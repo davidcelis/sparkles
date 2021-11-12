@@ -6,7 +6,7 @@ module Slack
         slack_channel = Slack::Channel.from_api_response(response.channel, slack_team_id: team.slack_id)
 
         ::Channel.upsert(slack_channel.attributes, unique_by: [:slack_team_id, :slack_id])
-        return if slack_channel.shared?
+        return unless slack_channel.sparklebot_should_join?
 
         # If it isn't shared, join the channel so that if it is eventually made
         # private, we won't lose access.

@@ -4,4 +4,7 @@ Sentry.init do |config|
 
   # Don't use Sentry for performance monitoring; stick to errors.
   config.traces_sample_rate = 0
+
+  # Capture request bodies; ours don't actually contain any PII.
+  config.send_default_pii = true
 end
