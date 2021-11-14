@@ -85,7 +85,20 @@ class SparkleWorker < ApplicationWorker
       message = team.api_client.chat_getPermalink(channel: channel.slack_id, message_ts: message.ts)
 
       # Create the sparkle
-      sparklee.sparkles.create!(team: team, sparkler: sparkler, channel: channel, reason: options[:reason], permalink: message.permalink)
+      sparklee.sparkles.create!(
+        slack_team_id: team.slack_id,
+        # Dual-write the sparklee IDs
+        slack_sparklee_id: sparklee.slack_id,
+        sparklee_id: sparklee.id,
+        # Dual-write the sparkler IDs
+        slack_sparkler_id: sparkler.slack_id,
+        sparkler_id: sparkler.id,
+        # Dual-write the channel IDs
+        slack_channel_id: channel.slack_id,
+        channel_id: channel.id,
+        reason: options[:reason],
+        permalink: message.permalink
+      )
 
       prefix = WORDS_OF_ENCOURAGEMENT.sample + ("!" * rand(1..3))
       text = if !leaderboard_enabled
