@@ -4,7 +4,7 @@ RSpec.describe Sparkle, type: :model do
   let(:sparkle) { build(:sparkle) }
 
   describe "#visible_to?" do
-    let(:user) { build(:user, team: sparkle.team) }
+    let(:user) { build(:user, slack_team_id: sparkle.sparklee.slack_team_id) }
     subject { sparkle.visible_to?(user) }
 
     it { is_expected.to be(true) }
@@ -12,6 +12,8 @@ RSpec.describe Sparkle, type: :model do
     context "when the channel is private" do
       let(:channel) { build(:channel, private: true) }
       let(:sparkle) { build(:sparkle, team: channel.team, channel: channel) }
+
+      it { is_expected.to be(false) }
 
       context "when the user is the sparkle's recipient" do
         let(:user) { sparkle.sparklee }
@@ -23,12 +25,6 @@ RSpec.describe Sparkle, type: :model do
         let(:user) { sparkle.sparkler }
 
         it { is_expected.to be(true) }
-      end
-
-      context "when the user is not related to the sparkle" do
-        let(:user) { build(:user, team: sparkle.team) }
-
-        it { is_expected.to be(false) }
       end
     end
 

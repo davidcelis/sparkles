@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_14_214506) do
+ActiveRecord::Schema.define(version: 2021_11_14_222457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,10 +30,6 @@ ActiveRecord::Schema.define(version: 2021_11_14_214506) do
   end
 
   create_table "sparkles", force: :cascade do |t|
-    t.string "slack_team_id", null: false
-    t.string "slack_sparklee_id", null: false
-    t.string "slack_sparkler_id", null: false
-    t.string "slack_channel_id", null: false
     t.string "reason"
     t.string "permalink"
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
@@ -42,8 +38,6 @@ ActiveRecord::Schema.define(version: 2021_11_14_214506) do
     t.bigint "sparkler_id"
     t.bigint "channel_id"
     t.index ["channel_id"], name: "index_sparkles_on_channel_id"
-    t.index ["slack_team_id", "slack_sparklee_id"], name: "index_sparkles_on_slack_team_id_and_slack_sparklee_id"
-    t.index ["slack_team_id", "slack_sparkler_id"], name: "index_sparkles_on_slack_team_id_and_slack_sparkler_id"
     t.index ["sparklee_id"], name: "index_sparkles_on_sparklee_id"
     t.index ["sparkler_id"], name: "index_sparkles_on_sparkler_id"
   end

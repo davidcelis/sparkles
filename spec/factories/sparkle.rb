@@ -1,11 +1,12 @@
 FactoryBot.define do
   factory :sparkle do
-    association :team
+    transient do
+      team { build(:team) }
+    end
 
-    sparklee { association :user, team: team }
-    sparkler { association :user, team: team }
-
-    association :channel
+    sparklee { association :user, slack_team_id: team.slack_id }
+    sparkler { association :user, slack_team_id: team.slack_id }
+    channel { association :channel, slack_team_id: team.slack_id }
 
     reason { "for #{Faker::Fantasy::Tolkien.poem}" }
   end

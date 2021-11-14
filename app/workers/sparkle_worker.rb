@@ -86,16 +86,8 @@ class SparkleWorker < ApplicationWorker
 
       # Create the sparkle
       sparklee.sparkles.create!(
-        slack_team_id: team.slack_id,
-        # Dual-write the sparklee IDs
-        slack_sparklee_id: sparklee.slack_id,
-        sparklee_id: sparklee.id,
-        # Dual-write the sparkler IDs
-        slack_sparkler_id: sparkler.slack_id,
-        sparkler_id: sparkler.id,
-        # Dual-write the channel IDs
-        slack_channel_id: channel.slack_id,
-        channel_id: channel.id,
+        sparkler: sparkler,
+        channel: channel,
         reason: options[:reason],
         permalink: message.permalink
       )
