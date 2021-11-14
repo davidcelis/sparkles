@@ -4,7 +4,7 @@ module SlackHelper
 
   USER_PATTERN = /<@(?<slack_user_id>\w+)(?:\|[^>]*)?>/
   CHANNEL_PATTERN = /<#(?<slack_channel_id>\w+)(?:\|[^>]*)?>/
-  EMOJI_PATTERN = /:([^:\s]*(?:::[^:\s]*)*):/.freeze
+  EMOJI_PATTERN = /:([^:\s]*(?:::[^:\s]*)*):/
   STOCK_EMOJI_NAMES = Emoji.all.flat_map(&:aliases).freeze
 
   BOT_SCOPES = [
@@ -19,7 +19,7 @@ module SlackHelper
     "reactions:read",
     "team:read",
     "users.profile:read",
-    "users:read",
+    "users:read"
   ].freeze
 
   USER_SCOPES = ["openid"].freeze

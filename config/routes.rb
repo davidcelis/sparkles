@@ -20,5 +20,5 @@ Rails.application.routes.draw do
   delete :sign_out, to: "sessions#destroy"
 
   # A simple health check for dokku
-  get :health, to: proc { [200, {}, ['ok']] }
+  get :health, to: proc { [200, {}, ["ok"]] }
 end

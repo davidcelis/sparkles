@@ -6,11 +6,11 @@ module Slack
 
     def callback
       slack_client = Slack::Web::Client.new
-      response = slack_client.post('openid.connect.token', {
+      response = slack_client.post("openid.connect.token", {
         code: params[:code],
         client_id: Rails.application.credentials.dig(:slack, :client_id),
         client_secret: Rails.application.credentials.dig(:slack, :client_secret),
-        redirect_uri: slack_openid_callback_url,
+        redirect_uri: slack_openid_callback_url
       })
 
       # Parse the JWT we received and validate its nonce

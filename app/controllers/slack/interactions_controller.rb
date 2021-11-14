@@ -14,7 +14,7 @@ module Slack
       user = team.users.find_by!(slack_id: payload.dig(:user, :id))
 
       # Pull the values from the final state of the view when it was submitted.
-      values = Hash[payload.dig(:view, :state, :values).map { |_, v| v.first }].with_indifferent_access
+      values = payload.dig(:view, :state, :values).map { |_, v| v.first }.to_h.with_indifferent_access
 
       # Adjust the user's personal leaderboard setting.
       user_leaderboard_enabled = values.dig(:user_leaderboard_enabled, :selected_options).present?

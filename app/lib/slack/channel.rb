@@ -4,7 +4,7 @@ module Slack
 
     PUBLIC_ATTRIBUTES = %i[slack_team_id slack_id name private archived shared read_only].freeze
     PRIVATE_ATTRIBUTES = [].freeze
-    attr_accessor *(PUBLIC_ATTRIBUTES + PRIVATE_ATTRIBUTES)
+    attr_accessor(*(PUBLIC_ATTRIBUTES + PRIVATE_ATTRIBUTES))
 
     alias_method :private?, :private
     alias_method :archived?, :archived
@@ -23,7 +23,7 @@ module Slack
     end
 
     def attributes
-      Hash[PUBLIC_ATTRIBUTES.map { |attr| [attr, public_send(attr)] }]
+      PUBLIC_ATTRIBUTES.map { |attr| [attr, public_send(attr)] }.to_h
     end
 
     def sparklebot_should_join?
