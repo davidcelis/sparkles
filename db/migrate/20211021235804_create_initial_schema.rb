@@ -31,9 +31,9 @@ class CreateInitialSchema < ActiveRecord::Migration[6.1]
       t.string :slack_id, null: false
       t.string :name, null: false
 
-      t.boolean :private,  null: false, default: false
+      t.boolean :private, null: false, default: false
       t.boolean :archived, null: false, default: false
-      t.boolean :deleted,  null: false, default: false
+      t.boolean :deleted, null: false, default: false
 
       t.timestamps null: false, default: -> { "now()" }
 

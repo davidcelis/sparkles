@@ -30,7 +30,7 @@ module Slack
                 text: ":sparkles: Hi, <@#{user.slack_id}>! Here are some ways you can personalize your experience with Sparkles:"
               }
             },
-            {type: :divider},
+            {type: :divider}
           ]
         }
 

@@ -25,7 +25,7 @@ RSpec.describe "Slack::OAuthController", type: :request do
         expect {
           get slack_oauth_callback_path, params: {code: code, state: state}
         }.to change { Team.count }.by(1)
-        .and change { SyncSlackTeamWorker.jobs.size }.by(1)
+          .and change { SyncSlackTeamWorker.jobs.size }.by(1)
 
         team = Team.last
         expect(team.slack_id).to eq("T02K1HUQ60Y")

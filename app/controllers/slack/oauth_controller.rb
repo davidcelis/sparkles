@@ -14,7 +14,7 @@ module Slack
         code: params[:code],
         client_id: Rails.application.credentials.dig(:slack, :client_id),
         client_secret: Rails.application.credentials.dig(:slack, :client_secret),
-        redirect_uri: slack_oauth_callback_url,
+        redirect_uri: slack_oauth_callback_url
       )
 
       team = ::Team.find_or_initialize_by(slack_id: response.team.id)

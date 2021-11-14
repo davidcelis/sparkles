@@ -4,7 +4,7 @@ module Slack
 
     PUBLIC_ATTRIBUTES = %i[slack_id name icon_url].freeze
     PRIVATE_ATTRIBUTES = [].freeze
-    attr_accessor *(PUBLIC_ATTRIBUTES + PRIVATE_ATTRIBUTES)
+    attr_accessor(*(PUBLIC_ATTRIBUTES + PRIVATE_ATTRIBUTES))
 
     def self.from_api_response(response)
       new(
@@ -15,7 +15,7 @@ module Slack
     end
 
     def attributes
-      Hash[PUBLIC_ATTRIBUTES.map { |attr| [attr, public_send(attr)] }]
+      PUBLIC_ATTRIBUTES.map { |attr| [attr, public_send(attr)] }.to_h
     end
   end
 end

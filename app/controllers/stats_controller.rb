@@ -35,13 +35,13 @@ class StatsController < ApplicationController
     # team's users or channels when we're likely only rendering a very small
     # number, if any at all, user or channel mentions.
     mentioned_user_ids = reasons.map { |r| r.scan(SlackHelper::USER_PATTERN) }.flatten
-    user_ids_to_names = Hash[current_team.users.where(slack_id: mentioned_user_ids).pluck(:slack_id, :name, :username).map do |(slack_id, name, username)|
+    user_ids_to_names = current_team.users.where(slack_id: mentioned_user_ids).pluck(:slack_id, :name, :username).map do |(slack_id, name, username)|
       [slack_id, username || name]
-    end]
+    end.to_h
     mentioned_channel_ids = reasons.map { |r| r.scan(SlackHelper::CHANNEL_PATTERN) }.flatten
-    channel_ids_to_names = Hash[current_team.channels.where(slack_id: mentioned_channel_ids).pluck(:slack_id, :name, :private).map do |(slack_id, name, private)|
+    channel_ids_to_names = current_team.channels.where(slack_id: mentioned_channel_ids).pluck(:slack_id, :name, :private).map do |(slack_id, name, private)|
       [slack_id, (private ? "<🔒 somewhere secret>" : name)]
-    end]
+    end.to_h
 
     # Likewise, workspaces can have tens of thousands of custom emoji, so
     # instead of initializing a huge hash and letting the markdown processor's
@@ -56,12 +56,12 @@ class StatsController < ApplicationController
 
     SlackMarkdown::Processor.new(
       on_slack_user_id: ->(id) {
-        return { url: user_stats_path(current_team.slack_id, id), text: user_ids_to_names[id] }
+        return {url: user_stats_path(current_team.slack_id, id), text: user_ids_to_names[id]}
       },
       on_slack_channel_id: ->(id) {
-        return { url: "#" , text: channel_ids_to_names[id] }
+        return {url: "#", text: channel_ids_to_names[id]}
       },
-      asset_root: '/assets',
+      asset_root: "/assets",
       original_emoji_set: emoji_set
     )
   end

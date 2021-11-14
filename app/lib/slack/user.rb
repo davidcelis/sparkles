@@ -4,7 +4,7 @@ module Slack
 
     PUBLIC_ATTRIBUTES = %i[slack_team_id slack_id name username image_url deactivated team_admin]
     PRIVATE_ATTRIBUTES = %i[bot restricted].freeze
-    attr_accessor *(PUBLIC_ATTRIBUTES + PRIVATE_ATTRIBUTES)
+    attr_accessor(*(PUBLIC_ATTRIBUTES + PRIVATE_ATTRIBUTES))
 
     alias_method :deactivated?, :deactivated
     alias_method :bot?, :bot
@@ -26,11 +26,11 @@ module Slack
     end
 
     def attributes
-      Hash[PUBLIC_ATTRIBUTES.map { |attr| [attr, public_send(attr)] }]
+      PUBLIC_ATTRIBUTES.map { |attr| [attr, public_send(attr)] }.to_h
     end
 
     def sparklebot?
-      self.bot? && self.name == "Sparklebot"
+      bot? && name == "Sparklebot"
     end
 
     def human_teammate?

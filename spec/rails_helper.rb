@@ -13,16 +13,16 @@ require "vcr"
 
 VCR.configure do |c|
   c.hook_into :webmock
-  c.cassette_library_dir = Rails.root.join('spec', 'fixtures', 'cassettes')
+  c.cassette_library_dir = Rails.root.join("spec", "fixtures", "cassettes")
 
-  c.filter_sensitive_data('<SLACK_CLIENT_ID>') { Rails.application.credentials.dig(:slack, :client_id) }
-  c.filter_sensitive_data('<SLACK_CLIENT_SECRET>') { Rails.application.credentials.dig(:slack, :client_secret) }
-  c.filter_sensitive_data('<SLACK_SIGNING_SECRET>') { Rails.application.credentials.dig(:slack, :signing_secret) }
+  c.filter_sensitive_data("<SLACK_CLIENT_ID>") { Rails.application.credentials.dig(:slack, :client_id) }
+  c.filter_sensitive_data("<SLACK_CLIENT_SECRET>") { Rails.application.credentials.dig(:slack, :client_secret) }
+  c.filter_sensitive_data("<SLACK_SIGNING_SECRET>") { Rails.application.credentials.dig(:slack, :signing_secret) }
 
   # Make sure to filter out any OAuth Bearer tokens from specs
-  c.filter_sensitive_data('<BEARER_TOKEN>') do |interaction|
-    auths = interaction.request.headers['Authorization']&.first
-    if (match = auths&.match /^Bearer\s+([^,\s]+)/ )
+  c.filter_sensitive_data("<BEARER_TOKEN>") do |interaction|
+    auths = interaction.request.headers["Authorization"]&.first
+    if (match = auths&.match /^Bearer\s+([^,\s]+)/)
       match.captures.first
     end
   end
