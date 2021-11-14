@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Slack::OAuthController", type: :request do
+RSpec.describe Slack::OAuthController, type: :request do
   describe "GET /slack/oauth/callback" do
     let(:state) { SecureRandom.urlsafe_base64 }
     let(:code) { "<SLACK_OAUTH_CODE>" }

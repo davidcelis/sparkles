@@ -1,8 +1,10 @@
 FactoryBot.define do
   factory :sparkle do
     association :team
-    association :sparklee, factory: :user
-    association :sparkler, factory: :user
+
+    sparklee { association :user, team: team }
+    sparkler { association :user, team: team }
+
     association :channel
 
     reason { "for #{Faker::Fantasy::Tolkien.poem}" }

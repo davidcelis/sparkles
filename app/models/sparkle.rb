@@ -5,6 +5,7 @@ class Sparkle < ApplicationRecord
   belongs_to :channel, primary_key: "slack_id", foreign_key: "slack_channel_id"
 
   def visible_to?(user)
+    return false if user.slack_team_id != slack_team_id
     return true unless channel.private?
 
     # We don't track channel membership, so if the sparkle happened in a
