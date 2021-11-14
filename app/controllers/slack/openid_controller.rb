@@ -22,13 +22,19 @@ module Slack
       end
 
       # Make sure the team has installed Sparkles
-      unless ::Team.where(slack_id: jwt["https://slack.com/team_id"]).exists?
+      team = ::Team.find_by(slack_id: jwt["https://slack.com/team_id"])
+      unless team.present?
         flash.alert = "Oops, your team hasn't installed Sparkles yet! Use the \"Add to Slack\" button to get it installed before trying to sign in."
 
         redirect_to root_path and return
       end
 
-      user = ::User.find_or_create_by!(slack_team_id: jwt["https://slack.com/team_id"], slack_id: jwt["https://slack.com/user_id"])
+      user = ::User.find_by(slack_team_id: jwt["https://slack.com/team_id"], slack_id: jwt["https://slack.com/user_id"])
+      unless user.present?
+        user_info_response = team.api_client.users_info(user: jwt["https://slack.com/user_id"])
+        slack_user = ::Slack::User.from_api_response(user_info_response.user)
+        user = ::User.create!(slack_user.attributes)
+      end
 
       cookies.encrypted.permanent[:slack_team_id] = user.slack_team_id
       cookies.encrypted.permanent[:slack_user_id] = user.slack_id
@@ -40,7 +46,7 @@ module Slack
 
     def verify_state
       if cookies.encrypted[:state] != params[:state]
-        flash.alert = "The provided OAuth state did not match. Please try installing to Slack again."
+        flash.alert = "The provided OpenID state did not match. Please try signing in again."
 
         redirect_to root_path
       end

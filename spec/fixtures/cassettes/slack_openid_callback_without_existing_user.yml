@@ -1,0 +1,160 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://slack.com/api/openid.connect.token
+    body:
+      encoding: UTF-8
+      string: client_id=<SLACK_CLIENT_ID>&client_secret=<SLACK_CLIENT_SECRET>&code=<SLACK_OPENID_CODE>&redirect_uri=https%3A%2F%2Fsparkles.loca.lt%2Fslack%2Fopenid%2Fcallback&token
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/0.17.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 Nov 2021 20:58:59 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Robots-Tag:
+      - noindex,nofollow
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - e52ffd19a9919f3c0c7e228350c77758
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '789'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '132'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-ls9x
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-y23u, envoy-edge-pdx-wj6b
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"access_token":"<SLACK_TOKEN>","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im1CMk1BeUtTbjU1NWlzZDBFYmRoS3g2bmt5QWk5eExxOHJ2Q0ViX25PeVkifQ.eyJpc3MiOiJodHRwczpcL1wvc2xhY2suY29tIiwic3ViIjoiVTAySkU0OU5ETlkiLCJhdWQiOiIyNjQ3NjA2ODIyMDMyLjI2NDc2MTkxNDIwODAiLCJleHAiOjE2MzY2NjQ2MzksImlhdCI6MTYzNjY2NDMzOSwiYXV0aF90aW1lIjoxNjM2NjY0MzM5LCJub25jZSI6IjF1SzdjZm1HRnlnUDFsaDJhbm5uaFEiLCJhdF9oYXNoIjoiaVJvb1hzNmxKdmF4NkMtNFRKd09TUSIsImh0dHBzOlwvXC9zbGFjay5jb21cL3RlYW1faWQiOiJUMDJLMUhVUTYwWSIsImh0dHBzOlwvXC9zbGFjay5jb21cL3VzZXJfaWQiOiJVMDJKRTQ5TkROWSJ9.xvZncMHNgLLMnSCpEGN6FAvxLIUVXgsbCTLHETbV56IfGwKLmuRGko2QMWrUC75XOgnuh9cwuOcVk-pGJsXINd3eJH22J_cB7gMFw9swormDn8Mt4umSi6SUbT2MGNmQcUfvuWtEjnCu1p_Imetd3pYjDVFAch6eg03veAbujnjk9psvvJ5VrBsAUFDDC2akiQjjY3soTOkqqwQGpaKRNL1N_5eIvTisuN-bFrQjEVnrvBm1iKbdit6J2S7ZWVbC-N-W1FQht1Mlzt_7WzpSvUnF9Q2wybN4QDp7CuwfsFB6zL_zd0JQEU5ZTK2r4i1cQpCJq7ah3lyDa2i2SyW9yw","state":"vXpvEcgop_S8QZ1wfgpo5A"}'
+  recorded_at: Thu, 11 Nov 2021 20:58:59 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/users.info
+    body:
+      encoding: UTF-8
+      string: token=<SLACK_TOKEN>
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/0.17.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 Nov 2021 20:56:16 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - channels:join,channels:read,chat:write,commands,groups:read,team:read,users:read,reactions:read,emoji:read,channels:history,groups:history,users.profile:read
+      X-Accepted-Oauth-Scopes:
+      - users:read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - da14e4ad1951c2beae5aceaff9191187
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '658'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '83'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-ld1e
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-48r8, envoy-edge-pdx-6lwt
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"user":{"id":"U02JE49NDNY","team_id":"T02K1HUQ60Y","name":"davidcelis","deleted":false,"color":"9f69e7","real_name":"David
+        Celis","tz":"America\/Los_Angeles","tz_label":"Pacific Standard Time","tz_offset":-28800,"profile":{"title":"Chief
+        Cowboy","phone":"+1 (813) 468-9737","skype":"","real_name":"David Celis","real_name_normalized":"David
+        Celis","display_name":"David","display_name_normalized":"David","fields":null,"status_text":"","status_emoji":"","status_emoji_display_info":[],"status_expiration":0,"avatar_hash":"g66b085a6f16","pronouns":"he\/him\/his","first_name":"David","last_name":"Celis","image_24":"https:\/\/secure.gravatar.com\/avatar\/66b085a6f16864adae78586e92811a73.jpg?s=24&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-24.png","image_32":"https:\/\/secure.gravatar.com\/avatar\/66b085a6f16864adae78586e92811a73.jpg?s=32&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-32.png","image_48":"https:\/\/secure.gravatar.com\/avatar\/66b085a6f16864adae78586e92811a73.jpg?s=48&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-48.png","image_72":"https:\/\/secure.gravatar.com\/avatar\/66b085a6f16864adae78586e92811a73.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-72.png","image_192":"https:\/\/secure.gravatar.com\/avatar\/66b085a6f16864adae78586e92811a73.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-192.png","image_512":"https:\/\/secure.gravatar.com\/avatar\/66b085a6f16864adae78586e92811a73.jpg?s=512&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-512.png","status_text_canonical":"","team":"T02K1HUQ60Y"},"is_admin":true,"is_owner":true,"is_primary_owner":true,"is_restricted":false,"is_ultra_restricted":false,"is_bot":false,"is_app_user":false,"updated":1636229183,"is_email_confirmed":true,"who_can_share_contact_card":"EVERYONE"}}'
+  recorded_at: Thu, 11 Nov 2021 20:58:59 GMT
+recorded_with: VCR 6.0.0

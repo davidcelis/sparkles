@@ -8,6 +8,25 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require "rspec/rails"
 
 # Add additional requires below this line. Rails is not loaded until this point!
+require "sidekiq/testing"
+require "vcr"
+
+VCR.configure do |c|
+  c.hook_into :webmock
+  c.cassette_library_dir = Rails.root.join('spec', 'fixtures', 'cassettes')
+
+  c.filter_sensitive_data('<SLACK_CLIENT_ID>') { Rails.application.credentials.dig(:slack, :client_id) }
+  c.filter_sensitive_data('<SLACK_CLIENT_SECRET>') { Rails.application.credentials.dig(:slack, :client_secret) }
+  c.filter_sensitive_data('<SLACK_SIGNING_SECRET>') { Rails.application.credentials.dig(:slack, :signing_secret) }
+
+  # Make sure to filter out any OAuth Bearer tokens from specs
+  c.filter_sensitive_data('<BEARER_TOKEN>') do |interaction|
+    auths = interaction.request.headers['Authorization']&.first
+    if (match = auths&.match /^Bearer\s+([^,\s]+)/ )
+      match.captures.first
+    end
+  end
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -21,8 +40,7 @@ require "rspec/rails"
 # of increasing the boot-up time by auto-requiring all files in the support
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
-#
-# Dir[Rails.root.join("spec", "support", "**", "*.rb")].sort.each { |f| require f }
+Dir[Rails.root.join("spec", "support", "**", "*.rb")].sort.each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.

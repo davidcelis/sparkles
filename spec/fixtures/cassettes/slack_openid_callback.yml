@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://slack.com/api/openid.connect.token
+    body:
+      encoding: UTF-8
+      string: client_id=<SLACK_CLIENT_ID>&client_secret=<SLACK_CLIENT_SECRET>&code=<SLACK_OPENID_CODE>&redirect_uri=https%3A%2F%2Fsparkles.loca.lt%2Fslack%2Fopenid%2Fcallback&token
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/0.17.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 Nov 2021 20:58:59 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Robots-Tag:
+      - noindex,nofollow
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - e52ffd19a9919f3c0c7e228350c77758
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '789'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '132'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-ls9x
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-y23u, envoy-edge-pdx-wj6b
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"access_token":"<SLACK_TOKEN>","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im1CMk1BeUtTbjU1NWlzZDBFYmRoS3g2bmt5QWk5eExxOHJ2Q0ViX25PeVkifQ.eyJpc3MiOiJodHRwczpcL1wvc2xhY2suY29tIiwic3ViIjoiVTAySkU0OU5ETlkiLCJhdWQiOiIyNjQ3NjA2ODIyMDMyLjI2NDc2MTkxNDIwODAiLCJleHAiOjE2MzY2NjQ2MzksImlhdCI6MTYzNjY2NDMzOSwiYXV0aF90aW1lIjoxNjM2NjY0MzM5LCJub25jZSI6IjF1SzdjZm1HRnlnUDFsaDJhbm5uaFEiLCJhdF9oYXNoIjoiaVJvb1hzNmxKdmF4NkMtNFRKd09TUSIsImh0dHBzOlwvXC9zbGFjay5jb21cL3RlYW1faWQiOiJUMDJLMUhVUTYwWSIsImh0dHBzOlwvXC9zbGFjay5jb21cL3VzZXJfaWQiOiJVMDJKRTQ5TkROWSJ9.xvZncMHNgLLMnSCpEGN6FAvxLIUVXgsbCTLHETbV56IfGwKLmuRGko2QMWrUC75XOgnuh9cwuOcVk-pGJsXINd3eJH22J_cB7gMFw9swormDn8Mt4umSi6SUbT2MGNmQcUfvuWtEjnCu1p_Imetd3pYjDVFAch6eg03veAbujnjk9psvvJ5VrBsAUFDDC2akiQjjY3soTOkqqwQGpaKRNL1N_5eIvTisuN-bFrQjEVnrvBm1iKbdit6J2S7ZWVbC-N-W1FQht1Mlzt_7WzpSvUnF9Q2wybN4QDp7CuwfsFB6zL_zd0JQEU5ZTK2r4i1cQpCJq7ah3lyDa2i2SyW9yw","state":"vXpvEcgop_S8QZ1wfgpo5A"}'
+  recorded_at: Thu, 11 Nov 2021 20:58:59 GMT
+recorded_with: VCR 6.0.0
