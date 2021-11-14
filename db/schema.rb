@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_14_222457) do
+ActiveRecord::Schema.define(version: 2021_11_14_231010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,9 +34,9 @@ ActiveRecord::Schema.define(version: 2021_11_14_222457) do
     t.string "permalink"
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
-    t.bigint "sparklee_id"
-    t.bigint "sparkler_id"
-    t.bigint "channel_id"
+    t.bigint "sparklee_id", null: false
+    t.bigint "sparkler_id", null: false
+    t.bigint "channel_id", null: false
     t.index ["channel_id"], name: "index_sparkles_on_channel_id"
     t.index ["sparklee_id"], name: "index_sparkles_on_sparklee_id"
     t.index ["sparkler_id"], name: "index_sparkles_on_sparkler_id"
