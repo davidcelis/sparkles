@@ -34,11 +34,11 @@ gem "jwt"
 gem "slack_markdown"
 
 # Use Sidekiq for background job processing
-gem "sidekiq", "~> 6.2"
-gem "sidekiq-scheduler", "~> 3.1"
+gem "sidekiq"
+gem "sidekiq-scheduler"
 
 # Paginate through sparkles and the leaderboard with Kaminari
-gem "kaminari", "~> 1.2"
+gem "kaminari"
 
 # Monitor performance and errors with Skylight and Sentry
 gem "skylight"
@@ -51,11 +51,12 @@ group :development, :test do
   gem "pry-byebug"
   gem "pry-rails"
 
-  gem "rspec-rails", "~> 5.0"
-  gem "factory_bot_rails", "~> 6.2"
-  gem "faker", "~> 2.19"
-  gem "vcr", "~> 6.0"
-  gem "webmock", "~> 3.14"
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "standard"
+  gem "vcr"
+  gem "webmock"
 end
 
 group :development do
