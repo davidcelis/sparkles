@@ -31,7 +31,7 @@ gem "listen", "~> 3.3"
 # Use the official API client to connect to Slack
 gem "slack-ruby-client"
 gem "jwt"
-gem "slack_markdown", github: "davidcelis/slack_markdown", branch: "fix-override-text"
+gem "slack_markdown"
 
 # Use Sidekiq for background job processing
 gem "sidekiq", "~> 6.2"
