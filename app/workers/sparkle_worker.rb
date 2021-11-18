@@ -113,6 +113,9 @@ class SparkleWorker < ApplicationWorker
           text: ":sparkle: Somebody just got a <#{message.permalink}|sparkle>!"
         )
       end
+    rescue Slack::Web::Api::Errors::UserNotFound
+      text = "I couldn't find the teammate you're trying to sparkle :sweat: Make sure you're using a highlighted @mention and that they aren't a guest member!"
+      team.api_client.chat_postMessage(channel: channel.slack_id, text: text)
     rescue
       # Just re-raise the error if this job has already been retried.
       raise if options[:retried]
