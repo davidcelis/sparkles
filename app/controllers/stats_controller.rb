@@ -28,7 +28,7 @@ class StatsController < ApplicationController
   private
 
   def markdown_processor_for(sparkles)
-    reasons = sparkles.map(&:reason)
+    reasons = sparkles.map(&:reason).compact
 
     # Parse out the users and channels that are being mentioned in the sparkles
     # we're going to render. This keeps us from having to query for _all_ of a
