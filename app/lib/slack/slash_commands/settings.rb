@@ -23,18 +23,31 @@ module Slack
           },
           callback_id: "settings-#{team.slack_id}-#{user.slack_id}",
           blocks: [
-            {
-              type: :section,
-              text: {
-                type: :mrkdwn,
-                text: ":sparkles: Hi, <@#{user.slack_id}>! Here are some ways you can personalize your experience with Sparkles:"
-              }
-            },
-            {type: :divider}
+            header_block(user),
+            {type: :divider},
+            user_leaderboard_block(user)
           ]
         }
 
-        leaderboard_block = {
+        view[:blocks] += admin_blocks(team) if user.team_admin?
+
+        team.api_client.views_open(trigger_id: params[:trigger_id], view: view)
+      end
+
+      private
+
+      def header_block(user)
+        {
+          type: :section,
+          text: {
+            type: :mrkdwn,
+            text: ":sparkles: Hi, <@#{user.slack_id}>! Here are some ways you can personalize your experience with Sparkles:"
+          }
+        }
+      end
+
+      def user_leaderboard_block(user)
+        block = {
           type: :section,
           text: {
             type: :mrkdwn,
@@ -59,22 +72,22 @@ module Slack
           }
         }
 
-        if user.leaderboard_enabled?
-          leaderboard_block[:accessory][:initial_options] = leaderboard_block[:accessory][:options].dup
-        end
+        block[:accessory][:initial_options] = block[:accessory][:options].dup if user.leaderboard_enabled?
 
-        view[:blocks] << leaderboard_block
+        block
+      end
 
-        if user.team_admin?
-          view[:blocks] << {type: :divider}
-          view[:blocks] << {
+      def admin_blocks(team)
+        [
+          {type: :divider},
+          {
             type: :section,
             text: {
               type: :mrkdwn,
               text: ":lock: *Admin settings*"
             }
-          }
-          view[:blocks] << {
+          },
+          {
             type: :context,
             elements: [
               {
@@ -82,61 +95,64 @@ module Slack
                 text: "These settings will adjust the experience for everybody on your team."
               }
             ]
-          }
+          },
+          channel_block(team),
+          team_leaderboard_block(team)
+        ]
+      end
 
-          channel_block = {
-            type: :section,
-            text: {
-              type: :mrkdwn,
-              text: ":sparkle: *Sparkle Feed Channel*\nShare all sparkles as they're given!"
-            },
-            accessory: {
-              type: :channels_select,
-              action_id: :team_sparkle_feed_channel,
-              placeholder: {
-                type: :plain_text,
-                text: "Channel",
-                emoji: true
+      def channel_block(team)
+        block = {
+          type: :section,
+          text: {
+            type: :mrkdwn,
+            text: ":sparkle: *Sparkle Feed Channel*\nShare all sparkles as they're given!"
+          },
+          accessory: {
+            type: :channels_select,
+            action_id: :team_sparkle_feed_channel,
+            placeholder: {
+              type: :plain_text,
+              text: "Channel",
+              emoji: true
+            }
+          }
+        }
+
+        block[:accessory][:initial_channel] = team.slack_feed_channel_id if team.slack_feed_channel_id
+
+        block
+      end
+
+      def team_leaderboard_block(team)
+        block = {
+          type: :section,
+          text: {
+            type: :mrkdwn,
+            text: ":trophy: *Leaderboard settings*"
+          },
+          accessory: {
+            type: :checkboxes,
+            action_id: :team_leaderboard_enabled,
+            options: [
+              {
+                text: {
+                  type: :mrkdwn,
+                  text: "*Enable the leaderboard*"
+                },
+                description: {
+                  type: :mrkdwn,
+                  text: "Disabling the leaderboard will hide all sparkle point totals, with sparkles still visible via a team directory."
+                },
+                value: "true"
               }
-            }
+            ]
           }
+        }
 
-          channel_block[:accessory][:initial_channel] = team.slack_feed_channel_id if team.slack_feed_channel_id
-          view[:blocks] << channel_block
+        block[:accessory][:initial_options] = block[:accessory][:options].dup if team.leaderboard_enabled?
 
-          team_leaderboard_block = {
-            type: :section,
-            text: {
-              type: :mrkdwn,
-              text: ":trophy: *Leaderboard settings*"
-            },
-            accessory: {
-              type: :checkboxes,
-              action_id: :team_leaderboard_enabled,
-              options: [
-                {
-                  text: {
-                    type: :mrkdwn,
-                    text: "*Enable the leaderboard*"
-                  },
-                  description: {
-                    type: :mrkdwn,
-                    text: "Disabling the leaderboard will hide all sparkle point totals, with sparkles still visible via a team directory."
-                  },
-                  value: "true"
-                }
-              ]
-            }
-          }
-
-          if team.leaderboard_enabled?
-            team_leaderboard_block[:accessory][:initial_options] = team_leaderboard_block[:accessory][:options].dup
-          end
-
-          view[:blocks] << team_leaderboard_block
-        end
-
-        team.api_client.views_open(trigger_id: params[:trigger_id], view: view)
+        block
       end
     end
   end

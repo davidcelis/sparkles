@@ -9,7 +9,7 @@ module Slack
       command = Slack::SlashCommands.parse(params)
       command.execute
 
-      if command.result
+      if command.result.present?
         render json: command.result
       else
         head :ok
