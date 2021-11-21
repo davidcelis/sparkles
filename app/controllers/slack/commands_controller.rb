@@ -22,7 +22,7 @@ module Slack
 
     def verify_slack_request
       Slack::Events::Request.new(request).verify!
-    rescue Slack::Events::Request::MissingSigningSecret, Slack::Events::Request::TimestampExpired, Slack::Events::Request::InvalidSignature
+    rescue Slack::Events::Request::TimestampExpired
       render plain: "Oops! I ran into an error verifying this request, but you should try again in a sec."
     end
 

@@ -158,10 +158,10 @@ RSpec.describe Slack::CommandsController, type: :request do
       end
     end
 
-    context "when slack verification fails" do
+    context "when slack verification fails due to an expired timestamp" do
       before do
         allow_any_instance_of(Slack::Events::Request).to receive(:verify!)
-          .and_raise(Slack::Events::Request::InvalidSignature)
+          .and_raise(Slack::Events::Request::TimestampExpired)
       end
 
       it "returns an error" do
