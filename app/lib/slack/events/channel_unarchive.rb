@@ -1,7 +1,7 @@
 module Slack
   module Events
-    class ChannelUnarchive < Base
-      def handle
+    class ChannelUnarchive
+      def self.execute(slack_team_id:, payload:)
         # If we already have the channel stored, we only need to update the
         # flag to reflect its been unarchived
         if (channel = ::Channel.find_by(slack_team_id: slack_team_id, slack_id: payload[:channel]))
@@ -12,6 +12,7 @@ module Slack
         # If we don't have it stored, it means we were installed after this
         # channel was created and archived and never fetched it in the first
         # place. We need to get the full object from the API to store it.
+        team = ::Team.find_by!(slack_id: slack_team_id)
         response = team.api_client.conversations_info(channel: payload[:channel])
         slack_channel = Slack::Channel.from_api_response(response.channel, slack_team_id: team.slack_id)
         channel = ::Channel.create!(slack_channel.attributes)

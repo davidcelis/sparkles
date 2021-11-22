@@ -1,7 +1,9 @@
 module Slack
   module Events
-    class ChannelShared < Base
-      def handle
+    class ChannelShared
+      def self.execute(slack_team_id:, payload:)
+        team = ::Team.find_by!(slack_id: slack_team_id)
+
         # This event can be received if an exist channel is shared _or_ a new
         # shared channel is created; an upsert will work for both cases.
         response = team.api_client.conversations_info(channel: payload[:channel])

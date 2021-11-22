@@ -1,10 +1,8 @@
 module Slack
   module Events
-    class EmojiChanged < Base
-      def handle
-        # We bust the entire cache for a team on any emoji change because it's
-        # easy, but we _could_ actually handle each sub-type and either add,
-        # modify, or delete the one emoji that was changed.
+    class EmojiChanged
+      def self.execute(slack_team_id:, payload:)
+        team = ::Team.find_by!(slack_id: slack_team_id)
         EmojiCache.new(team).bust!
       end
     end

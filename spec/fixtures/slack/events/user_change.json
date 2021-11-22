@@ -1,0 +1,76 @@
+{
+  "token": "[FILTERED]",
+  "team_id": "T02K1HUQ60Y",
+  "api_app_id": "A02K1J7462C",
+  "event": {
+    "type": "user_change",
+    "user": {
+      "id": "U02JE49NDNY",
+      "team_id": "T02K1HUQ60Y",
+      "name": "davidcelis",
+      "deleted": false,
+      "color": "9f69e7",
+      "real_name": "David Celis",
+      "tz": "America/Los_Angeles",
+      "tz_label": "Pacific Standard Time",
+      "tz_offset": -28800,
+      "profile": {
+        "title": "Chief Sparkle Officer",
+        "phone": "+1 (813) 468-9737",
+        "skype": "",
+        "real_name": "David Celis",
+        "real_name_normalized": "David Celis",
+        "display_name": "David",
+        "display_name_normalized": "David",
+        "fields": {},
+        "status_text": "Darkly sparkling",
+        "status_emoji": ":dark-sparkles:",
+        "status_emoji_display_info": [
+          {
+            "emoji_name": "dark-sparkles",
+            "display_url": "https://emoji.slack-edge.com/T02K1HUQ60Y/dark-sparkles/71e4bda7ea624a3c.png"
+          }
+        ],
+        "status_expiration": 1637567999,
+        "avatar_hash": "g66b085a6f16",
+        "pronouns": "he/him/his",
+        "first_name": "David",
+        "last_name": "Celis",
+        "image_24": "https://secure.gravatar.com/avatar/66b085a6f16864adae78586e92811a73.jpg?s=24&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-24.png",
+        "image_32": "https://secure.gravatar.com/avatar/66b085a6f16864adae78586e92811a73.jpg?s=32&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-32.png",
+        "image_48": "https://secure.gravatar.com/avatar/66b085a6f16864adae78586e92811a73.jpg?s=48&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-48.png",
+        "image_72": "https://secure.gravatar.com/avatar/66b085a6f16864adae78586e92811a73.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-72.png",
+        "image_192": "https://secure.gravatar.com/avatar/66b085a6f16864adae78586e92811a73.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-192.png",
+        "image_512": "https://secure.gravatar.com/avatar/66b085a6f16864adae78586e92811a73.jpg?s=512&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-512.png",
+        "status_text_canonical": "",
+        "team": "T02K1HUQ60Y"
+      },
+      "is_admin": true,
+      "is_owner": true,
+      "is_primary_owner": true,
+      "is_restricted": false,
+      "is_ultra_restricted": false,
+      "is_bot": false,
+      "is_app_user": false,
+      "updated": 1637527428,
+      "is_email_confirmed": true,
+      "who_can_share_contact_card": "EVERYONE",
+      "locale": "en-US"
+    },
+    "cache_ts": 1637527428,
+    "event_ts": "1637527428.000300"
+  },
+  "type": "event_callback",
+  "event_id": "Ev02N4L9936E",
+  "event_time": 1637527428,
+  "authorizations": [
+    {
+      "enterprise_id": null,
+      "team_id": "T02K1HUQ60Y",
+      "user_id": "U02JEBH6BGC",
+      "is_bot": true,
+      "is_enterprise_install": false
+    }
+  ],
+  "is_ext_shared_channel": false
+}

@@ -1,7 +1,8 @@
 module Slack
   module Events
-    class ChannelCreated < Base
-      def handle
+    class ChannelCreated
+      def self.execute(slack_team_id:, payload:)
+        team = ::Team.find_by!(slack_id: slack_team_id)
         response = team.api_client.conversations_info(channel: payload.dig(:channel, :id))
         slack_channel = Slack::Channel.from_api_response(response.channel, slack_team_id: team.slack_id)
 

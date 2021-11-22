@@ -101,7 +101,7 @@ RSpec.describe Slack::CommandsController, type: :request do
       # our command with the right arguments and call `execute`
       it "uses the trigger ID to open a modal" do
         expect(Slack::SlashCommands::Settings).to receive(:execute)
-          .with(hash_including(**params))
+          .with(params)
           .and_return(Slack::SlashCommands::Result.new(response_type: nil))
 
         post slack_commands_path, params: params

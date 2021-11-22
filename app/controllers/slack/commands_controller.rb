@@ -8,7 +8,7 @@ module Slack
 
     def create
       command_class = parse(params[:text])
-      result = command_class.execute(params)
+      result = command_class.execute(params.except(:controller, :action).to_unsafe_h)
 
       return head :ok unless result.should_render?
 
