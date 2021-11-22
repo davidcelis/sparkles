@@ -35,6 +35,8 @@ module Slack
 
     def verify_slack_request
       Slack::Events::Request.new(request).verify!
+    rescue Slack::Events::Request::MissingSigningSecret, Slack::Events::Request::TimestampExpired, Slack::Events::Request::InvalidSignature
+      head :bad_request
     end
   end
 end

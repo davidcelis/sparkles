@@ -1,0 +1,229 @@
+{
+  "type": "view_submission",
+  "team": {
+    "id": "T02K1HUQ60Y",
+    "domain": "sparkles-ts66289"
+  },
+  "user": {
+    "id": "U02JE49NDNY",
+    "username": "davidcelis",
+    "name": "davidcelis",
+    "team_id": "T02K1HUQ60Y"
+  },
+  "api_app_id": "A02K1J7462C",
+  "token": "[FILTERED]",
+  "trigger_id": "2776738643760.2647606822032.17b66c28a18c73eedbd1c7c8262dbfee",
+  "view": {
+    "id": "V02NUMPL2JU",
+    "team_id": "T02K1HUQ60Y",
+    "type": "modal",
+    "blocks": [
+      {
+        "type": "section",
+        "block_id": "fTV",
+        "text": {
+          "type": "mrkdwn",
+          "text": ":sparkles: Hi, <@U02JE49NDNY>! Here are some ways you can personalize your experience with Sparkles:",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "divider",
+        "block_id": "vYZ"
+      },
+      {
+        "type": "section",
+        "block_id": "QRL",
+        "text": {
+          "type": "mrkdwn",
+          "text": ":trophy: *Leaderboard settings*",
+          "verbatim": false
+        },
+        "accessory": {
+          "type": "checkboxes",
+          "action_id": "user_leaderboard_enabled",
+          "options": [
+            {
+              "text": {
+                "type": "mrkdwn",
+                "text": "*Enable the leaderboard*",
+                "verbatim": false
+              },
+              "value": "true",
+              "description": {
+                "type": "mrkdwn",
+                "text": "Disabling the leaderboard will hide point totals in most places, just for you! Others in your team will still see you in the leaderboard.",
+                "verbatim": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "divider",
+        "block_id": "5gHq"
+      },
+      {
+        "type": "section",
+        "block_id": "fDNt",
+        "text": {
+          "type": "mrkdwn",
+          "text": ":lock: *Admin settings*",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "context",
+        "block_id": "=1fP",
+        "elements": [
+          {
+            "type": "mrkdwn",
+            "text": "These settings will adjust the experience for everybody on your team.",
+            "verbatim": false
+          }
+        ]
+      },
+      {
+        "type": "section",
+        "block_id": "zUB2x",
+        "text": {
+          "type": "mrkdwn",
+          "text": ":sparkle: *Sparkle Feed Channel*\nShare all sparkles as they're given!",
+          "verbatim": false
+        },
+        "accessory": {
+          "type": "channels_select",
+          "action_id": "team_sparkle_feed_channel",
+          "initial_channel": "C02LEQ0E1QS",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Channel",
+            "emoji": true
+          }
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "u5h",
+        "text": {
+          "type": "mrkdwn",
+          "text": ":trophy: *Leaderboard settings*",
+          "verbatim": false
+        },
+        "accessory": {
+          "type": "checkboxes",
+          "action_id": "team_leaderboard_enabled",
+          "initial_options": [
+            {
+              "text": {
+                "type": "mrkdwn",
+                "text": "*Enable the leaderboard*",
+                "verbatim": false
+              },
+              "value": "true",
+              "description": {
+                "type": "mrkdwn",
+                "text": "Disabling the leaderboard will hide all sparkle point totals, with sparkles still visible via a team directory.",
+                "verbatim": false
+              }
+            }
+          ],
+          "options": [
+            {
+              "text": {
+                "type": "mrkdwn",
+                "text": "*Enable the leaderboard*",
+                "verbatim": false
+              },
+              "value": "true",
+              "description": {
+                "type": "mrkdwn",
+                "text": "Disabling the leaderboard will hide all sparkle point totals, with sparkles still visible via a team directory.",
+                "verbatim": false
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "private_metadata": "",
+    "callback_id": "settings-T02K1HUQ60Y-U02JE49NDNY",
+    "state": {
+      "values": {
+        "QRL": {
+          "user_leaderboard_enabled": {
+            "type": "checkboxes",
+            "selected_options": [
+              {
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Enable the leaderboard*",
+                  "verbatim": false
+                },
+                "value": "true",
+                "description": {
+                  "type": "mrkdwn",
+                  "text": "Disabling the leaderboard will hide point totals in most places, just for you! Others in your team will still see you in the leaderboard.",
+                  "verbatim": false
+                }
+              }
+            ]
+          }
+        },
+        "zUB2x": {
+          "team_sparkle_feed_channel": {
+            "type": "channels_select",
+            "selected_channel": "C02LEQ0E1QS"
+          }
+        },
+        "u5h": {
+          "team_leaderboard_enabled": {
+            "type": "checkboxes",
+            "selected_options": [
+              {
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Enable the leaderboard*",
+                  "verbatim": false
+                },
+                "value": "true",
+                "description": {
+                  "type": "mrkdwn",
+                  "text": "Disabling the leaderboard will hide all sparkle point totals, with sparkles still visible via a team directory.",
+                  "verbatim": false
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "hash": "1637545391.VzDPFmvW",
+    "title": {
+      "type": "plain_text",
+      "text": "Configure Sparkles",
+      "emoji": true
+    },
+    "clear_on_close": false,
+    "notify_on_close": false,
+    "close": {
+      "type": "plain_text",
+      "text": ":x: Cancel",
+      "emoji": true
+    },
+    "submit": {
+      "type": "plain_text",
+      "text": ":sparkles: Submit",
+      "emoji": true
+    },
+    "previous_view_id": null,
+    "root_view_id": "V02NUMPL2JU",
+    "app_id": "A02K1J7462C",
+    "external_id": "",
+    "app_installed_team_id": "T02K1HUQ60Y",
+    "bot_id": "B02K1R281NC"
+  },
+  "response_urls": [],
+  "is_enterprise_install": false,
+  "enterprise": null
+}
