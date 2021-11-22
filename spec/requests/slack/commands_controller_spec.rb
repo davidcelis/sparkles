@@ -100,17 +100,13 @@ RSpec.describe Slack::CommandsController, type: :request do
       # a BlockKit view for Slack, so this test just asserts that we create
       # our command with the right arguments and call `execute`
       it "uses the trigger ID to open a modal" do
-        expected_params = ActionController::Parameters.new(params.merge(controller: "slack/commands", action: "create"))
-        expect(Slack::SlashCommands).to receive(:parse).with(expected_params).and_call_original
-
-        command = Mocktail.of_next(Slack::SlashCommands::Settings)
-        stubs { command.execute }
+        expect(Slack::SlashCommands::Settings).to receive(:execute)
+          .with(hash_including(**params))
+          .and_return(Slack::SlashCommands::Result.new(response_type: nil))
 
         post slack_commands_path, params: params
         expect(response.status).to eq(200)
         expect(response.body).to be_empty
-
-        verify { command.execute }
       end
     end
 

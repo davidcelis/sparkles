@@ -8,7 +8,7 @@ module Slack
       payload = JSON.parse(params[:payload]).with_indifferent_access
 
       # We only care about modifying settings if the view was submitted.
-      head :ok and return unless payload[:type] == "view_submission"
+      return head :ok unless payload[:type] == "view_submission"
 
       team = ::Team.find_by!(slack_id: payload.dig(:team, :id))
       user = team.users.find_by!(slack_id: payload.dig(:user, :id))

@@ -1,8 +1,10 @@
 module Slack
   module SlashCommands
-    class Stats < Base
-      def execute
-        matches = params[:text].match(Slack::SlashCommands::STATS)
+    class Stats
+      FORMAT = /\Astats(\s+#{SlackHelper::USER_PATTERN})?\z/
+
+      def self.execute(params)
+        matches = params[:text].match(FORMAT)
         options = {
           slack_team_id: params[:team_id],
           slack_user_id: matches[:slack_user_id],
@@ -11,6 +13,8 @@ module Slack
         }
 
         StatsWorker.perform_async(options)
+
+        Result.new(response_type: :ephemeral)
       end
     end
   end

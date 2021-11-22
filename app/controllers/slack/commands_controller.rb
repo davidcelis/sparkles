@@ -1,24 +1,38 @@
 module Slack
   class CommandsController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    ParseError = Class.new(StandardError)
 
+    skip_before_action :verify_authenticity_token
     before_action :verify_slack_request
     before_action :verify_channel_supports_sparkles
 
     def create
-      command = Slack::SlashCommands.parse(params)
-      command.execute
+      command_class = parse(params[:text])
+      result = command_class.execute(params)
 
-      if command.result.present?
-        render json: command.result
-      else
-        head :ok
-      end
-    rescue Slack::SlashCommands::ParseError
+      return head :ok unless result.should_render?
+
+      render json: result
+    rescue ParseError
       render plain: "Sorry, I didn't understand your command. Usage:\n\n#{Slack::SlashCommands::Help::TEXT}"
     end
 
     private
+
+    def parse(text)
+      case params[:text]
+      when Slack::SlashCommands::Sparkle::FORMAT
+        Slack::SlashCommands::Sparkle
+      when Slack::SlashCommands::Stats::FORMAT
+        Slack::SlashCommands::Stats
+      when Slack::SlashCommands::Settings::FORMAT
+        Slack::SlashCommands::Settings
+      when Slack::SlashCommands::Help::FORMAT
+        Slack::SlashCommands::Help
+      else
+        raise ParseError
+      end
+    end
 
     def verify_slack_request
       Slack::Events::Request.new(request).verify!

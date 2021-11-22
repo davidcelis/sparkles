@@ -1,8 +1,10 @@
 module Slack
   module SlashCommands
-    class Sparkle < Base
-      def execute
-        matches = params[:text].match(Slack::SlashCommands::SPARKLE_USER)
+    class Sparkle
+      FORMAT = /\A#{SlackHelper::USER_PATTERN}(\s+(?<reason>.+))?\z/
+
+      def self.execute(params)
+        matches = params[:text].match(FORMAT)
         options = {
           slack_team_id: params[:team_id],
           slack_channel_id: params[:channel_id],
@@ -13,7 +15,7 @@ module Slack
 
         SparkleWorker.perform_async(options)
 
-        @result = {response_type: :in_channel}
+        Result.new(response_type: :in_channel)
       end
     end
   end

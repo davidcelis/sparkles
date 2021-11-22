@@ -1,7 +1,9 @@
 module Slack
   module SlashCommands
-    class Settings < Base
-      def execute
+    class Settings
+      FORMAT = /\Asettings\z/
+
+      def self.execute(params)
         team = ::Team.find_by!(slack_id: params[:team_id])
         user = team.users.find_by!(slack_id: params[:user_id])
         view = {
@@ -32,11 +34,11 @@ module Slack
         view[:blocks] += admin_blocks(team) if user.team_admin?
 
         team.api_client.views_open(trigger_id: params[:trigger_id], view: view)
+
+        Result.new(response_type: nil)
       end
 
-      private
-
-      def header_block(user)
+      private_class_method def self.header_block(user)
         {
           type: :section,
           text: {
@@ -46,7 +48,7 @@ module Slack
         }
       end
 
-      def user_leaderboard_block(user)
+      private_class_method def self.user_leaderboard_block(user)
         block = {
           type: :section,
           text: {
@@ -77,7 +79,7 @@ module Slack
         block
       end
 
-      def admin_blocks(team)
+      private_class_method def self.admin_blocks(team)
         [
           {type: :divider},
           {
@@ -101,7 +103,7 @@ module Slack
         ]
       end
 
-      def channel_block(team)
+      private_class_method def self.channel_block(team)
         block = {
           type: :section,
           text: {
@@ -124,7 +126,7 @@ module Slack
         block
       end
 
-      def team_leaderboard_block(team)
+      private_class_method def self.team_leaderboard_block(team)
         block = {
           type: :section,
           text: {
