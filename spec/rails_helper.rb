@@ -15,9 +15,9 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.cassette_library_dir = Rails.root.join("spec", "fixtures", "cassettes")
 
-  c.filter_sensitive_data("<SLACK_CLIENT_ID>") { Rails.application.credentials.dig(:slack, :client_id) }
-  c.filter_sensitive_data("<SLACK_CLIENT_SECRET>") { Rails.application.credentials.dig(:slack, :client_secret) }
-  c.filter_sensitive_data("<SLACK_SIGNING_SECRET>") { Rails.application.credentials.dig(:slack, :signing_secret) }
+  c.filter_sensitive_data("<SLACK_CLIENT_ID>") { Slack::CLIENT_ID }
+  c.filter_sensitive_data("<SLACK_CLIENT_SECRET>") { Slack::CLIENT_SECRET }
+  c.filter_sensitive_data("<SLACK_SIGNING_SECRET>") { Slack::SIGNING_SECRET }
 
   # Make sure to filter out any OAuth Bearer tokens from specs
   c.filter_sensitive_data("<SLACK_TOKEN>") do |interaction|

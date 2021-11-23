@@ -1,4 +1,4 @@
 ---
 # The authentication token for the application.
-authentication: <%= Rails.application.credentials.skylight_token %>
+authentication: <%= ENV["SKYLIGHT_TOKEN"] %>
 enable_sidekiq: true

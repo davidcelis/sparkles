@@ -9,6 +9,7 @@ module Slack
     alias_method :private?, :private
     alias_method :archived?, :archived
     alias_method :shared?, :shared
+    alias_method :read_only?, :read_only
 
     def self.from_api_response(response, slack_team_id:)
       new(

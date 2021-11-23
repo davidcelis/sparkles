@@ -29,7 +29,7 @@ module SlackHelper
     authorization_url.query = {
       response_type: :code,
       scope: USER_SCOPES.join(","),
-      client_id: Rails.application.credentials.dig(:slack, :client_id),
+      client_id: Slack::CLIENT_ID,
       state: state,
       nonce: nonce,
       redirect_uri: slack_openid_callback_url
@@ -45,7 +45,7 @@ module SlackHelper
     authorization_url.query = {
       scope: BOT_SCOPES.join(","),
       user_scope: USER_SCOPES.join(","),
-      client_id: Rails.application.credentials.dig(:slack, :client_id),
+      client_id: Slack::CLIENT_ID,
       state: state,
       redirect_uri: slack_oauth_callback_url
     }.to_query
