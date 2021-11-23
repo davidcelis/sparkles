@@ -22,10 +22,14 @@ Rails.application.configure do
     "Cache-Control" => "public, max-age=#{1.hour.to_i}"
   }
 
-  # Show full error reports and disable caching.
+  # Show full error reports.
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
-  config.cache_store = :null_store
+
+  # Enable caching with Redis.
+  config.cache_store = :redis_cache_store, {
+    url: "redis://localhost:6379"
+  }
 
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false

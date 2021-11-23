@@ -40,7 +40,7 @@ class EmojiCache
   end
 
   def key
-    @key ||= "teams:#{@team.id}:emoji".freeze
+    @key ||= "teams:#{@team.slack_id}:emoji".freeze
   end
 
   def write(emoji)
