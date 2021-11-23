@@ -20,9 +20,20 @@ VCR.configure do |c|
   c.filter_sensitive_data("<SLACK_SIGNING_SECRET>") { Rails.application.credentials.dig(:slack, :signing_secret) }
 
   # Make sure to filter out any OAuth Bearer tokens from specs
-  c.filter_sensitive_data("<BEARER_TOKEN>") do |interaction|
-    auths = interaction.request.headers["Authorization"]&.first
-    if (match = auths&.match /^Bearer\s+([^,\s]+)/)
+  c.filter_sensitive_data("<SLACK_TOKEN>") do |interaction|
+    if (match = interaction.response.body.match /(xoxb-[\w\-]+)/)
+      match.captures.first
+    end
+  end
+
+  c.filter_sensitive_data("<SLACK_TOKEN>") do |interaction|
+    if (match = interaction.response.body.match /(xoxp-[\w\-]+)/)
+      match.captures.first
+    end
+  end
+
+  c.filter_sensitive_data("<SLACK_TOKEN>") do |interaction|
+    if (match = interaction.request.body.match /token=(xox[bp]-[\w\-]+)/)
       match.captures.first
     end
   end
