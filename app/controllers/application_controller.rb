@@ -27,6 +27,6 @@ class ApplicationController < ActionController::Base
   helper_method :leaderboard_enabled?
 
   def require_authentication
-    redirect_to sign_in_path unless authenticated?
+    redirect_to root_path unless authenticated?
   end
 end
