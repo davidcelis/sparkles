@@ -63,6 +63,7 @@ RSpec.configure do |config|
   # Allow using FactoryBot methods without having to call them directly on
   # the FactoryBot class.
   config.include FactoryBot::Syntax::Methods
+  config.include AuthenticationHelpers
   config.include FixtureSpecHelpers
   config.include Mocktail::DSL
   config.after(:each) { Mocktail.reset }
