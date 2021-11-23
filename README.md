@@ -70,7 +70,7 @@ At least, these are the versions in use upon writing this README. Depending on t
 
 Slack recently made it easy to create a preconfigured Slack application using App Manifests. Visit https://api.slack.com/apps?new_app=1 and choose the option to create an app from an app manifest. Choose a development workspace (it's best to choose one that you control so that you can install Sparkles yourself without requiring review from a workspace admin) and paste in the contents of our example [app_manifest.yml](config/app_manifest.example.yml) file, making sure to replace `example.com` in any URL with the domain where you're planning to host Sparkles.
 
-### Generate an encrypted file
+### Generate an encrypted credentials file
 
 Newer Rails applications use encrypted YAML files to store application secrets. You'll need to generate one with your own credentials:
 
@@ -85,19 +85,19 @@ When you run the above command, you should find yourself in a text editor for th
 ```yaml
 # Found on your Slack application's "Basic Information" page
 slack:
-  client_id: # required
-  client_secret: # required
-  signing_secret: # required
+  client_id: # or set a SLACK_CLIENT_ID environment variable
+  client_secret: # or set a SLACK_CLIENT_SECRET environment variable
+  signing_secret: # or set a SLACK_SIGNING_SECRET environment variable
 
 # An ingestion URL for error handling using Sentry. This isn't required, but
 # Sentry has a generous free tier, so you may as well sign up and set up a
 # quick project at http://sentry.io/signup/
 #
 # Example: https://aa80f6df85a993c7657ec39a0@o12345.ingest.sentry.io/1234567
-sentry_dsn: # optional
+sentry_dsn: # optional, a SENTRY_DSN environment variable works as well
 
 # Used as the base secret for all MessageVerifiers in Rails, including the one
-# protecting cookies. Generate one by running `rails secret`
+# protecting cookies. Generate one by running `rails secret`.
 secret_key_base: # required
 ```
 
@@ -112,6 +112,7 @@ You can deploy Sparkles however you like; the only two required processes are th
 ## Development [![View performance data on Skylight](https://badges.skylight.io/status/wrjfnvXfyKpB.svg)](https://oss.skylight.io/app/applications/wrjfnvXfyKpB)
 
 Encountered a bug? Have an idea for something that Sparkles doesn't do yet? Want to help [make the app faster](https://oss.skylight.io/app/applications/wrjfnvXfyKpB)? Feel free to [file an issue](https://github.com/davidcelis/sparkles/issues/new). Or, if you're a developer yourself, [fork the repository](https://github.com/davidcelis/sparkles/fork), make some changes, and open a Pull Request!
+
 
 ## Acknowledgements
 
