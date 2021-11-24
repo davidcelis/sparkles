@@ -28,7 +28,7 @@ Rails.application.configure do
 
   # Enable caching with Redis.
   config.cache_store = :redis_cache_store, {
-    url: "redis://localhost:6379"
+    url: "redis://localhost:6379/15"
   }
 
   # Raise exceptions instead of rendering exception templates.

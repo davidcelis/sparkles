@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://slack.com/api/emoji.list
+    body:
+      encoding: UTF-8
+      string: token=<SLACK_TOKEN>
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/0.17.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 24 Nov 2021 17:19:24 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - channels:history,channels:join,channels:read,chat:write,commands,emoji:read,groups:history,groups:read,reactions:read,team:read,users.profile:read,users:read
+      X-Accepted-Oauth-Scopes:
+      - emoji:read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 4c0b4e2495485b190aa1020ce9ec27c0
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '719'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '127'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-pvel
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-hzyz, envoy-edge-pdx-daml
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"emoji":{"bowtie":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/bowtie\/f3ec6f2bb0.png","squirrel":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/squirrel\/465f40c0e0.png","glitch_crab":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/glitch_crab\/db049f1f9c.png","piggy":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/piggy\/b7762ee8cd.png","cubimal_chick":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/cubimal_chick\/85961c43d7.png","dusty_stick":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/dusty_stick\/6177a62312.png","slack":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/slack\/7d462d2443.png","pride":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/pride\/56b1bd3388.png","thumbsup_all":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/thumbsup_all\/50096a1020.gif","slack_call":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/slack_call\/b81fffd6dd.png","shipit":"alias:squirrel","white_square":"alias:white_large_square","black_square":"alias:black_large_square","simple_smile":"https:\/\/a.slack-edge.com\/80588\/img\/emoji_2017_12_06\/apple\/simple_smile.png","dark-sparkle":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/dark-sparkle\/57afe5a13160ceba.png","dark-sparkles":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/dark-sparkles\/71e4bda7ea624a3c.png","happy":"alias:smile","cappuccino":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/cappuccino\/e6394adb68a497a9.png","dark-sparkling-heart":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/dark-sparkling-heart\/178b19cfecbb0ef8.png","sushi-anago":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-anago\/142a1d37d7c0cacd.png","sushi-bye":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-bye\/e3aea53e1d8510e9.png","sushi-cmon":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-cmon\/e3aea53e1d8510e9.png","sushi-cool":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-cool\/e3aea53e1d8510e9.png","sushi-hello":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-hello\/7c5c340a8f47079d.png","sushi-ikura":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-ikura\/7c5c340a8f47079d.png","sushi-no-comment":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-no-comment\/ab74c1aa9c5fce6a.png","sushi-ok":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-ok\/ab74c1aa9c5fce6a.png","sushi-phone":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-phone\/ab74c1aa9c5fce6a.png","sushi-see-you":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-see-you\/93d6a0310ff69dd7.png","sushi-sparkles":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-sparkles\/93d6a0310ff69dd7.png","sushi-stack":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-stack\/93d6a0310ff69dd7.png","sushi-tada":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-tada\/e21603e6181caa1e.png","sushi-thanks":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-thanks\/e21603e6181caa1e.png","sushi-yes":"https:\/\/emoji.slack-edge.com\/T02K1HUQ60Y\/sushi-yes\/e21603e6181caa1e.png"},"cache_ts":"1636228832.044600"}'
+  recorded_at: Wed, 24 Nov 2021 17:19:24 GMT
+recorded_with: VCR 6.0.0
