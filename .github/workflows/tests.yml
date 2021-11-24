@@ -51,6 +51,13 @@ jobs:
         run: |
           bin/rails db:prepare
 
+      - name: Compile JavaScript packs
+        env:
+          NODE_ENV: test
+        run: |
+          bin/rails webpacker:install
+          bin/rails webpacker:compile
+
       - name: Run tests
         run: |
           bin/rspec
