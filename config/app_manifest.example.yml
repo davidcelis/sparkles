@@ -23,19 +23,23 @@ features:
 oauth_config:
   redirect_urls:
     - https://example.com/slack/oauth/callback
-    - https://example.com/slack/openid/callbck
+    - https://example.com/slack/openid/callback
   scopes:
     user:
       - openid
     bot:
+      - channels:history
       - channels:join
       - channels:read
+      - chat:write
       - commands
+      - emoji:read
+      - groups:history
       - groups:read
       - reactions:read
       - team:read
       - users:read
-      - chat:write
+      - users.profile:read
 settings:
   event_subscriptions:
     request_url: https://example.com/slack/events
@@ -44,7 +48,10 @@ settings:
       - channel_created
       - channel_deleted
       - channel_rename
+      - channel_shared
       - channel_unarchive
+      - channel_unshared
+      - emoji_changed
       - group_archive
       - group_deleted
       - group_rename
@@ -53,6 +60,9 @@ settings:
       - team_join
       - team_rename
       - user_change
+  interactivity:
+    is_enabled: true
+    request_url: https://example.com/slack/interactions
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false
