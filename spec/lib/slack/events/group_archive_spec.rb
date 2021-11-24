@@ -5,11 +5,9 @@ RSpec.describe Slack::Events::GroupArchive do
   let(:team) { create(:team, :sparkles) }
   let!(:channel) { create(:channel, team: team, slack_id: payload[:event][:channel], private: true) }
 
+  subject(:event) { Slack::Events::GroupArchive.execute(slack_team_id: team.slack_id, payload: payload[:event]) }
+
   it "updates the channel's archived flag" do
-    expect {
-      Slack::Events::GroupArchive.execute(slack_team_id: team.slack_id, payload: payload[:event])
-    }.to change {
-      channel.reload.archived?
-    }.from(false).to(true)
+    expect { event }.to change { channel.reload.archived? }.from(false).to(true)
   end
 end

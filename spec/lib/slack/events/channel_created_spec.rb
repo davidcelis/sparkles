@@ -4,13 +4,11 @@ RSpec.describe Slack::Events::ChannelCreated do
   let(:payload) { event_fixture("channel_created") }
   let!(:team) { create(:team, :sparkles) }
 
+  subject(:event) { Slack::Events::ChannelCreated.execute(slack_team_id: team.slack_id, payload: payload[:event]) }
+
   it "stores the channel locally" do
     VCR.use_cassette("channel_created_event") do
-      expect {
-        Slack::Events::ChannelCreated.execute(slack_team_id: team.slack_id, payload: payload[:event])
-      }.to change {
-        team.reload.channels.count
-      }.from(0).to(1)
+      expect { event }.to change { team.reload.channels.count }.from(0).to(1)
     end
 
     channel = team.channels.first

@@ -5,13 +5,11 @@ RSpec.describe Slack::Events::ChannelUnshared do
   let(:team) { create(:team, :sparkles) }
   let!(:channel) { create(:channel, team: team, slack_id: payload[:event][:channel], shared: true) }
 
+  subject(:event) { Slack::Events::ChannelUnshared.execute(slack_team_id: team.slack_id, payload: payload[:event]) }
+
   it "updates the channel's shared flag" do
     VCR.use_cassette("channel_unshared_event") do
-      expect {
-        Slack::Events::ChannelUnshared.execute(slack_team_id: team.slack_id, payload: payload[:event])
-      }.to change {
-        channel.reload.shared?
-      }.from(true).to(false)
+      expect { event }.to change { channel.reload.shared? }.from(true).to(false)
     end
   end
 end
