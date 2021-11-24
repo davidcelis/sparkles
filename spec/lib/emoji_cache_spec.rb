@@ -5,13 +5,13 @@ RSpec.describe EmojiCache do
   let(:cache) { EmojiCache.new(team) }
 
   let(:cassette) { YAML.load_file("spec/fixtures/cassettes/emoji_list.yml").with_indifferent_access }
-  let(:emoji_response) { JSON.parse(cassette[:http_interactions].first.dig(:response, :body, :string))["emoji"] }
+  let(:emoji_response) { request_fixture("emoji_list") }
   let(:cache_key) { "teams:#{team.slack_id}:emoji" }
 
   describe "#read" do
     context "when no custom emoji are stored" do
       it "hits Slack's Emoji API and returns the requested emoji" do
-        expect(Rails.cache.redis).to receive(:hset).with(cache_key, emoji_response)
+        expect(Rails.cache.redis).to receive(:hset).with(cache_key, emoji_response[:emoji])
         emoji = VCR.use_cassette("emoji_list") { cache.read("sushi-sparkles", "dark-sparkles") }
 
         expect(emoji.size).to eq(2)
@@ -22,7 +22,7 @@ RSpec.describe EmojiCache do
 
     context "when custom emoji are stored" do
       before do
-        stored_emoji = emoji_response.slice("sushi-sparkles")
+        stored_emoji = emoji_response[:emoji].slice("sushi-sparkles")
         Rails.cache.redis.hset(cache_key, stored_emoji)
       end
 
@@ -35,7 +35,7 @@ RSpec.describe EmojiCache do
       end
 
       it "hits Slack's Emoji API if a cache miss occurs" do
-        expect(Rails.cache.redis).to receive(:hset).with(cache_key, emoji_response)
+        expect(Rails.cache.redis).to receive(:hset).with(cache_key, emoji_response["emoji"])
         emoji = VCR.use_cassette("emoji_list") { cache.read("sushi-sparkles", "dark-sparkles") }
 
         expect(emoji.size).to eq(2)
@@ -44,7 +44,7 @@ RSpec.describe EmojiCache do
       end
 
       it "does not hit Slack's Emoji API multiple times for repeated cache misses" do
-        expect(Rails.cache.redis).to receive(:hset).with(cache_key, emoji_response).once
+        expect(Rails.cache.redis).to receive(:hset).with(cache_key, emoji_response["emoji"]).once
         first_emoji = VCR.use_cassette("emoji_list") { cache.read("doesnt-exist") }
         expect(first_emoji["doesnt-exist"]).to be_blank
 

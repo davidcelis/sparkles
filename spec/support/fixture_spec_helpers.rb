@@ -10,4 +10,10 @@ module FixtureSpecHelpers
 
     JSON.parse(File.read(path)).with_indifferent_access
   end
+
+  def request_fixture(name)
+    path = Rails.root.join("spec", "fixtures", "slack", "requests", "#{name}.json")
+
+    JSON.parse(File.read(path)).with_indifferent_access
+  end
 end
