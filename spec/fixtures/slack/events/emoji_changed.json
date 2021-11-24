@@ -1,0 +1,25 @@
+{
+  "token": "[FILTERED]",
+  "team_id": "T02K1HUQ60Y",
+  "api_app_id": "A02N01LRHLP",
+  "event": {
+    "subtype": "add",
+    "name": "sparklebot",
+    "value": "https://emoji.slack-edge.com/T02K1HUQ60Y/sparklebot/06adfe43a11d442a.png",
+    "type": "emoji_changed",
+    "event_ts": "1637785396.006700"
+  },
+  "type": "event_callback",
+  "event_id": "Ev02NFTA5ZL5",
+  "event_time": 1637785396,
+  "authorizations": [
+    {
+      "enterprise_id": null,
+      "team_id": "T02K1HUQ60Y",
+      "user_id": "U02NTAF7N81",
+      "is_bot": true,
+      "is_enterprise_install": false
+    }
+  ],
+  "is_ext_shared_channel": false
+}

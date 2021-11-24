@@ -8,7 +8,7 @@ module Slack
 
         # Don't persist users who are bots or restricted guests.
         slack_user = ::Slack::User.from_api_response(payload[:user])
-        return if slack_user.bot? || slack_user.restricted?
+        return unless slack_user.human_teammate?
 
         ::User.upsert(slack_user.attributes, unique_by: [:slack_team_id, :slack_id])
       end

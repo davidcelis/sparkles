@@ -74,7 +74,7 @@ http_interactions:
       - no-match
     body:
       encoding: ASCII-8BIT
-      string: '{"ok":true,"app_id":"A02K1J7462C","authed_user":{"id":"U02JE49NDNY","scope":"openid","access_token":"<SLACK_TOKEN>","token_type":"user"},"scope":"channels:join,channels:read,chat:write,commands,groups:read,team:read,users:read,reactions:read,emoji:read,channels:history,groups:history,users.profile:read","token_type":"bot","access_token":"<SLACK_TOKEN>","bot_user_id":"U02JEBH6BGC","team":{"id":"T02K1HUQ60Y","name":"Sparkles"},"enterprise":null,"is_enterprise_install":false}'
+      string: '{"ok":true,"app_id":"A02K1J7462C","authed_user":{"id":"U02JE49NDNY","scope":"openid","access_token":"<SLACK_TOKEN>","token_type":"user"},"scope":"channels:join,channels:read,chat:write,commands,groups:read,team:read,users:read,reactions:read,emoji:read,channels:history,groups:history,users.profile:read","token_type":"bot","access_token":"<SLACK_TOKEN>","bot_user_id":"USPARKLEBOT","team":{"id":"T02K1HUQ60Y","name":"Sparkles"},"enterprise":null,"is_enterprise_install":false}'
   recorded_at: Thu, 11 Nov 2021 20:56:15 GMT
 - request:
     method: post

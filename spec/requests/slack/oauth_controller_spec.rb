@@ -31,7 +31,7 @@ RSpec.describe Slack::OAuthController, type: :request do
         expect(team.slack_id).to eq("T02K1HUQ60Y")
         expect(team.name).to eq("Sparkles")
         expect(team.icon_url).to eq("https://avatars.slack-edge.com/2021-10-23/2642530172644_b1f7592ed7472c2dfb0e_original.png")
-        expect(team.sparklebot_id).to eq("U02JEBH6BGC")
+        expect(team.sparklebot_id).to eq("USPARKLEBOT")
         expect(team.slack_token).to eq("<SLACK_TOKEN>")
 
         job = SyncSlackTeamWorker.jobs.last
