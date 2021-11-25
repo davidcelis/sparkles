@@ -1,0 +1,162 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://slack.com/api/users.info
+    body:
+      encoding: UTF-8
+      string: token=<SLACK_TOKEN>&user=U1234567890
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/0.17.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 25 Nov 2021 01:35:11 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - channels:history,channels:join,channels:read,chat:write,commands,emoji:read,groups:history,groups:read,reactions:read,team:read,users.profile:read,users:read
+      X-Accepted-Oauth-Scopes:
+      - users:read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - e727710c45fe0592b8d73afcad4a8afc
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '57'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '264'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-2dhj
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-9e88, envoy-edge-pdx-j1sc
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":false,"error":"user_not_found"}'
+  recorded_at: Thu, 25 Nov 2021 01:35:12 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/chat.postMessage
+    body:
+      encoding: UTF-8
+      string: channel=C02NCMN16PQ&text=I+couldn%27t+find+the+teammate+you%27re+trying+to+sparkle+%3Asweat%3A+Make+sure+you%27re+using+a+highlighted+%40mention+and+that+they+aren%27t+a+guest+member%21&token=<SLACK_TOKEN>
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/0.17.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 25 Nov 2021 01:35:12 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - channels:history,channels:join,channels:read,chat:write,commands,emoji:read,groups:history,groups:read,reactions:read,team:read,users.profile:read,users:read
+      X-Accepted-Oauth-Scopes:
+      - chat:write
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 95fff7d5afc84f2d3a463246e80c38e0
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '440'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '131'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-0qij
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-g7h2, envoy-edge-pdx-xzef
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channel":"C02NCMN16PQ","ts":"1637804112.003000","message":{"bot_id":"B02NBNY1AJH","type":"message","text":"I
+        couldn''t find the teammate you''re trying to sparkle :sweat: Make sure you''re
+        using a highlighted @mention and that they aren''t a guest member!","user":"U02NTAF7N81","ts":"1637804112.003000","team":"T02K1HUQ60Y","bot_profile":{"id":"B02NBNY1AJH","app_id":"A02N01LRHLP","name":"Sparkles
+        (Development)","icons":{"image_36":"https:\/\/avatars.slack-edge.com\/2021-11-23\/2759751707333_d3683b077497a3e3e7f5_36.png","image_48":"https:\/\/avatars.slack-edge.com\/2021-11-23\/2759751707333_d3683b077497a3e3e7f5_48.png","image_72":"https:\/\/avatars.slack-edge.com\/2021-11-23\/2759751707333_d3683b077497a3e3e7f5_72.png"},"deleted":false,"updated":1637710952,"team_id":"T02K1HUQ60Y"}}}'
+  recorded_at: Thu, 25 Nov 2021 01:35:12 GMT
+recorded_with: VCR 6.0.0

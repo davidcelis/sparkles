@@ -46,7 +46,7 @@ class SparkleWorker < ApplicationWorker
       slack_sparklee = Slack::User.from_api_response(response.user)
 
       if slack_sparklee.bot?
-        text = if slack_sparklee.sparklebot?
+        text = if slack_sparklee.slack_id == team.sparklebot_id
           "Aww, thank you, <@#{options[:slack_sparkler_id]}>! That's so thoughtful, but I'm already swimming in sparkles! I couldn't possibly take one of yours, but I apprecate the gesture nonetheless :sparkles:"
         else
           "It's so nice that you want to recognize one of my fellow bots! They've all politely declined to join the fun of sparkle hoarding, but I'll pass along your thanks."

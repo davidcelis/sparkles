@@ -1,0 +1,84 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://slack.com/api/chat.postMessage
+    body:
+      encoding: UTF-8
+      string: channel=C02NCMN16PQ&text=Oops%2C+I+ran+into+a+problem+in+the+Sparkle+pipeline+%3Asweat%3A+I%27ll+notify+my+mechanic+about+this+and+keep+trying+for+a+bit+in+the+meantime.+Sorry%21&token=<SLACK_TOKEN>
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/0.17.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 25 Nov 2021 01:37:24 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - channels:history,channels:join,channels:read,chat:write,commands,emoji:read,groups:history,groups:read,reactions:read,team:read,users.profile:read,users:read
+      X-Accepted-Oauth-Scopes:
+      - chat:write
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 2b18892201478258962562038fb9f114
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '444'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '124'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-y05n
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-4y7d, envoy-edge-pdx-4q12
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channel":"C02NCMN16PQ","ts":"1637804244.003200","message":{"bot_id":"B02NBNY1AJH","type":"message","text":"Oops,
+        I ran into a problem in the Sparkle pipeline :sweat: I''ll notify my mechanic
+        about this and keep trying for a bit in the meantime. Sorry!","user":"U02NTAF7N81","ts":"1637804244.003200","team":"T02K1HUQ60Y","bot_profile":{"id":"B02NBNY1AJH","app_id":"A02N01LRHLP","name":"Sparkles
+        (Development)","icons":{"image_36":"https:\/\/avatars.slack-edge.com\/2021-11-23\/2759751707333_d3683b077497a3e3e7f5_36.png","image_48":"https:\/\/avatars.slack-edge.com\/2021-11-23\/2759751707333_d3683b077497a3e3e7f5_48.png","image_72":"https:\/\/avatars.slack-edge.com\/2021-11-23\/2759751707333_d3683b077497a3e3e7f5_72.png"},"deleted":false,"updated":1637710952,"team_id":"T02K1HUQ60Y"}}}'
+  recorded_at: Thu, 25 Nov 2021 01:37:24 GMT
+recorded_with: VCR 6.0.0
