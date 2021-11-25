@@ -1,0 +1,85 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://slack.com/api/users.info
+    body:
+      encoding: UTF-8
+      string: token=<SLACK_TOKEN>&user=U02J7PC3Z39
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/0.17.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 25 Nov 2021 02:11:14 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - channels:history,channels:join,channels:read,chat:write,commands,emoji:read,groups:history,groups:read,reactions:read,team:read,users.profile:read,users:read
+      X-Accepted-Oauth-Scopes:
+      - users:read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - d63a1a34efb21da681864df5eeab99ba
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '639'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '89'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-8ynh
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-hys2, envoy-edge-pdx-01cw
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"user":{"id":"U02J7PC3Z39","team_id":"T02K1HUQ60Y","name":"sdt","deleted":false,"color":"e7392d","real_name":"Slack
+        Developer Tools","tz":"America\/Los_Angeles","tz_label":"Pacific Standard
+        Time","tz_offset":-28800,"profile":{"title":"","phone":"","skype":"","real_name":"Slack
+        Developer Tools","real_name_normalized":"Slack Developer Tools","display_name":"","display_name_normalized":"","fields":null,"status_text":"","status_emoji":"","status_emoji_display_info":[],"status_expiration":0,"avatar_hash":"99d2d7b21baa","api_app_id":"APXEJ79UY","always_active":true,"image_original":"https:\/\/avatars.slack-edge.com\/2021-10-21\/2627746167622_99d2d7b21baa7274e0e5_original.png","is_custom_image":true,"bot_id":"B02JNE9LGPM","first_name":"Slack","last_name":"Developer
+        Tools","image_24":"https:\/\/avatars.slack-edge.com\/2021-10-21\/2627746167622_99d2d7b21baa7274e0e5_24.png","image_32":"https:\/\/avatars.slack-edge.com\/2021-10-21\/2627746167622_99d2d7b21baa7274e0e5_32.png","image_48":"https:\/\/avatars.slack-edge.com\/2021-10-21\/2627746167622_99d2d7b21baa7274e0e5_48.png","image_72":"https:\/\/avatars.slack-edge.com\/2021-10-21\/2627746167622_99d2d7b21baa7274e0e5_72.png","image_192":"https:\/\/avatars.slack-edge.com\/2021-10-21\/2627746167622_99d2d7b21baa7274e0e5_192.png","image_512":"https:\/\/avatars.slack-edge.com\/2021-10-21\/2627746167622_99d2d7b21baa7274e0e5_512.png","image_1024":"https:\/\/avatars.slack-edge.com\/2021-10-21\/2627746167622_99d2d7b21baa7274e0e5_1024.png","status_text_canonical":"","team":"T02K1HUQ60Y"},"is_admin":false,"is_owner":false,"is_primary_owner":false,"is_restricted":false,"is_ultra_restricted":false,"is_bot":true,"is_app_user":false,"updated":1634853321,"is_email_confirmed":false,"who_can_share_contact_card":"EVERYONE"}}'
+  recorded_at: Thu, 25 Nov 2021 02:11:14 GMT
+recorded_with: VCR 6.0.0

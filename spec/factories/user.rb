@@ -9,6 +9,10 @@ FactoryBot.define do
     deactivated { false }
     team_admin { false }
 
+    transient do
+      with_sparkles { 0 }
+    end
+
     trait :davidcelis do
       slack_id { "U02JE49NDNY" }
       name { "David Celis" }
@@ -17,6 +21,16 @@ FactoryBot.define do
       team_admin { true }
 
       association :team, :sparkles
+    end
+
+    after(:create) do |user, evaluator|
+      next unless evaluator.with_sparkles > 0
+
+      channel = create(:channel, team: user.team)
+      create_list(:sparkle, evaluator.with_sparkles, team: user.team, channel: channel, sparkler: user, sparklee: user)
+
+      # You may need to reload the record here, depending on your application
+      user.reload
     end
   end
 end

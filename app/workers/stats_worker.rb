@@ -17,6 +17,13 @@ class StatsWorker < ApplicationWorker
     http.post(options[:response_url], result)
   end
 
+  def http
+    @http ||= Faraday.new do |f|
+      f.request :json # Encode request bodies as JSON
+      f.request :retry # Retry transient failures
+    end
+  end
+
   private
 
   def team_leaderboard_for(team:)
@@ -76,7 +83,7 @@ class StatsWorker < ApplicationWorker
       slack_user = Slack::User.from_api_response(response.user)
 
       if slack_user.bot?
-        text = if slack_user.sparklebot?
+        text = if slack_user.slack_id == team.sparklebot_id
           "I have far too many sparkles to count, so I've stopped keeping track!"
         else
           "<@#{slack_user_id}> and all the other bots have politely declined to join the fun of sparkle hoarding."
@@ -159,12 +166,5 @@ class StatsWorker < ApplicationWorker
     }
 
     {blocks: blocks, response_type: :ephemeral}
-  end
-
-  def http
-    @http ||= Faraday.new do |f|
-      f.request :json # Encode request bodies as JSON
-      f.request :retry # Retry transient failures
-    end
   end
 end
