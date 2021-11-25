@@ -106,7 +106,7 @@ RSpec.describe StatsWorker do
                     alt_text: "sparkles"
                   },
                   {
-                    text: "Visit <https://sparkles.lol/stats/T02K1HUQ60Y/U02JE49NDNY|sparkles.lol> to see the rest!",
+                    text: "Visit <https://sparkles.lol/stats/#{team.slack_id}/#{user.slack_id}|sparkles.lol> to see the rest!",
                     type: :mrkdwn
                   }
                 ],
@@ -123,12 +123,200 @@ RSpec.describe StatsWorker do
     context "when a user_id is provided" do
       before { options[:slack_user_id] = teammate.slack_id }
 
-      it "displays that user's sparkles"
+      it "displays that user's sparkles" do
+        most_recent_sparkles = teammate.sparkles.includes(:sparkler, :channel).order(created_at: :desc).limit(10)
+
+        expect(worker.http).to receive(:post).with(options[:response_url], {
+          response_type: :ephemeral,
+          blocks: [
+            {
+              type: :header,
+              text: {
+                text: ":sparkles: Here are #{teammate.name}'s most recent sparkles! :sparkles:",
+                type: :plain_text,
+                emoji: true
+              }
+            },
+            {type: :divider},
+            *most_recent_sparkles.map { |s| sparkle_block(s) },
+            {type: :divider},
+            {
+              elements: [
+                {
+                  type: :image,
+                  image_url: "https://sparkles.lol/sparkles.png",
+                  alt_text: "sparkles"
+                },
+                {
+                  text: "Visit <https://sparkles.lol/stats/#{team.slack_id}/#{teammate.slack_id}|sparkles.lol> to see the rest!",
+                  type: :mrkdwn
+                }
+              ],
+              type: :context
+            }
+          ]
+        })
+
+        worker.perform(options)
+      end
+
+      context "when one or more sparkles were given in a private channel" do
+        before do
+          private_channel = create(:channel, team: team, private: true)
+          create(:sparkle, sparkler: user, sparklee: teammate, channel: private_channel, reason: "for your secrets")
+        end
+
+        it "hides details about the sparkle from people who are uninvolved" do
+          most_recent_sparkles = teammate.sparkles.includes(:sparkler, :channel).order(created_at: :desc).limit(10)
+
+          expect(worker.http).to receive(:post).with(options[:response_url], {
+            response_type: :ephemeral,
+            blocks: [
+              {
+                type: :header,
+                text: {
+                  text: ":sparkles: Here are #{teammate.name}'s most recent sparkles! :sparkles:",
+                  type: :plain_text,
+                  emoji: true
+                }
+              },
+              {type: :divider},
+              *most_recent_sparkles.map { |s| s.channel.private? ? private_sparkle_block(s) : sparkle_block(s) },
+              {type: :divider},
+              {
+                elements: [
+                  {
+                    type: :image,
+                    image_url: "https://sparkles.lol/sparkles.png",
+                    alt_text: "sparkles"
+                  },
+                  {
+                    text: "Visit <https://sparkles.lol/stats/#{team.slack_id}/#{teammate.slack_id}|sparkles.lol> to see the rest!",
+                    type: :mrkdwn
+                  }
+                ],
+                type: :context
+              }
+            ]
+          })
+
+          worker.perform(options.merge(slack_caller_id: second_place.slack_id))
+        end
+
+        it "shows details about the sparkle to the sparkler" do
+          most_recent_sparkles = teammate.sparkles.includes(:sparkler, :channel).order(created_at: :desc).limit(10)
+
+          expect(worker.http).to receive(:post).with(options[:response_url], {
+            response_type: :ephemeral,
+            blocks: [
+              {
+                type: :header,
+                text: {
+                  text: ":sparkles: Here are #{teammate.name}'s most recent sparkles! :sparkles:",
+                  type: :plain_text,
+                  emoji: true
+                }
+              },
+              {type: :divider},
+              *most_recent_sparkles.map { |s| sparkle_block(s) },
+              {type: :divider},
+              {
+                elements: [
+                  {
+                    type: :image,
+                    image_url: "https://sparkles.lol/sparkles.png",
+                    alt_text: "sparkles"
+                  },
+                  {
+                    text: "Visit <https://sparkles.lol/stats/#{team.slack_id}/#{teammate.slack_id}|sparkles.lol> to see the rest!",
+                    type: :mrkdwn
+                  }
+                ],
+                type: :context
+              }
+            ]
+          })
+
+          worker.perform(options.merge(slack_caller_id: user.slack_id))
+        end
+
+        it "shows details about the sparkle to the sparklee" do
+          most_recent_sparkles = teammate.sparkles.includes(:sparkler, :channel).order(created_at: :desc).limit(10)
+
+          expect(worker.http).to receive(:post).with(options[:response_url], {
+            response_type: :ephemeral,
+            blocks: [
+              {
+                type: :header,
+                text: {
+                  text: ":sparkles: Here are your most recent sparkles! :sparkles:",
+                  type: :plain_text,
+                  emoji: true
+                }
+              },
+              {type: :divider},
+              *most_recent_sparkles.map { |s| sparkle_block(s) },
+              {type: :divider},
+              {
+                elements: [
+                  {
+                    type: :image,
+                    image_url: "https://sparkles.lol/sparkles.png",
+                    alt_text: "sparkles"
+                  },
+                  {
+                    text: "Visit <https://sparkles.lol/stats/#{team.slack_id}/#{teammate.slack_id}|sparkles.lol> to see the rest!",
+                    type: :mrkdwn
+                  }
+                ],
+                type: :context
+              }
+            ]
+          })
+
+          worker.perform(options.merge(slack_caller_id: teammate.slack_id))
+        end
+      end
 
       context "when used on oneself" do
         before { options[:slack_user_id] = user.slack_id }
 
-        it "changes the messaging slightly"
+        it "changes the messaging slightly" do
+          most_recent_sparkles = user.sparkles.includes(:sparkler, :channel).order(created_at: :desc).limit(10)
+
+          expect(worker.http).to receive(:post).with(options[:response_url], {
+            response_type: :ephemeral,
+            blocks: [
+              {
+                type: :header,
+                text: {
+                  text: ":sparkles: Here are your most recent sparkles! :sparkles:",
+                  type: :plain_text,
+                  emoji: true
+                }
+              },
+              {type: :divider},
+              *most_recent_sparkles.map { |s| sparkle_block(s) },
+              {type: :divider},
+              {
+                elements: [
+                  {
+                    type: :image,
+                    image_url: "https://sparkles.lol/sparkles.png",
+                    alt_text: "sparkles"
+                  },
+                  {
+                    text: "Visit <https://sparkles.lol/stats/#{team.slack_id}/#{user.slack_id}|sparkles.lol> to see the rest!",
+                    type: :mrkdwn
+                  }
+                ],
+                type: :context
+              }
+            ]
+          })
+
+          worker.perform(options)
+        end
       end
     end
   end
@@ -176,11 +364,7 @@ RSpec.describe StatsWorker do
     {
       type: :context,
       elements: [
-        {
-          type: :image,
-          image_url: user.image_url,
-          alt_text: user.name
-        },
+        image_block(user),
         {
           type: :mrkdwn,
           text: "*<@#{user.slack_id}>* has #{user.sparkles_count} sparkles :sparkles:"
@@ -193,11 +377,7 @@ RSpec.describe StatsWorker do
     {
       type: :context,
       elements: [
-        {
-          type: :image,
-          image_url: sparkle.sparkler.image_url,
-          alt_text: sparkle.sparkler.name
-        },
+        image_block(sparkle.sparkler),
         {
           type: :mrkdwn,
           text: "Sparkled by <@#{sparkle.sparkler.slack_id}> less than a minute ago in <##{sparkle.channel.slack_id}>"
@@ -207,6 +387,27 @@ RSpec.describe StatsWorker do
           text: sparkle.reason
         }
       ]
+    }
+  end
+
+  def private_sparkle_block(sparkle)
+    {
+      type: :context,
+      elements: [
+        image_block(sparkle.sparkler),
+        {
+          type: :mrkdwn,
+          text: "Sparkled by <@#{sparkle.sparkler.slack_id}> less than a minute ago in <:lock: a secret place>"
+        }
+      ]
+    }
+  end
+
+  def image_block(user)
+    {
+      type: :image,
+      image_url: user.image_url,
+      alt_text: user.name
     }
   end
 end

@@ -77,7 +77,12 @@ class StatsWorker < ApplicationWorker
   end
 
   def user_stats_for(team:, current_user:, slack_user_id:)
-    user = current_user if current_user.slack_id == slack_user_id
+    user = if current_user.slack_id == slack_user_id
+      current_user
+    else
+      team.users.find_by(slack_id: slack_user_id)
+    end
+
     unless user
       response = team.api_client.users_info(user: slack_user_id)
       slack_user = Slack::User.from_api_response(response.user)
