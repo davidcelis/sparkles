@@ -58,7 +58,7 @@ RSpec.describe Slack::OAuthController, type: :request do
     end
 
     context "when installing again" do
-      let!(:team) { create(:team, :sparkles, slack_token: "<OLD_TOKEN>", name: "Old Sparkles") }
+      let!(:team) { create(:team, :sparkles, slack_token: "<OLD_TOKEN>", name: "Old Sparkles", uninstalled: true) }
       let!(:user) { create(:user, team: team, slack_id: "U02JE49NDNY", name: "David S. Pumpkins") }
 
       around do |example|
@@ -73,6 +73,7 @@ RSpec.describe Slack::OAuthController, type: :request do
         team.reload
         expect(team.slack_token).to eq("<SLACK_TOKEN>")
         expect(team.name).to eq("Sparkles")
+        expect(team).not_to be_uninstalled
       end
 
       it "signs in and updates the authorizing user" do

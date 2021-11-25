@@ -7,6 +7,7 @@ FactoryBot.define do
     sparklebot_id { "U#{generate(:slack_id)}" }
     slack_feed_channel_id { nil }
     leaderboard_enabled { true }
+    uninstalled { false }
 
     trait :sparkles do
       slack_id { "T02K1HUQ60Y" }

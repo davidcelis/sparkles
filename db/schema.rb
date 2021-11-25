@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_14_231010) do
+ActiveRecord::Schema.define(version: 2021_11_25_174317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,7 +52,9 @@ ActiveRecord::Schema.define(version: 2021_11_14_231010) do
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
     t.string "slack_feed_channel_id"
     t.boolean "leaderboard_enabled", default: true, null: false
+    t.boolean "uninstalled", default: false, null: false
     t.index ["slack_id"], name: "index_teams_on_slack_id", unique: true
+    t.index ["uninstalled"], name: "index_teams_on_uninstalled"
   end
 
   create_table "users", force: :cascade do |t|

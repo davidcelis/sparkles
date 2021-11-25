@@ -20,6 +20,7 @@ module Slack
       team = ::Team.find_or_initialize_by(slack_id: response.team.id)
       team.slack_token = response.access_token
       team.sparklebot_id = response.bot_user_id
+      team.uninstalled = false
 
       slack_team = Slack::Team.from_api_response(team.api_client.team_info.team)
       team.assign_attributes(slack_team.attributes)

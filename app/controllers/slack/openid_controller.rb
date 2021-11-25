@@ -29,6 +29,12 @@ module Slack
         redirect_to root_path and return
       end
 
+      if team.uninstalled?
+        flash.alert = "Sorry, your team uninstalled Sparkles. They'll have to reinstall it if you want to sign in with this team. If they do reinstall, all of your sparkles are still here!"
+
+        redirect_to root_path and return
+      end
+
       user = ::User.find_by(slack_team_id: jwt["https://slack.com/team_id"], slack_id: jwt["https://slack.com/user_id"])
       unless user.present?
         user_info_response = team.api_client.users_info(user: jwt["https://slack.com/user_id"])

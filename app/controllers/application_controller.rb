@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_action :require_active_team
+
   def current_user
     @current_user ||= User.find_by(
       slack_team_id: cookies.encrypted[:slack_team_id],
@@ -28,5 +30,16 @@ class ApplicationController < ActionController::Base
 
   def require_authentication
     redirect_to root_path unless authenticated?
+  end
+
+  def require_active_team
+    return unless authenticated?
+
+    if current_team.uninstalled?
+      cookies.clear
+
+      flash.alert = "Sorry, your team uninstalled Sparkles. They'll have to reinstall it if you want to sign in with this team. If they do reinstall, all of your sparkles are still here!"
+      redirect_to root_path
+    end
   end
 end

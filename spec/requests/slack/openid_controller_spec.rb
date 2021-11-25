@@ -85,6 +85,19 @@ RSpec.describe Slack::OAuthController, type: :request do
           expect(cookies[:slack_user_id]).to eq(user.slack_id)
         end
       end
+
+      context "when the team has later uninstalled sparkles" do
+        before { team.update!(uninstalled: true) }
+
+        it "returns an error" do
+          VCR.use_cassette("slack_openid_callback") do
+            get slack_openid_callback_path, params: {code: code, state: state}
+          end
+
+          expect(flash[:alert]).to eq("Sorry, your team uninstalled Sparkles. They'll have to reinstall it if you want to sign in with this team. If they do reinstall, all of your sparkles are still here!")
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
   end
 end

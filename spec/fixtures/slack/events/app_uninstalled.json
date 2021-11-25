@@ -1,0 +1,12 @@
+{
+  "token": "[FILTERED]",
+  "team_id": "T02K1HUQ60Y",
+  "api_app_id": "A02N01LRHLP",
+  "event": {
+    "type": "app_uninstalled",
+    "event_ts": "1637781485.005400"
+  },
+  "type": "event_callback",
+  "event_id": "Ev02NFMEPSQ5",
+  "event_time": 1637781485
+}
