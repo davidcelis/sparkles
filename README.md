@@ -59,7 +59,7 @@ Both the slack application and [sparkles.lol](https://sparkles.lol) are free to 
 
 Sparkles is a Rails application using the following dependencies:
 
-* Ruby 3.0.2 (and Bundler)
+* Ruby 3.0.3 (and Bundler)
 * Node v12.16.2 (and Yarn)
 * PostgreSQL 13.4
 * Redis 6.2.6
