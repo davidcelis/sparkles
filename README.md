@@ -1,12 +1,8 @@
 # ✨ Sparkles ✨
 
-Sparkles is a simple little Slack application for recognizing your teammates and friends in the form of ~~meaningless internet points~~ sparkles. When installed to a Slack workspace, a `/sparkle` slash command is added and you can get started immediately!
+Sparkles was a simple little Slack application for recognizing your teammates and friends in the form of ~~meaningless internet points~~ sparkles. Unfortunately, this original version was a bit heavy in terms of the permissions required from Slack and I never found the time to rework its permissions or how data is stored, nor did I have a lot of incentive to do so (very few people installed the application, and my own workplace only had it installed for a short period of time).
 
-<p align="center">
-  <a href="https://slack.com/oauth/v2/authorize?client_id=2647606822032.2647619142080&scope=channels:join,channels:read,commands,groups:read,reactions:read,team:read,users:read,chat:write&user_scope=openid">
-    <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"/>
-  </a>
-</p>
+I've left the code here as an archived repository so that folks can take a look, but the application is no longer available to be installed via the Slack app marketplace. I may bring Sparkles back when Slack opens up their new app development platform, but this particular Rails implementation is unlikely to return.
 
 ## Usage
 
