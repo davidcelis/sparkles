@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  database: sparkles
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  host: <%= ENV["DATABASE_HOST"] %>
+  port: <%= ENV["DATABASE_PORT"] %>
+  user: <%= ENV["DATABASE_USER"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  database: sparkles_test
+
+production:
+  url: <%= ENV["DATABASE_URL"] %>
