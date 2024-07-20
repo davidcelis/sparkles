@@ -1,0 +1,54 @@
+name: Tests
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_call:
+    secrets:
+      RAILS_MASTER_KEY:
+        required: true
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: runner
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: sparkles_test
+        ports:
+          - 5432:5432
+        options: >-
+          --mount type=tmpfs,destination=/var/lib/postgresql/data
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_ENV: test
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      DATABASE_HOST: localhost
+      DATABASE_PORT: 5432
+      DATABASE_USER: runner
+      DATABASE_PASSWORD: postgres
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Prepare test database
+        run: |
+          bin/rails db:schema:load
+
+      - name: Run tests
+        run: |
+          bin/rspec
