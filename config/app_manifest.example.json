@@ -1,0 +1,58 @@
+{
+  "display_information": {
+    "name": "Sparkles",
+    "description": "Award your teammates with sparkles for any reason or no reason at all!",
+    "background_color": "#000000",
+    "long_description": "Sparkles is a simple little Slack application for recognizing your teammates and friends. It's inspired by an old Hubot script that was very popular at GitHub and gave us a fun, silly way to share appreciation for anything from the mundane to the extraordinary. Gold stars for everyone!"
+  },
+  "features": {
+    "bot_user": {
+      "display_name": "Sparklebot",
+      "always_online": true
+    },
+    "slash_commands": [
+      {
+        "command": "/sparkle",
+        "url": "https://example.com/slack/commands",
+        "description": "✨ Give someone sparkles!",
+        "usage_hint": "@user [for something they did]",
+        "should_escape": true
+      },
+      {
+        "command": "/sparkles",
+        "url": "https://example.com/slack/commands",
+        "description": "✨ See your sparkles (or someone else's)!",
+        "usage_hint": "[@user]",
+        "should_escape": false
+      }
+    ]
+  },
+  "oauth_config": {
+    "redirect_urls": [
+      "https://example.com/slack/oauth/callback"
+    ],
+    "scopes": {
+      "bot": [
+        "chat:write",
+        "commands",
+        "reactions:read"
+      ]
+    }
+  },
+  "settings": {
+    "event_subscriptions": {
+      "request_url": "https://example.com/slack/events",
+      "bot_events": [
+        "app_uninstalled",
+        "reaction_added"
+      ]
+    },
+    "interactivity": {
+      "is_enabled": true,
+      "request_url": "https://example.com/slack/interactions"
+    },
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": false
+  }
+}
