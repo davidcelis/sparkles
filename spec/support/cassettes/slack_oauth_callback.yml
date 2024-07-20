@@ -1,0 +1,79 @@
+---
+http_interactions:
+  - request:
+      method: post
+      uri: https://slack.com/api/oauth.v2.access
+      body:
+        encoding: UTF-8
+        string: client_id=<SLACK_CLIENT_ID>&client_secret=<SLACK_CLIENT_SECRET>&code=<SLACK_OAUTH_CODE>&redirect_uri=https%3A%2F%2Fsparkles.loca.lt%2Fslack%2Foauth%2Fcallback&token
+      headers:
+        Accept:
+          - application/json; charset=utf-8
+        User-Agent:
+          - Slack Ruby Client/0.17.0
+        Content-Type:
+          - application/x-www-form-urlencoded
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Thu, 11 Nov 2021 20:56:15 GMT
+        Server:
+          - Apache
+        Access-Control-Allow-Origin:
+          - "*"
+        Referrer-Policy:
+          - no-referrer
+        X-Slack-Backend:
+          - r
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        Access-Control-Allow-Headers:
+          - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+            x-b3-sampled, x-b3-flags
+        Access-Control-Expose-Headers:
+          - x-slack-req-id, retry-after
+        Expires:
+          - Mon, 26 Jul 1997 05:00:00 GMT
+        Cache-Control:
+          - private, no-cache, no-store, must-revalidate
+        Pragma:
+          - no-cache
+        X-Robots-Tag:
+          - noindex,nofollow
+        X-Xss-Protection:
+          - "0"
+        X-Content-Type-Options:
+          - nosniff
+        X-Slack-Req-Id:
+          - a2966e30a05aff15b78ff1ae6cc6a6f3
+        Vary:
+          - Accept-Encoding
+        Content-Length:
+          - "374"
+        Content-Type:
+          - application/json; charset=utf-8
+        X-Envoy-Upstream-Service-Time:
+          - "420"
+        X-Backend:
+          - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+            main_control_with_overflow main_bedrock_control_with_overflow
+        X-Server:
+          - slack-www-hhvm-main-iad-612q
+        X-Slack-Shared-Secret-Outcome:
+          - no-match
+        Via:
+          - envoy-www-iad-s3cs, envoy-edge-pdx-qbw0
+        X-Edge-Backend:
+          - envoy-www
+        X-Slack-Edge-Shared-Secret-Outcome:
+          - no-match
+      body:
+        encoding: ASCII-8BIT
+        string: '{"ok":true,"app_id":"A02K1J7462C","authed_user":{"id":"U02JE49NDNY"},"scope":"chat:write,commands,reactions:read","token_type":"bot","access_token":"<SLACK_TOKEN>","bot_user_id":"USPARKLEBOT","team":{"id":"T02K1HUQ60Y","name":"Sparkles"},"enterprise":null,"is_enterprise_install":false}'
+    recorded_at: Thu, 11 Nov 2021 20:56:15 GMT
+recorded_with: VCR 6.0.0

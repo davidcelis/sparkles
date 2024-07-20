@@ -38,5 +38,8 @@ module Sparkles
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Format the database schema using raw SQL.
+    config.active_record.schema_format = :sql
   end
 end
