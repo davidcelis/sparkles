@@ -1,8 +1,7 @@
 module Slack
   module Commands
     class Sparkle
-      USER_PATTERN = /<@(?<slack_user_id>\w+)(?:\|[^>]*)?>/
-      FORMAT = /\A#{USER_PATTERN}(\s+(?<reason>.+))?\z/
+      FORMAT = /\A#{Slack::Commands::USER_PATTERN}(\s+(?<reason>.+))?\z/
 
       HELP_TEXT = <<~TEXT.strip
         Give someone a sparkle to show your appreciation! :sparkles:
@@ -36,7 +35,7 @@ module Slack
           team_id: params[:team_id],
           channel_id: params[:channel_id],
           user_id: params[:user_id],
-          recipient_id: match[:slack_user_id],
+          recipient_id: match[:user_id],
           reason: match[:reason],
 
           # We'll typically use the chat.postMessage method to respond to the

@@ -128,5 +128,64 @@ RSpec.describe Slack::CommandsController, type: :request do
         end
       end
     end
+
+    describe "/sparkles" do
+      let(:text) { "" }
+      let(:params) {
+        {
+          token: SecureRandom.base58,
+          team_id: team.id,
+          team_domain: "sparkles-lol",
+          channel_id: "C02J565A4CE",
+          channel_name: "general",
+          user_id: "U02JE49NDNY",
+          user_name: "davidcelis",
+          command: "/sparkles",
+          text: text,
+          api_app_id: "A02N01LRHLP",
+          is_enterprise_install: "false",
+          response_url: "https://hooks.slack.com/commands/#{team.id}/respond/here",
+          trigger_id: "7440325491831.2647606822032.9a375190d6d176398ffa83e1d7f15d8e"
+        }
+      }
+
+      it "responds with a message that the feature is coming soon" do
+        post slack_commands_path, params: params
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to eq({
+          text: ":construction: This feature is coming soon!",
+          response_type: :ephemeral
+        }.to_json)
+      end
+
+      context "when help is requested" do
+        let(:text) { "help" }
+
+        it "responds with a help message" do
+          post slack_commands_path, params: params
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to eq({
+            text: Slack::Commands::Sparkles::HELP_TEXT,
+            response_type: :ephemeral
+          }.to_json)
+        end
+      end
+
+      context "when the command is not formatted correctly" do
+        let(:text) { "lol" }
+
+        it "responds with the help message" do
+          post slack_commands_path, params: params
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to eq({
+            text: Slack::Commands::Sparkles::HELP_TEXT,
+            response_type: :ephemeral
+          }.to_json)
+        end
+      end
+    end
   end
 end
