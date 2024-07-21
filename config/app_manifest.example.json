@@ -3,7 +3,7 @@
     "name": "Sparkles",
     "description": "Award your teammates with sparkles for any reason or no reason at all!",
     "background_color": "#000000",
-    "long_description": "Sparkles is a simple little Slack application for recognizing your teammates and friends. It's inspired by an old Hubot script that was very popular at GitHub and gave us a fun, silly way to share appreciation for anything from the mundane to the extraordinary. Gold stars for everyone!"
+    "long_description": "Sparkles is a simple little Slack application for recognizing your teammates and friends! It's inspired by an old Hubot script that was very popular at GitHub and gave us a fun, silly way to share appreciation for anything from the mundane to the extraordinary."
   },
   "features": {
     "bot_user": {
@@ -21,7 +21,7 @@
       {
         "command": "/sparkles",
         "url": "https://example.com/slack/commands",
-        "description": "✨ See your sparkles (or someone else's)!",
+        "description": "✨ Check the leaderboard or view someone's sparkles!",
         "usage_hint": "[@user]",
         "should_escape": false
       }
@@ -35,7 +35,8 @@
       "bot": [
         "chat:write",
         "commands",
-        "reactions:read"
+        "reactions:read",
+        "users:read"
       ]
     }
   },
