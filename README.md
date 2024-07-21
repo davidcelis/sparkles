@@ -18,7 +18,14 @@ Reasons don’t require any particular format, but if you want them to flow bett
 
 ## Self-hosting
 
-Both the slack application and [sparkles.lol](https://sparkles.lol) are free to use! Except for the reasons given for sparkles, we never store messages from Slack itself, and the OAuth scopes requested are minimal (`chat:write`, `commands`, and `reactions:read`). However, maybe you work for an organization with extremely strict rules about what data is allowed into or out of Slack. If that’s the case, Sparkles is easy to host yourself! In fact, with only a little bit of configuration, you can host Sparkles on Heroku or with Dokku.
+Both the slack application and [sparkles.lol](https://sparkles.lol) are free to use! Except for the reasons given for sparkles, we never store messages from Slack itself, and the OAuth scopes requested are minimal:
+
+* `commands` (adds the `/sparkle` command to your workspace)
+* `chat:write` (so we can post a confirmation when someone gives out a sparkle)
+* `reactions:read` (so we can give people a sparkle via emoji reactions)
+* `users:read` (so we can confirm that the user you’re trying to give a sparkle to is a member of the workspace)
+
+However, maybe you work for an organization with extremely strict rules about what data is allowed into or out of Slack. If that’s the case, Sparkles is easy to host yourself! In fact, with only a little bit of configuration, you can host Sparkles on Heroku or with Dokku.
 
 ### Requirements
 

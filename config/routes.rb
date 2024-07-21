@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root "application#index"
 
   namespace :slack do
+    resources :commands, only: :create
+
     namespace :oauth do
       get :callback
     end

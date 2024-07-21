@@ -4,7 +4,8 @@ module ApplicationHelper
   BOT_SCOPES = [
     "chat:write",
     "commands",
-    "reactions:read"
+    "reactions:read",
+    "users:read"
   ].freeze
 
   def slack_authorization_url(state:)

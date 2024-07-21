@@ -22,14 +22,14 @@
   <div class="mt-10 flex justify-center gap-x-6">
     <% if flash[:notice] %>
       <section class="flex flex-col rounded-3xl px-6 sm:px-8 bg-yellow-600 py-8">
-        <h3 class="mt-5 font-display text-lg text-white">Success!</h3>
+        <h3 class="font-display text-lg text-white">Success!</h3>
 
         <p class="mt-2 text-base text-white"><%= flash[:notice] %></p>
       </section>
     <% else %>
       <% if flash[:error] %>
         <section class="flex flex-col rounded-3xl px-6 sm:px-8 bg-red-800 py-8">
-          <h3 class="mt-5 font-display text-lg text-white">Oops!</h3>
+          <h3 class="font-display text-lg text-white">Oops!</h3>
 
           <p class="mt-2 text-base text-white"><%= flash[:error] %></p>
         </section>

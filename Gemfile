@@ -30,7 +30,16 @@ gem "tailwindcss-rails"
 gem "bcrypt", "~> 3.1.7"
 
 # Use Slack's official Ruby client
+gem "faraday"
 gem "slack-ruby-client"
+
+# Use Solid Queue for background jobs
+gem "solid_queue"
+
+# Report exceptions to Sentry
+gem "stackprof"
+gem "sentry-ruby"
+gem "sentry-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

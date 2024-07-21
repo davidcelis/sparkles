@@ -1,3 +1,2 @@
 web: bin/rails server
-css: bin/rails tailwindcss:watch
 lt: lt -p 3000 -s sparkles

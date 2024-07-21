@@ -33,3 +33,9 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
+
+# Allow puma to manage Solid Queue workers.
+plugin :solid_queue
+
+# Watch for changes and recompile CSS as necessary in development
+plugin :tailwindcss if ENV.fetch("RAILS_ENV", "development") == "development"
