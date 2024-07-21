@@ -1,0 +1,38 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  run-tests:
+    uses: ./.github/workflows/tests.yml
+    secrets:
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+  run-linters:
+    uses: ./.github/workflows/linting.yml
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [run-tests, run-linters]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deploy to Dokku
+        uses: dokku/github-action@master
+        with:
+          branch: main
+          git_remote_url: "ssh://dokku@apps.davidcel.is:22/sparkles"
+          ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
+
+      - name: Publish release to Sentry
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: davidcelis
+          SENTRY_PROJECT: sparkles
+        with:
+          environment: production
