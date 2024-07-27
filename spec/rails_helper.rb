@@ -55,6 +55,9 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
+# Use the test adapter for active job.
+ActiveJob::Base.queue_adapter = :test
+
 RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
