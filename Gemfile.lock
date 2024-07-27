@@ -273,6 +273,8 @@ GEM
     sentry-ruby (5.18.1)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+    slack-ruby-block-kit (0.24.0)
+      zeitwerk (~> 2.6)
     slack-ruby-client (2.4.0)
       faraday (>= 2.0)
       faraday-mashify
@@ -361,6 +363,7 @@ DEPENDENCIES
   rspec-rails
   sentry-rails
   sentry-ruby
+  slack-ruby-block-kit
   slack-ruby-client
   solid_queue
   stackprof

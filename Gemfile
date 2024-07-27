@@ -32,6 +32,7 @@ gem "bcrypt", "~> 3.1.7"
 # Use Slack's official Ruby client
 gem "faraday"
 gem "slack-ruby-client"
+gem "slack-ruby-block-kit"
 
 # Use Solid Queue for background jobs
 gem "solid_queue"
