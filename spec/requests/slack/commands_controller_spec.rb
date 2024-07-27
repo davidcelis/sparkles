@@ -200,8 +200,8 @@ RSpec.describe Slack::CommandsController, type: :request do
         it "opens a modal with the leaderboard" do
           post slack_commands_path, params: params
 
-          expect(response).to have_http_status(:ok)
-          expect(response.body).to eq({response_type: :ephemeral}.to_json)
+          expect(response).to have_http_status(:accepted)
+          expect(response.body).to be_empty
 
           expect(modal_request).to have_been_requested
         end
@@ -246,8 +246,8 @@ RSpec.describe Slack::CommandsController, type: :request do
           it "pads the ranks with zeros" do
             post slack_commands_path, params: params
 
-            expect(response).to have_http_status(:ok)
-            expect(response.body).to eq({response_type: :ephemeral}.to_json)
+            expect(response).to have_http_status(:accepted)
+            expect(response.body).to be_empty
 
             expect(modal_request).to have_been_requested
           end
@@ -273,8 +273,8 @@ RSpec.describe Slack::CommandsController, type: :request do
           it "opens a modal with a message that the user has not received any sparkles" do
             post slack_commands_path, params: params
 
-            expect(response).to have_http_status(:ok)
-            expect(response.body).to eq({response_type: :ephemeral}.to_json)
+            expect(response).to have_http_status(:accepted)
+            expect(response.body).to be_empty
 
             expect(modal_request).to have_been_requested
           end
@@ -297,8 +297,8 @@ RSpec.describe Slack::CommandsController, type: :request do
               it "opens a modal with the user's sparkles via /sparkles #{argument}" do
                 post slack_commands_path, params: params
 
-                expect(response).to have_http_status(:ok)
-                expect(response.body).to eq({response_type: :ephemeral}.to_json)
+                expect(response).to have_http_status(:accepted)
+                expect(response.body).to be_empty
 
                 expect(modal_request).to have_been_requested
               end
@@ -331,8 +331,8 @@ RSpec.describe Slack::CommandsController, type: :request do
           it "opens a modal with the user's sparkles" do
             post slack_commands_path, params: params
 
-            expect(response).to have_http_status(:ok)
-            expect(response.body).to eq({response_type: :ephemeral}.to_json)
+            expect(response).to have_http_status(:accepted)
+            expect(response.body).to be_empty
 
             expect(modal_request).to have_been_requested
           end
@@ -360,8 +360,8 @@ RSpec.describe Slack::CommandsController, type: :request do
               it "opens a modal with the user's sparkles via /sparkles #{argument}" do
                 post slack_commands_path, params: params
 
-                expect(response).to have_http_status(:ok)
-                expect(response.body).to eq({response_type: :ephemeral}.to_json)
+                expect(response).to have_http_status(:accepted)
+                expect(response.body).to be_empty
 
                 expect(modal_request).to have_been_requested
               end

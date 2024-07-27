@@ -40,7 +40,7 @@ module Slack
           render_leaderboard(params)
         end
 
-        {response_type: :ephemeral}
+        nil
       end
 
       def self.render_sparkles_for_user(user_id, params)
