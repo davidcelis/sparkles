@@ -278,6 +278,32 @@ RSpec.describe Slack::CommandsController, type: :request do
 
             expect(modal_request).to have_been_requested
           end
+
+          context "when the user is the one requesting their own sparkles" do
+            let(:params) { super().merge(user_id: user_id) }
+
+            let(:expected_modal) do
+              {
+                type: "modal",
+                title: {type: "plain_text", text: "Sparkles"},
+                close: {type: "plain_text", text: "Close"},
+                blocks: [
+                  {type: "section", text: {type: "mrkdwn", text: "You haven’t received any sparkles yet! :cry: Go do something nice or make someone laugh!"}}
+                ]
+              }
+            end
+
+            ["<@U02K1HUQ60Y>", "me"].each do |argument|
+              it "opens a modal with the user's sparkles via /sparkles #{argument}" do
+                post slack_commands_path, params: params
+
+                expect(response).to have_http_status(:ok)
+                expect(response.body).to eq({response_type: :ephemeral}.to_json)
+
+                expect(modal_request).to have_been_requested
+              end
+            end
+          end
         end
 
         context "when the user has received sparkles" do
@@ -313,14 +339,13 @@ RSpec.describe Slack::CommandsController, type: :request do
 
           context "when the user is the one requesting their own sparkles" do
             let(:params) { super().merge(user_id: user_id) }
-
             let(:expected_modal) do
               {
                 type: "modal",
                 title: {type: "plain_text", text: "Sparkles"},
                 close: {type: "plain_text", text: "Close"},
                 blocks: [
-                  {type: "section", text: {type: "mrkdwn", text: "Here are all the sparkles that you’ve received! :sparkles:"}},
+                  {type: "section", text: {type: "mrkdwn", text: "Here are all the sparkles you’ve received! :sparkles:"}},
                   {type: "divider"},
                   {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_1.from_user_id}> in <##{sparkle_1.channel_id}> on <!date^#{sparkle_1.created_at.to_i}^{date_short_pretty}^https://example.com|#{sparkle_1.created_at}>"}},
                   {type: "context", elements: [{type: "mrkdwn", text: sparkle_1.reason}]},
@@ -329,6 +354,17 @@ RSpec.describe Slack::CommandsController, type: :request do
                   {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_3.from_user_id}> in <##{sparkle_3.channel_id}> on <!date^#{sparkle_3.created_at.to_i}^{date_short_pretty}^https://example.com|#{sparkle_3.created_at}>"}}
                 ]
               }
+            end
+
+            ["<@U02K1HUQ60Y>", "me"].each do |argument|
+              it "opens a modal with the user's sparkles via /sparkles #{argument}" do
+                post slack_commands_path, params: params
+
+                expect(response).to have_http_status(:ok)
+                expect(response.body).to eq({response_type: :ephemeral}.to_json)
+
+                expect(modal_request).to have_been_requested
+              end
             end
           end
         end
