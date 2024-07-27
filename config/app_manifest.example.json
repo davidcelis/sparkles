@@ -23,7 +23,7 @@
         "url": "https://example.com/slack/commands",
         "description": "✨ Check the leaderboard or view someone's sparkles!",
         "usage_hint": "[@user]",
-        "should_escape": false
+        "should_escape": true
       }
     ]
   },
