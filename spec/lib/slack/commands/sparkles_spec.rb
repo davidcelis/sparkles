@@ -93,11 +93,11 @@ RSpec.describe Slack::Commands::Sparkles do
         blocks: [
           {type: "section", text: {type: "mrkdwn", text: "Here are all the sparkles that <@#{user_id}> has received! :sparkles:"}},
           {type: "divider"},
-          {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_1.from_user_id}> in <##{sparkle_1.channel_id}> on <!date^#{sparkle_1.created_at.to_i}^{date_short_pretty}^https://example.com|#{sparkle_1.created_at}>"}},
+          {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_1.from_user_id}> in <##{sparkle_1.channel_id}> on <!date^#{sparkle_1.created_at.to_i}^{date_short}^https://example.com|#{sparkle_1.created_at}>"}},
           {type: "context", elements: [{type: "mrkdwn", text: sparkle_1.reason}]},
-          {type: "section", text: {type: "mrkdwn", text: ":sparkle: From themselves (:wink:) in <##{sparkle_2.channel_id}> on <!date^#{sparkle_2.created_at.to_i}^{date_short_pretty}^https://sparkles.lol|#{sparkle_2.created_at}>"}},
+          {type: "section", text: {type: "mrkdwn", text: ":sparkle: From themselves (:wink:) in <##{sparkle_2.channel_id}> on <!date^#{sparkle_2.created_at.to_i}^{date_short}^https://sparkles.lol|#{sparkle_2.created_at}>"}},
           {type: "context", elements: [{type: "mrkdwn", text: sparkle_2.reason}]},
-          {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_3.from_user_id}> in <##{sparkle_3.channel_id}> on <!date^#{sparkle_3.created_at.to_i}^{date_short_pretty}^https://example.com|#{sparkle_3.created_at}>"}}
+          {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_3.from_user_id}> in <##{sparkle_3.channel_id}> on <!date^#{sparkle_3.created_at.to_i}^{date_short}^https://example.com|#{sparkle_3.created_at}>"}}
         ]
       }
     end
@@ -118,11 +118,11 @@ RSpec.describe Slack::Commands::Sparkles do
           blocks: [
             {type: "section", text: {type: "mrkdwn", text: "Here are all the sparkles you’ve received! :sparkles:"}},
             {type: "divider"},
-            {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_1.from_user_id}> in <##{sparkle_1.channel_id}> on <!date^#{sparkle_1.created_at.to_i}^{date_short_pretty}^https://example.com|#{sparkle_1.created_at}>"}},
+            {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_1.from_user_id}> in <##{sparkle_1.channel_id}> on <!date^#{sparkle_1.created_at.to_i}^{date_short}^https://example.com|#{sparkle_1.created_at}>"}},
             {type: "context", elements: [{type: "mrkdwn", text: sparkle_1.reason}]},
-            {type: "section", text: {type: "mrkdwn", text: ":sparkle: From yourself (:wink:) in <##{sparkle_2.channel_id}> on <!date^#{sparkle_2.created_at.to_i}^{date_short_pretty}^https://sparkles.lol|#{sparkle_2.created_at}>"}},
+            {type: "section", text: {type: "mrkdwn", text: ":sparkle: From yourself (:wink:) in <##{sparkle_2.channel_id}> on <!date^#{sparkle_2.created_at.to_i}^{date_short}^https://sparkles.lol|#{sparkle_2.created_at}>"}},
             {type: "context", elements: [{type: "mrkdwn", text: sparkle_2.reason}]},
-            {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_3.from_user_id}> in <##{sparkle_3.channel_id}> on <!date^#{sparkle_3.created_at.to_i}^{date_short_pretty}^https://example.com|#{sparkle_3.created_at}>"}}
+            {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_3.from_user_id}> in <##{sparkle_3.channel_id}> on <!date^#{sparkle_3.created_at.to_i}^{date_short}^https://example.com|#{sparkle_3.created_at}>"}}
           ]
         }
       end

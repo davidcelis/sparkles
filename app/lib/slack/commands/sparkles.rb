@@ -60,7 +60,7 @@ module Slack
             else
               "<@#{sparkle.from_user_id}>"
             end
-            section.mrkdwn(text: ":sparkle: From #{from} in <##{sparkle.channel_id}> on <!date^#{sparkle.created_at.to_i}^{date_short_pretty}^#{sparkle.permalink}|#{sparkle.created_at}>")
+            section.mrkdwn(text: ":sparkle: From #{from} in <##{sparkle.channel_id}> on <!date^#{sparkle.created_at.to_i}^{date_short}^#{sparkle.permalink}|#{sparkle.created_at}>")
           end
 
           modal.blocks.context { |ctx| ctx.mrkdwn(text: sparkle.reason) } if sparkle.reason.present?
