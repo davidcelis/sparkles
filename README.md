@@ -2,9 +2,11 @@
 
 Sparkles is a simple little Slack application for recognizing people in the form of ~~meaningless internet points~~ sparkles!
 
+![A screenshot of David using the /sparkle command in Slack, giving Annabelle a sparkle for recommending a great sushi restaurant.](./app/assets/images/give-a-sparkle.png)
+
 ## Usage
 
-Tip: You can always view usage information in Slack using `/sparkle help`
+Tip: You can always view usage information in Slack using `/sparkle help` and `/sparkles help`.
 
 ### Give a sparkle to somebody
 
