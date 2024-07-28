@@ -14,6 +14,16 @@
     <%= javascript_importmap_tags %>
 
     <%= favicon_link_tag asset_path("sparkles.png") %>
+
+    <meta name="author" content="David Celis" />
+    <meta name="description" content="A fun and easy way to show appreciation for people in Slack ✨" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Sparkles" />
+    <meta property="og:description" content="A fun and easy way to show appreciation for people in Slack ✨" />
+    <meta property="og:url" content="<%= root_url %>" />
+    <meta property="og:image" content="<%= asset_path("give-a-sparkle.png") %>" />
+    <meta property="og:image:alt" content="A screenshot of David using the /sparkle command in Slack, giving Annabelle a sparkle for recommending a great sushi restaurant." />
   </head>
 
   <body class="flex h-full flex-col">
