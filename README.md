@@ -16,6 +16,16 @@ Reasons don’t require any particular format, but if you want them to flow bett
 
 `/sparkle @davidcelis for being so awesome`
 
+You can also give a sparkle to someone by reacting to one of their messages with the `:sparkle:` emoji! This is a great way to give someone a sparkle point if you just liked what they said or want to celebrate good news or some kind of announcement.
+
+### View your team’s leaderboard
+
+You can check out the leaderboard for your team at any time by using the `/sparkles` command!
+
+### View your (or somebody else’s) sparkles
+
+To see the sparkles you or someone else have received, you can pass a username to the `/sparkles` command (e.g. `/sparkles @davidcelis`). If you just want to see your own sparkles, you can also enter `/sparkles me` into the chat box.
+
 ## Self-hosting
 
 Both the slack application and [sparkles.lol](https://sparkles.lol) are free to use! Except for the reasons given for sparkles, we never store messages from Slack itself, and the OAuth scopes requested are minimal:
