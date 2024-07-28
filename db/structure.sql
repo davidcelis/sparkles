@@ -384,7 +384,8 @@ CREATE TABLE public.sparkles (
     message_ts character varying NOT NULL,
     permalink character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    reaction_to_ts character varying
 );
 
 
@@ -775,6 +776,20 @@ CREATE INDEX index_sparkles_on_team_id ON public.sparkles USING btree (team_id);
 
 
 --
+-- Name: index_sparkles_on_team_id_and_reaction_to_ts; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_sparkles_on_team_id_and_reaction_to_ts ON public.sparkles USING btree (team_id, reaction_to_ts);
+
+
+--
+-- Name: index_sparkles_on_team_id_and_reaction_to_ts_and_from_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_sparkles_on_team_id_and_reaction_to_ts_and_from_user_id ON public.sparkles USING btree (team_id, reaction_to_ts, from_user_id);
+
+
+--
 -- Name: index_sparkles_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -844,6 +859,7 @@ ALTER TABLE ONLY public.solid_queue_scheduled_executions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240727184831'),
 ('20240721142327'),
 ('20240720190603'),
 ('20240720190602'),

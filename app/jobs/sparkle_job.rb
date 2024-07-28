@@ -60,13 +60,29 @@ class SparkleJob < ApplicationJob
       return team.api_client.chat_postMessage(channel: options[:channel_id], text: text)
     end
 
+    # First things first: one reaction per message per user is enough!
+    return if options[:reaction_to_ts] && team.sparkles.exists?(user_id: recipient.id, reaction_to_ts: options[:reaction_to_ts], from_user_id: options[:user_id])
+
     ActiveRecord::Base.transaction do
+      # If this sparkle is in response to a reaction, will give the sparkle a
+      # default reason that includes a link to the message that was reacted to.
+      reaction_permalink = nil
+      reason = if options[:reaction_to_ts]
+        reaction_permalink = team.api_client.chat_getPermalink(channel: options[:channel_id], message_ts: options[:reaction_to_ts]).permalink
+        reaction_permalink = URI(reaction_permalink)
+
+        "because I approve <#{reaction_permalink}|this message>!"
+      else
+        options[:reason]
+      end
+
       sparkle_count = team.sparkles.where(user_id: recipient.id).count
       sparkle = team.sparkles.new(
         user_id: recipient.id,
         from_user_id: options[:user_id],
         channel_id: options[:channel_id],
-        reason: options[:reason]
+        reaction_to_ts: options[:reaction_to_ts],
+        reason: reason
       )
 
       text = if sparkle_count == 0
@@ -77,14 +93,33 @@ class SparkleJob < ApplicationJob
         "#{prefix} <@#{recipient.id}> now has #{sparkle_count + 1} sparkles :sparkles:"
       end
 
-      if sparkle.user_id == sparkle.from_user_id
+      existing_reactions = team.sparkles.where(reaction_to_ts: options[:reaction_to_ts])
+      if sparkle.user_id == sparkle.from_user_id || (sparkle.reaction? && existing_reactions.where("user_id = from_user_id").exists?)
         text += "\n\nNothing wrong with a little pat on the back, eh <@#{sparkle.user_id}>?"
       end
 
-      message = team.api_client.chat_postMessage(channel: options[:channel_id], text: text)
-      permalink = team.api_client.chat_getPermalink(channel: options[:channel_id], message_ts: message.ts).permalink
+      # If the sparkle is being given via a reaction, we want to post our
+      # response as a threaded reply to the original message. However, if that
+      # message is itself in a thread, we need to get the parent message's ts
+      # so we can reply to that instead. Thankfully, this will be in the URL
+      # params of the permalink we got earlier.
+      thread_ts = if sparkle.reaction?
+        query = Rack::Utils.parse_query(reaction_permalink.query)
+        query.fetch("thread_ts") { sparkle.reaction_to_ts }
+      end
 
-      sparkle.update!(message_ts: message.ts, permalink: permalink)
+      # Now we'll post our response; however, if sparkles are being given via
+      # multiple reactions, we want to update whatever message we've already
+      # posted with the latest count.
+      if sparkle.reaction? && (existing_reaction = existing_reactions.first)
+        team.api_client.chat_update(channel: options[:channel_id], ts: existing_reaction.message_ts, text: text, as_user: true)
+        sparkle.update!(message_ts: existing_reaction.message_ts, permalink: existing_reaction.permalink)
+      else
+        message = team.api_client.chat_postMessage(channel: options[:channel_id], text: text, thread_ts: thread_ts)
+        permalink = team.api_client.chat_getPermalink(channel: options[:channel_id], message_ts: message.ts).permalink
+
+        sparkle.update!(message_ts: message.ts, permalink: permalink)
+      end
     end
   rescue Slack::Web::Api::Errors::UserNotFound
     text = "I couldn’t find the person you’re trying to sparkle :sweat: Make sure you’re using a highlighted @mention!"
@@ -93,14 +128,20 @@ class SparkleJob < ApplicationJob
   rescue Slack::Web::Api::Error => e
     Sentry.capture_exception(e)
 
-    text = <<~TEXT.strip
-      Oops, I ran into an unexpected problem with Slack :sweat: You can try again, and I’ll report this to my supervisor in the meantime. Here’s that sparkle you tried to give away so you can try again more easily!
+    text = "Oops, I ran into an unexpected problem with Slack :sweat: You can try again, and I’ll report this to my supervisor in the meantime."
 
-      /sparkle <@#{options[:recipient_id]}> #{options[:reason]}
-    TEXT
+    unless options[:reaction_to_ts]
+      text += " Here’s that sparkle you tried to give away so you can try again more easily!\n\n/sparkle <@#{options[:recipient_id]}> #{options[:reason]}"
+    end
 
-    Faraday.post(options[:response_url], {text: text}.to_json, "Content-Type" => "application/json")
+    if (response_url = options[:response_url])
+      Faraday.post(response_url, {text: text}.to_json, "Content-Type" => "application/json")
+    else
+      team.api_client.chat_postEphemeral(channel: options[:channel_id], user: options[:user_id], text: text)
+    end
   ensure
-    team.api_client.chat_deleteScheduledMessage(channel: options[:channel_id], scheduled_message_id: options[:scheduled_message_id])
+    if options[:scheduled_message_id]
+      team.api_client.chat_deleteScheduledMessage(channel: options[:channel_id], scheduled_message_id: options[:scheduled_message_id])
+    end
   end
 end
