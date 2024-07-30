@@ -51,6 +51,13 @@ RSpec.describe Slack::Commands::Leaderboard do
     team.sparkles.create!(user_id: second_place_tie_2, from_user_id: "U02JE49NDNY", channel_id: "C02J565A4CE", reason: "for being awesome", message_ts: "12345.67890", permalink: "https://example.com")
 
     team.sparkles.create!(user_id: third_place, from_user_id: "U02JE49NDNY", channel_id: "C02J565A4CE", reason: "for being awesome", message_ts: "12345.67890", permalink: "https://example.com")
+
+    # Create a few sparkles that are older than 30 days to ensure they're not
+    # included in the leaderboard.
+    team.sparkles.create!(created_at: 30.days.ago, user_id: first_place, from_user_id: "U02JE49NDNY", channel_id: "C02J565A4CE", reason: "for being awesome", message_ts: "12345.67890", permalink: "https://example.com")
+    team.sparkles.create!(created_at: 30.days.ago, user_id: second_place_tie_1, from_user_id: "U02JE49NDNY", channel_id: "C02J565A4CE", reason: "for being awesome", message_ts: "12345.67890", permalink: "https://example.com")
+    team.sparkles.create!(created_at: 30.days.ago, user_id: second_place_tie_2, from_user_id: "U02JE49NDNY", channel_id: "C02J565A4CE", reason: "for being awesome", message_ts: "12345.67890", permalink: "https://example.com")
+    team.sparkles.create!(created_at: 30.days.ago, user_id: third_place, from_user_id: "U02JE49NDNY", channel_id: "C02J565A4CE", reason: "for being awesome", message_ts: "12345.67890", permalink: "https://example.com")
   end
 
   let(:expected_modal) do
@@ -59,7 +66,7 @@ RSpec.describe Slack::Commands::Leaderboard do
       title: {type: "plain_text", text: "Top Sparklers"},
       close: {type: "plain_text", text: "Close"},
       blocks: [
-        {type: "section", text: {type: "mrkdwn", text: "Here’s the current leaderboard for your team! :sparkles:"}},
+        {type: "section", text: {type: "mrkdwn", text: "Here are the top sparklers for your team in the last 30 days! :sparkles:"}},
         {type: "divider"},
         {type: "section", fields: [{type: "mrkdwn", text: ":one: <@#{first_place}>:"}, {type: "mrkdwn", text: ":sparkle: 4 points"}]},
         {type: "section", fields: [{type: "mrkdwn", text: ":two: <@#{second_place_tie_1}>:"}, {type: "mrkdwn", text: ":sparkle: 2 points"}]},
@@ -91,7 +98,7 @@ RSpec.describe Slack::Commands::Leaderboard do
         title: {type: "plain_text", text: "Top Sparklers"},
         close: {type: "plain_text", text: "Close"},
         blocks: [
-          {type: "section", text: {type: "mrkdwn", text: "Here’s the current leaderboard for your team! :sparkles:"}},
+          {type: "section", text: {type: "mrkdwn", text: "Here are the top sparklers for your team in the last 30 days! :sparkles:"}},
           {type: "divider"},
           {type: "section", fields: [{type: "mrkdwn", text: a_string_starting_with(":zero::one:")}, {type: "mrkdwn", text: ":sparkle: 14 points"}]},
           {type: "section", fields: [{type: "mrkdwn", text: a_string_starting_with(":zero::two:")}, {type: "mrkdwn", text: ":sparkle: 13 points"}]},

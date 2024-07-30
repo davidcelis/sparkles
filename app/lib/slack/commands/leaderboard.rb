@@ -18,8 +18,14 @@ module Slack
         team = Team.find(params[:team_id])
 
         # This is a leaderboard, so we'll group the sparkles by user, count
-        # them, and then group together any direct ties.
-        sparkles = team.sparkles.group(:user_id).order(count_all: :desc).count
+        # them, and then group together any direct ties. We'll also only look
+        # at sparkles given in the last 30 days, because all-time leaderboards
+        # are boring.
+        sparkles = team.sparkles
+          .where("created_at >= ?", 30.days.ago)
+          .group(:user_id)
+          .order(count_all: :desc)
+          .count
         grouped_sparkles = sparkles.group_by { |_, v| v }.transform_values { |v| v.map(&:first) }
 
         # We're going to show everyone who has ever received a sparkle, and
@@ -32,7 +38,7 @@ module Slack
         modal.close(text: "Close")
 
         modal.blocks.section do |section|
-          section.mrkdwn(text: "Here’s the current leaderboard for your team! :sparkles:")
+          section.mrkdwn(text: "Here are the top sparklers for your team in the last 30 days! :sparkles:")
         end
         modal.blocks.divider
 

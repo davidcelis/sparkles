@@ -27,6 +27,7 @@ module Slack
         user_id = match[:user_id]
 
         sparkles = team.sparkles.where(user_id: user_id).order(created_at: :desc)
+        sparkle_count = sparkles.count
 
         modal = Slack::Surfaces::Modal.new(title: "Sparkles")
         modal.close(text: "Close")
@@ -34,14 +35,14 @@ module Slack
         modal.blocks.section do |section|
           text = if sparkles.any?
             if user_id == params[:user_id]
-              "Here are all the sparkles you’ve received! :sparkles:"
+              "You’ve received a total of *#{sparkle_count}* sparkle #{"point".pluralize(sparkle_count)}! :sparkles: Here they all are:"
             else
-              "Here are all the sparkles that <@#{user_id}> has received! :sparkles:"
+              "<@#{user_id}> has received a total of *#{sparkles.count}* sparkle #{"point".pluralize(sparkle_count)}! :sparkles: Here they all are:"
             end
           elsif user_id == params[:user_id]
             "You haven’t received any sparkles yet! :cry: Go do something nice or make someone laugh!"
           else
-            "<@#{user_id}> hasn’t received any sparkles yet! :cry: Maybe you can change that?"
+            "<@#{user_id}> hasn’t received any sparkles yet! :cry: Maybe you can give them their first one?"
           end
 
           section.mrkdwn(text: text)

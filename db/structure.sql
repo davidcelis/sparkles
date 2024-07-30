@@ -762,6 +762,13 @@ CREATE INDEX index_sparkles_on_channel_id ON public.sparkles USING btree (channe
 
 
 --
+-- Name: index_sparkles_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_sparkles_on_created_at ON public.sparkles USING btree (created_at DESC);
+
+
+--
 -- Name: index_sparkles_on_from_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -859,6 +866,7 @@ ALTER TABLE ONLY public.solid_queue_scheduled_executions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240730190317'),
 ('20240727184831'),
 ('20240721142327'),
 ('20240720190603'),

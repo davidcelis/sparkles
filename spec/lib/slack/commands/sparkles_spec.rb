@@ -45,7 +45,7 @@ RSpec.describe Slack::Commands::Sparkles do
         title: {type: "plain_text", text: "Sparkles"},
         close: {type: "plain_text", text: "Close"},
         blocks: [
-          {type: "section", text: {type: "mrkdwn", text: "<@#{user_id}> hasn’t received any sparkles yet! :cry: Maybe you can change that?"}}
+          {type: "section", text: {type: "mrkdwn", text: "<@#{user_id}> hasn’t received any sparkles yet! :cry: Maybe you can give them their first one?"}}
         ]
       }
     end
@@ -91,7 +91,7 @@ RSpec.describe Slack::Commands::Sparkles do
         title: {type: "plain_text", text: "Sparkles"},
         close: {type: "plain_text", text: "Close"},
         blocks: [
-          {type: "section", text: {type: "mrkdwn", text: "Here are all the sparkles that <@#{user_id}> has received! :sparkles:"}},
+          {type: "section", text: {type: "mrkdwn", text: "<@#{user_id}> has received a total of *3* sparkle points! :sparkles: Here they all are:"}},
           {type: "divider"},
           {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_1.from_user_id}> in <##{sparkle_1.channel_id}> on <!date^#{sparkle_1.created_at.to_i}^{date_short}^https://example.com|#{sparkle_1.created_at}>"}},
           {type: "context", elements: [{type: "mrkdwn", text: sparkle_1.reason}]},
@@ -116,7 +116,7 @@ RSpec.describe Slack::Commands::Sparkles do
           title: {type: "plain_text", text: "Sparkles"},
           close: {type: "plain_text", text: "Close"},
           blocks: [
-            {type: "section", text: {type: "mrkdwn", text: "Here are all the sparkles you’ve received! :sparkles:"}},
+            {type: "section", text: {type: "mrkdwn", text: "You’ve received a total of *3* sparkle points! :sparkles: Here they all are:"}},
             {type: "divider"},
             {type: "section", text: {type: "mrkdwn", text: ":sparkle: From <@#{sparkle_1.from_user_id}> in <##{sparkle_1.channel_id}> on <!date^#{sparkle_1.created_at.to_i}^{date_short}^https://example.com|#{sparkle_1.created_at}>"}},
             {type: "context", elements: [{type: "mrkdwn", text: sparkle_1.reason}]},
