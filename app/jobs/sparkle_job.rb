@@ -45,7 +45,7 @@ class SparkleJob < ApplicationJob
     recipient = team.api_client.users_info(user: options[:recipient_id]).user
 
     if recipient.deleted
-      text = "Oops, I can’t find that person anymore :sweat: They’ve either left the team or been deactivated. Sorry!"
+      text = "Oops, I can’t find <@#{recipient.id}> anymore :sweat: They’ve either left the team or been deactivated. Sorry!"
 
       return team.api_client.chat_postMessage(channel: options[:channel_id], text: text)
     end
@@ -54,7 +54,7 @@ class SparkleJob < ApplicationJob
       text = if recipient.id == team.sparklebot_id
         "Aww, thank you, <@#{options[:user_id]}>! That’s so thoughtful, but I’m already swimming in sparkles! I couldn’t possibly take one of yours, but I apprecate the gesture nonetheless :sparkles:"
       else
-        "It’s so nice that you want to recognize one of my fellow bots! They’ve all politely declined to join the fun of hoarding sparkles, but I’ll pass along your thanks."
+        "It’s so nice that you want to recognize my fellow bot, <@#{recipient.id}>! They’ve politely declined to join the fun of hoarding sparkles, but I’ll pass along your thanks."
       end
 
       return team.api_client.chat_postMessage(channel: options[:channel_id], text: text)

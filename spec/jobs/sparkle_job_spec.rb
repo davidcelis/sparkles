@@ -21,13 +21,13 @@ RSpec.describe SparkleJob, type: :job do
 
   shared_examples "a recipient that has been deactivated" do
     let(:users_info_response) do
-      double(user: double(deleted: true))
+      double(user: double(id: options[:recipient_id], deleted: true))
     end
 
     it "responds with an error message" do
       expect(api_client).to receive(:chat_postMessage).with(
         channel: options[:channel_id],
-        text: "Oops, I can’t find that person anymore :sweat: They’ve either left the team or been deactivated. Sorry!"
+        text: "Oops, I can’t find <@#{options[:recipient_id]}> anymore :sweat: They’ve either left the team or been deactivated. Sorry!"
       )
 
       SparkleJob.perform_now(options)
@@ -42,7 +42,7 @@ RSpec.describe SparkleJob, type: :job do
     it "responds with an error message" do
       expect(api_client).to receive(:chat_postMessage).with(
         channel: options[:channel_id],
-        text: "It’s so nice that you want to recognize one of my fellow bots! They’ve all politely declined to join the fun of hoarding sparkles, but I’ll pass along your thanks."
+        text: "It’s so nice that you want to recognize my fellow bot, <@U1029384756>! They’ve politely declined to join the fun of hoarding sparkles, but I’ll pass along your thanks."
       )
 
       SparkleJob.perform_now(options)

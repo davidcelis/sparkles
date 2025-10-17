@@ -47,6 +47,70 @@ RSpec.describe Slack::Commands::Sparkle do
     )
   end
 
+  context "when multiple users are specified" do
+    let(:text) { "<@U02K7AUR7LN>, <@U03A1B2C3D4> for your help!" }
+
+    let(:common_args) do
+      {
+        team_id: team.id,
+        channel_id: params[:channel_id],
+        user_id: params[:user_id],
+        reason: "for your help!",
+        response_url: params[:response_url]
+      }
+    end
+
+    it "enqueues a SparkleJob for each recipient" do
+      expect {
+        command
+      }.to have_enqueued_job(SparkleJob).with(
+        recipient_id: "U02K7AUR7LN",
+        scheduled_message_id: "Q1298393284",
+        **common_args
+      ).and have_enqueued_job(SparkleJob).with(
+        recipient_id: "U03A1B2C3D4",
+        **common_args
+      )
+    end
+
+    context "when users are separated by spaces instead of commas" do
+      let(:text) { "<@U02K7AUR7LN> <@U03A1B2C3D4> for your help!" }
+
+      it "enqueues a SparkleJob for each recipient" do
+        expect {
+          command
+        }.to have_enqueued_job(SparkleJob).with(
+          recipient_id: "U02K7AUR7LN",
+          scheduled_message_id: "Q1298393284",
+          **common_args
+        ).and have_enqueued_job(SparkleJob).with(
+          recipient_id: "U03A1B2C3D4",
+          **common_args
+        )
+      end
+    end
+
+    context "when a mix of commas and spaces are used" do
+      let(:text) { "<@U02K7AUR7LN>   , <@U03A1B2C3D4>  <@U04D5E6F7G8>    for your help!" }
+
+      it "enqueues a SparkleJob for each recipient" do
+        expect {
+          command
+        }.to have_enqueued_job(SparkleJob).with(
+          recipient_id: "U02K7AUR7LN",
+          scheduled_message_id: "Q1298393284",
+          **common_args
+        ).and have_enqueued_job(SparkleJob).with(
+          recipient_id: "U03A1B2C3D4",
+          **common_args
+        ).and have_enqueued_job(SparkleJob).with(
+          recipient_id: "U04D5E6F7G8",
+          **common_args
+        )
+      end
+    end
+  end
+
   context "when help is requested" do
     let(:text) { "help" }
 
@@ -81,7 +145,7 @@ RSpec.describe Slack::Commands::Sparkle do
 
     it "responds with an error message" do
       expect(result).to eq({
-        text: "Sorry, I didn’t understand that.\n\nUsage: `/sparkle @user [reason]`",
+        text: "Sorry, I didn’t understand that.\n\nUsage: `/sparkle @user [@user2] [@user3...] [reason]`",
         response_type: :ephemeral
       })
     end
