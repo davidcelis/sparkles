@@ -25,7 +25,7 @@ jobs:
         uses: dokku/github-action@master
         with:
           branch: main
-          git_remote_url: "ssh://dokku@apps.davidcel.is:22/sparkles"
+          git_remote_url: ${{ secrets.DOKKU_GIT_REMOTE_URL }}
           ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
 
       - name: Publish release to Sentry
