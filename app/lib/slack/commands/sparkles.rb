@@ -4,14 +4,26 @@ module Slack
       FORMAT = /\A#{Slack::Commands::USER_PATTERN}|me\z/
 
       HELP_TEXT = <<~TEXT.strip
-        Check the leaderboard or view someone’s sparkles! :sparkles:
+        Check the leaderboard or view someone's sparkles! :sparkles:
 
         Usage: `/sparkles [@user]` (hint: you can also just type `/sparkles me` to see your own sparkles)
+
+        *More commands:*
+        `/sparkles stats [days]` — Sparkle stats for the last N days (default: 30)
+        `/sparkles givers` — See who's given the most sparkles
+        `/sparkles remind [day] [time]` — Set a recurring reminder to sparkle someone
+        `/sparkles remind list` — See your active reminders
+        `/sparkles remind stop` — Remove all your reminders
       TEXT
 
       def self.execute(params)
         text = params[:text].strip
         text = "<@#{params[:user_id]}>" if text == "me"
+
+        # Route subcommands
+        return Stats.execute(params) if text.start_with?("stats")
+        return GiversLeaderboard.execute(params) if text == "givers"
+        return Remind.execute(params) if text.start_with?("remind")
 
         match = text.match(FORMAT)
 
@@ -35,14 +47,14 @@ module Slack
         modal.blocks.section do |section|
           text = if sparkles.any?
             if user_id == params[:user_id]
-              "You’ve received a total of *#{sparkle_count}* sparkle #{"point".pluralize(sparkle_count)}! :sparkles: Here they all are:"
+              "You've received a total of *#{sparkle_count}* sparkle #{"point".pluralize(sparkle_count)}! :sparkles: Here they all are:"
             else
               "<@#{user_id}> has received a total of *#{sparkles.count}* sparkle #{"point".pluralize(sparkle_count)}! :sparkles: Here they all are:"
             end
           elsif user_id == params[:user_id]
-            "You haven’t received any sparkles yet! :cry: Go do something nice or make someone laugh!"
+            "You haven't received any sparkles yet! :cry: Go do something nice or make someone laugh!"
           else
-            "<@#{user_id}> hasn’t received any sparkles yet! :cry: Maybe you can give them their first one?"
+            "<@#{user_id}> hasn't received any sparkles yet! :cry: Maybe you can give them their first one?"
           end
 
           section.mrkdwn(text: text)

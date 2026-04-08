@@ -1,5 +1,6 @@
 class Team < ApplicationRecord
   has_many :sparkles, dependent: :destroy
+  has_many :sparkle_reminders, dependent: :destroy
 
   encrypts :access_token
 
